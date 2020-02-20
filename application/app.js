@@ -23,12 +23,14 @@ var patientRoutes = require("./routes/patients"),
     indexRoutes = require("./routes/index"),
     calendarRoutes = require("./routes/calendar");
 
-mongoose.connect("mongodb://localhost/hospital");  // WHENEVER I GIT PUSH CHANGE MONGOOSE CONNECT !!!!!!!!!!!!!!!!!
-const mongoURI = 'mongodb://localhost/hospital';
+// WHENEVER I GIT PUSH CHANGE MONGOOSE CONNECT !!!!!!!!!!!!!!!!!
+// mongoose.connect("mongodb://localhost/hospital");  
+// const mongoURI = 'mongodb://localhost/hospital';
 
 // To use the new parser, pass option { useNewUrlParser: true } to MongoClient.connect.
 
-//mongoose.connect("mongodb://john:" + encodeURIComponent('kalamata1') + "@ds233541.mlab.com:33541/hospital");
+// WHENEVER I GIT PUSH CHANGE MONGOOSE CONNECT !!!!!!!!!!!!!!!!!
+mongoose.connect("mongodb://john:" + encodeURIComponent('kalamata1') + "@ds233541.mlab.com:33541/hospital");
 
 //mongodb://<john>:<kalamata1>@ds233541.mlab.com:33541/hospital
 app.use(bodyParser.urlencoded({extended:true}));
@@ -72,12 +74,12 @@ app.use("/",indexRoutes);
 
 //listen for request on port 3000, and as a callback function have the port listened on logged
 // "C:\Program Files\MongoDB\Server\4.0\bin\mongo.exe"
-app.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+// app.listen(port, hostname, () => {
+//   console.log(`Server running at http://${hostname}:${port}/`);
+// });
 
-/*
+
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("Started");
 });
-*/
+
