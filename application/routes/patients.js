@@ -5,52 +5,55 @@ var Diagnose = require("../models/diagnose")
 var Treatment = require("../models/treatment");
 var middleware = require('../middleware');
 var Calendar = require("../models/calendar");
-var moment =require('moment')
+var moment = require('moment')
+
+var database = require('../public/data/database.js')
 
 
-router.get("/", function(req, res){
-    if(req.query.search){
+router.get("/", function(req, res) {
+    if (req.query.search) {
         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-        Patient.find({lastName: regex}, function(err, allPatients){
-       if(err){
-           console.log(err);
-       } else {
-          res.render("patients/index",{patients:allPatients});
-       }
-    });
-    }else if(req.query.search1){
+        Patient.find({ lastName: regex }, function(err, allPatients) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render("patients/index", { patients: allPatients });
+            }
+        });
+    } else if (req.query.search1) {
         const regex = new RegExp(escapeRegex(req.query.search1), 'gi');
-        Patient.find({doc: regex}, function(err, allPatients){
-       if(err){
-           console.log(err);
-       } else {
-          res.render("patients/index",{patients:allPatients});
-       }
-    });
-    }
-    else{
+        Patient.find({ doc: regex }, function(err, allPatients) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render("patients/index", { patients: allPatients });
+            }
+        });
+    } else {
         // Get all patient from DB
-    Patient.find({}, function(err, allPatients){
-       if(err){
-           console.log(err);
-       } else {
-          res.render("patients/index",{patients:allPatients});
-       }
-    });
+        Patient.find({}, function(err, allPatients) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render("patients/index", { patients: allPatients });
+            }
+        });
     }
-    
+
 });
 
-router.post("/",middleware.isLoggedIn, function(req, res){
+router.post("/", middleware.isLoggedIn, function(req, res) {
     //console.log(req.body)
     var firstName = req.body.firstName;
     var lastName = req.body.lastName;
     //var birthday = new Date();
     var birthday = req.body.birthday; // to do:   change how is the format of User Interface
     //var fomatted_date = moment(birthday).format('YYYY-DD-MM');
+    var regDate = new Date();
     var mPhone = req.body.mPhone;
     var sPhone = req.body.sPhone;
     var city = req.body.city;
+    var sex = req.body.sex;
     var address = req.body.address;
     var bloodType = req.body.bloodType;
     var doc = req.body.doc;
@@ -59,74 +62,78 @@ router.post("/",middleware.isLoggedIn, function(req, res){
     var alerg1_text = req.body.alerg1_text;
     var alerg2_text = req.body.alerg2_text;
     var general = req.body.general;
-    var author ={
-        id:req.user._id,
+    var author = {
+        id: req.user._id,
         username: req.user.username
     }
-    var newPatient = 
-    {firstName: firstName,
-    lastName : lastName,
-    birthday:birthday,
-    general:general,
-    author:author,
-    mPhone:mPhone,
-    sPhone:sPhone,
-    city:city,
-    address:address,
-    bloodType:bloodType,
-    alerg1:alerg1,
-    doc:doc,
-    alerg2:alerg2,
-    alerg1_text:alerg1_text,
-    alerg2_text:alerg2_text};
+    console.log(birthday, typeof(birthday))
+    var newPatient = {
+        firstName: firstName,
+        lastName: lastName,
+        birthday: birthday,
+        general: general,
+        author: author,
+        mPhone: mPhone,
+        sPhone: sPhone,
+        city: city,
+        address: address,
+        bloodType: bloodType,
+        alerg1: alerg1,
+        doc: doc,
+        sex: sex,
+        alerg2: alerg2,
+        alerg1_text: alerg1_text,
+        alerg2_text: alerg2_text,
+        regDate: regDate,
+    };
     //console.log(newPatient)
-    
-    Patient.create(newPatient, function(err, newlyCreated){
-        if(err){
+
+    Patient.create(newPatient, function(err, newlyCreated) {
+        if (err) {
             console.log(err);
-        }else{
+        } else {
             res.redirect("/patients");
         }
     });
-    
+
 });
 
-router.get("/new",middleware.isLoggedIn, function(req, res){
-    res.render("patients/new.ejs");
+router.get("/new", middleware.isLoggedIn, function(req, res) {
+    res.render("patients/new.ejs", { data: database });
 });
 
 
 
 //SHOW PATIENT ROUTE 
-router.get("/:id", function(req, res){
+router.get("/:id", function(req, res) {
     //find the patient with provided ID
-    Patient.findById(req.params.id).populate("diagnoses").exec(function(err, foundPatient){
-        if(err){
+    Patient.findById(req.params.id).populate("diagnoses").exec(function(err, foundPatient) {
+        if (err) {
             console.log(err);
         } else {
             //console.log(foundPatient);
             //render show template with that patient
-            res.render("patients/show", {patient: foundPatient});
+            res.render("patients/show", { patient: foundPatient });
         }
     });
 });
 
 // Edit Route
-router.get("/:id/edit",middleware.checkPatientOwnership, function(req, res){
-        Patient.findById(req.params.id, function(err, foundPatient){
-                //console.log(req.params.id)
-                res.render("patients/edit", {p_id:req.params.id, patient: foundPatient});
-        });
+router.get("/:id/edit", middleware.checkPatientOwnership, function(req, res) {
+    Patient.findById(req.params.id, function(err, foundPatient) {
+        //console.log(req.params.id)
+        res.render("patients/edit", { p_id: req.params.id, patient: foundPatient });
+    });
 });
 
 // Update Route
-router.put("/:id",middleware.checkPatientOwnership, function(req, res){   
-    Patient.findByIdAndUpdate(req.params.id,req.body.patient,function(err, updatedPatient){
+router.put("/:id", middleware.checkPatientOwnership, function(req, res) {
+    Patient.findByIdAndUpdate(req.params.id, req.body.patient, function(err, updatedPatient) {
         //console.log(req.body)
-        if(err){
+        if (err) {
             res.redirect("/patients");
             console.log(err)
-        }else{
+        } else {
             res.redirect("/patients/" + req.params.id);
         }
     });
@@ -135,20 +142,20 @@ router.put("/:id",middleware.checkPatientOwnership, function(req, res){
 
 //Destroy Patient
 
-router.delete("/:id",middleware.checkPatientOwnership, function(req, res){
-   Patient.findByIdAndRemove(req.params.id, function(err){
-      if(err){
-          res.redirect("/patients");
-      } else {
-          res.redirect("/patients");
-      }
-   });
+router.delete("/:id", middleware.checkPatientOwnership, function(req, res) {
+    Patient.findByIdAndRemove(req.params.id, function(err) {
+        if (err) {
+            res.redirect("/patients");
+        } else {
+            res.redirect("/patients");
+        }
+    });
 });
 
 
 
-function escapeRegex(text){
-    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");    
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
 
 
