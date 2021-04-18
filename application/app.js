@@ -71,7 +71,11 @@ app.use("/calendar", calendarRoutes);
 app.use("/patients/:id/diagnoses",diagnoseRoutes);
 app.use("/patients/:id/diagnoses/:diagnose_1/treatments",treatmentRoutes);
 app.use("/",indexRoutes);
-
+console.log('lmao')
+process.on('unhandledRejection', (reason, p) => {
+    console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+    // application specific logging, throwing an error, or other logic here
+  });
 // listen for request on port 3000, and as a callback function have the port listened on logged
 // "C:\Program Files\MongoDB\Server\4.0\bin\mongo.exe"
 app.listen(port, hostname, () => {

@@ -8,11 +8,9 @@ var middleware = require('../middleware');
 
 
 
-
 router.get("/register", function(req, res){
     res.render('register');
 });
-
 //handle sign up logic
 router.post("/register", function(req, res){
     var newUser = new User({username: req.body.username});
@@ -33,7 +31,6 @@ router.post("/register", function(req, res){
 });
 
 // LOGIN
-
 router.get("/",function(req, res){
     res.render("login");
 });
@@ -54,5 +51,5 @@ router.get("/logout", function(req, res){
 
 
 
-
+console.log(4)
 module.exports = router

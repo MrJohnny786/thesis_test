@@ -21,6 +21,10 @@ var patientSchema = new mongoose.Schema({
     alerg2:String,
     alerg1_text:String,
     alerg2_text:String,
+    upFile: {
+        id: String,
+        info:{Object}
+    },
     createdAt:{type:Date, default:Date.now},
     author : {
         id :{

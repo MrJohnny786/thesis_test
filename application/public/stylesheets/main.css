@@ -1,11 +1,19 @@
-
 #delete-form {
     display: inline;
 }
 
-.clickableRow { cursor: pointer; }
-
+.clickableRow {
+    cursor: pointer;
+}
 
 body {
     background-color: lightblue;
+}
+
+.jumbotron {
+    margin-top: 2rem;
+}
+
+#td_center {
+    text-align: center;
 }
