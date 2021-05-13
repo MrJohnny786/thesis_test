@@ -8,9 +8,9 @@ var middleware = require('../middleware');
 var Calendar = require("../models/calendar");
 
 
-router.get("/new",middleware.isLoggedIn, function(req, res) {
+router.get("/new", middleware.isLoggedIn, function (req, res) {
     // find patient by id
-    Patient.findById(req.params.id, function(err, patient) {
+    Patient.findById(req.params.id, function (err, patient) {
         console.log(patient);
         if (err) {
             console.log(err);
@@ -21,16 +21,16 @@ router.get("/new",middleware.isLoggedIn, function(req, res) {
     });
 });
 
-router.post("/",middleware.isLoggedIn, function(req, res) {
+router.post("/", middleware.isLoggedIn, function (req, res) {
     //lookup patient using ID
-    Patient.findById(req.params.id, function(err, patient) {
+    Patient.findById(req.params.id, function (err, patient) {
         if (err) {
             console.log(err);
             res.redirect("/patients");
         }
         else {
             console.log(req.body.diagnose);
-            Diagnose.create(req.body.diagnose, function(err, diagnose) {
+            Diagnose.create(req.body.diagnose, function (err, diagnose) {
                 if (err) {
                     req.flash("error", "Δημιουργηθηκε καποιο προβλημα")
                     console.log(err);
@@ -52,8 +52,8 @@ router.post("/",middleware.isLoggedIn, function(req, res) {
 
 
 //Show Diagnose Route
-router.get("/:diagnose_id", function(req, res) {
-    Diagnose.findById(req.params.diagnose_id).populate("treatments").exec( function(err, foundDiagnose) {
+router.get("/:diagnose_id", function (req, res) {
+    Diagnose.findById(req.params.diagnose_id).populate("treatments").exec(function (err, foundDiagnose) {
         if (err) {
             res.redirect("/patients");
         }
@@ -64,8 +64,8 @@ router.get("/:diagnose_id", function(req, res) {
 });
 
 //Edit Diagnose Route
-router.get("/:diagnose_id/edit", middleware.checkDiagnoseOwnership, function(req, res) {
-    Diagnose.findById(req.params.diagnose_id, function(err, foundDiagnose) {
+router.get("/:diagnose_id/edit", middleware.checkDiagnoseOwnership, function (req, res) {
+    Diagnose.findById(req.params.diagnose_id, function (err, foundDiagnose) {
         if (err) {
             res.redirect("/patients");
         }
@@ -76,22 +76,22 @@ router.get("/:diagnose_id/edit", middleware.checkDiagnoseOwnership, function(req
 });
 
 // Update Diagnose Route
-router.put("/:diagnose_id",middleware.checkDiagnoseOwnership, function(req, res) {
-    Diagnose.findByIdAndUpdate(req.params.diagnose_id, req.body.diagnose, function(err, updatedDiagnose) {
+router.put("/:diagnose_id", middleware.checkDiagnoseOwnership, function (req, res) {
+    Diagnose.findByIdAndUpdate(req.params.diagnose_id, req.body.diagnose, function (err, updatedDiagnose) {
         if (err) {
             res.redirect("back");
             console.log(err)
         }
         else {
-            res.redirect("/patients/" + req.params.id + "/diagnoses/" + req.params.diagnose_id );
+            res.redirect("/patients/" + req.params.id + "/diagnoses/" + req.params.diagnose_id);
         }
     });
 });
 
 // Destroy Diagnose Route
 
-router.delete("/:diagnose_id",middleware.checkDiagnoseOwnership, function(req, res) {
-    Diagnose.findByIdAndRemove(req.params.diagnose_id, function(err) {
+router.delete("/:diagnose_id", middleware.checkDiagnoseOwnership, function (req, res) {
+    Diagnose.findByIdAndRemove(req.params.diagnose_id, function (err) {
         if (err) {
             res.redirect("back");
         }

@@ -71,27 +71,27 @@
                 <div class="row mt-3 patient_row">
                     <div class="col-sm">Γιατρος :</div>
                     <div class="col-sm">
-                        <%= patient.doc  %>
+                        <%= patient.doc %>
                     </div>
                 </div>
 
                 <div class="row mt-3 patient_row">
                     <div class="col-sm">Αλεργιες περιβαλλοντος/τροφιμων :</div>
                     <div class="col-sm">
-                        <%= patient.alerg1  %>
+                        <%= patient.alerg1 %>
                     </div>
                 </div>
                 <div class="row mt-3 patient_row">
                     <div class="col-sm">Πληροφοριες αλλεργιων περιβαλλοντος/τροφιμων :</div>
                     <div class="col-sm">
-                        <%= patient.alerg1_text  %>
+                        <%= patient.alerg1_text %>
                     </div>
                 </div>
 
                 <div class="row mt-3 patient_row">
                     <div class="col-sm">Αλεργιες σε φαρμακα :</div>
                     <div class="col-sm">
-                        <%= patient.alerg2  %>
+                        <%= patient.alerg2 %>
                     </div>
                 </div>
                 <div class="row mt-3 patient_row">
@@ -111,10 +111,11 @@
                 <div class="row mt-3 patient_row">
                     <div class="col-sm">
                         <span class="pull-right">
-                <p>
-                    Δημιουργηθηκε απο τον/την : <%= patient.author.username %>, <%= moment(patient.createdAt).fromNow() %>
-                </p>
-            </span>
+                            <p>
+                                Δημιουργηθηκε απο τον/την : <%= patient.author.username %>, <%=
+                                        moment(patient.createdAt).fromNow() %>
+                            </p>
+                        </span>
                     </div>
                 </div>
 
@@ -122,7 +123,7 @@
                 <form action="/patients/<%= patient._id %>" method="POST" enctype="multipart/form-data">
                     <!--?_method=PUT -->
                     <div class="form-group ">
-                        <label for="exampleFormControlFile1">Example file input</label>
+                        <label for="exampleFormControlFile1">File input</label>
                         <input name="myImage" type="file" class="form-control-file" id="exampleFormControlFile1">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -131,7 +132,8 @@
 
 
 
-                <% if(currentUser && patient.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                <% if(currentUser && patient.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){
+                    %>
                     <div class="row mt-3">
                         <p class="col-sm">
                             <a class="btn btn-warning btn-larg" href="/patients/<%= patient._id %>/edit">Επεξεργασία</a>
@@ -167,20 +169,24 @@
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" href="/patients/<%= patient._id %>/diagnoses/<%= diagnose._id %>">
+                                                        <a class="alpha"
+                                                            href="/patients/<%= patient._id %>/diagnoses/<%= diagnose._id %>">
                                                             <%= moment(diagnose.date).format('DD-MM-YYYY') %>
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" href="/patients/<%= patient._id %>/diagnoses/<%= diagnose._id %>">
+                                                        <a class="alpha"
+                                                            href="/patients/<%= patient._id %>/diagnoses/<%= diagnose._id %>">
                                                             <%= diagnose.disease %>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" href="/patients/<%= patient._id %>/diagnoses/<%= diagnose._id %>">
+                                                        <a class="alpha"
+                                                            href="/patients/<%= patient._id %>/diagnoses/<%= diagnose._id %>">
                                                             <%= diagnose.doc %>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" href="/patients/<%= patient._id %>/diagnoses/<%= diagnose._id %>">
+                                                        <a class="alpha"
+                                                            href="/patients/<%= patient._id %>/diagnoses/<%= diagnose._id %>">
                                                             <%= moment(diagnose.createdAt).fromNow() %>
                                                     </td>
                                                 </tr>
@@ -189,7 +195,8 @@
                             </table>
                         </div>
                         <p>
-                            <a class="btn btn-primary btn-large" href="/patients/<%= patient._id %>/diagnoses/new">Πρόσθεστε Διάγνωση</a>
+                            <a class="btn btn-primary btn-large"
+                                href="/patients/<%= patient._id %>/diagnoses/new">Πρόσθεστε Διάγνωση</a>
                         </p>
             </div>
         </div>

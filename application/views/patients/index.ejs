@@ -48,7 +48,8 @@
                             <%i+=1 %>
 
                                 <tbody>
-                                    <tr class='clickable-row ' data-href='/patients/<%= patient._id %>' style="cursor:pointer">
+                                    <tr class='clickable-row ' data-href='/patients/<%= patient._id %>'
+                                        style="cursor:pointer">
                                         <td>
                                             <a class="alpha">
                                                 <%= i %>
@@ -93,8 +94,8 @@
     </div>
 
     <script>
-        jQuery(document).ready(function($) {
-            $(".clickable-row").click(function() {
+        jQuery(document).ready(function ($) {
+            $(".clickable-row").click(function () {
                 window.location = $(this).data("href");
             });
         });

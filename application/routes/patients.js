@@ -4,28 +4,56 @@ var Patient = require("../models/patient");
 var middleware = require('../middleware');
 var multer = require('multer');
 var path = require('path');
+const fs = require('fs');
 
 //Init Storage *Needs to be refactored for better naming of the uploaded files :)
 const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        var id = req.url.replace('/', '');
+        Patient.findById(id, function (err, user) {
+            var patient_name = user.firstName
+            var patient_lastname = user.lastName
+            var pname = patient_lastname + ' ' + patient_name + ' ' + id
+            const dir = `./public/uploads/${pname}`
+            if (err) {
+                return fs.mkdir(dir, error => cb(error, dir))
+            } else {
+                fs.exists(dir, exist => {
+                    if (!exist) {
+                        return fs.mkdir(dir, error => cb(error, dir))
+                    }
+                    return cb(null, dir)
+                })
+            }
+        })
 
-    destination: './public/uploads/',
-    filename: function(req, file, cb) {
-        // var info = Patient.findById(req.params.id).exec(function(err, foundPatient){
-        // 	console.log(foundPatient)
-        // 	var data = foundPatient
-        // 	return data
-        // })
-        // console.log('info', info)
+    },
+    filename: function (req, file, cb) {
 
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+        var id = req.url.replace('/', '');
+        Patient.findById(id, function (err, user) {
+            if (err) {
+                cb(null, '-' + path.extname(file.originalname));
+            } else {
+                var patient_name = user.firstName
+                var patient_lastname = user.lastName
+                var pname = patient_lastname + ' ' + patient_name
+                var timestamp = Date.now()
+                date = new Date(timestamp)
+                var date_c = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getHours() + '-' + date.getMinutes();
+                cb(null, pname + '-' + date_c + path.extname(file.originalname));
+            }
+        });
+
     }
 });
 
 // Init Upload
 const upload = multer({
+
     storage: storage,
     limits: { fileSize: 1000000 },
-    fileFilter: function(req, file, cb) {
+    fileFilter: function (req, file, cb) {
         checkFileType(file, cb);
     }
 }).single('myImage');
@@ -46,10 +74,10 @@ function checkFileType(file, cb) {
 }
 
 // Get all Patients
-router.get("/", function(req, res) {
+router.get("/", function (req, res) {
     if (req.query.search) {
         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-        Patient.find({ lastName: regex }, function(err, allPatients) {
+        Patient.find({ lastName: regex }, function (err, allPatients) {
             if (err) {
                 console.log(err);
             } else {
@@ -58,7 +86,7 @@ router.get("/", function(req, res) {
         });
     } else if (req.query.search1) {
         const regex = new RegExp(escapeRegex(req.query.search1), 'gi');
-        Patient.find({ doc: regex }, function(err, allPatients) {
+        Patient.find({ doc: regex }, function (err, allPatients) {
             if (err) {
                 console.log(err);
             } else {
@@ -67,7 +95,7 @@ router.get("/", function(req, res) {
         });
     } else {
         // Get all patient from DB
-        Patient.find({}, function(err, allPatients) {
+        Patient.find({}, function (err, allPatients) {
             if (err) {
                 console.log(err);
             } else {
@@ -79,7 +107,7 @@ router.get("/", function(req, res) {
 });
 
 // Create new Patient
-router.post("/", middleware.isLoggedIn, function(req, res) {
+router.post("/", middleware.isLoggedIn, function (req, res) {
     var firstName = req.body.firstName;
     var lastName = req.body.lastName;
     //var birthday = new Date();
@@ -118,7 +146,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
         alerg2_text: alerg2_text
     };
 
-    Patient.create(newPatient, function(err, newlyCreated) {
+    Patient.create(newPatient, function (err, newlyCreated) {
         if (err) {
             console.log(err);
         } else {
@@ -128,17 +156,17 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
 
 });
 
-router.post("/", middleware.isLoggedIn, function(req, res) {
+router.post("/", middleware.isLoggedIn, function (req, res) {
     res.render("patients/new.ejs");
 });
 
 
-router.get("/new", middleware.isLoggedIn, function(req, res) {
+router.get("/new", middleware.isLoggedIn, function (req, res) {
     res.render("patients/new.ejs");
 });
 
 // Upload logic  *Careful redirect logic has been implemented which is not the best , needs refactoring
-router.post("/:id", middleware.checkPatientOwnership, function(req, res) {
+router.post("/:id", middleware.checkPatientOwnership, function (req, res) {
     upload(req, res, (err) => {
         if (err) {
             console.log('error')
@@ -148,16 +176,16 @@ router.post("/:id", middleware.checkPatientOwnership, function(req, res) {
                 console.log('no file found');
                 res.redirect('/patients/' + req.params.id);
             } else {
-                res.redirect('/patients/' + req.params.id, );
+                res.redirect('/patients/' + req.params.id,);
             }
         }
     })
 });
 
 //Show Patient Route
-router.get("/:id", function(req, res) {
+router.get("/:id", function (req, res) {
     //find the patient with provided ID
-    Patient.findById(req.params.id).populate("diagnoses").exec(function(err, foundPatient) {
+    Patient.findById(req.params.id).populate("diagnoses").exec(function (err, foundPatient) {
         if (err) {
             console.log(err);
         } else {
@@ -169,16 +197,16 @@ router.get("/:id", function(req, res) {
 });
 
 // Edit Route
-router.get("/:id/edit", middleware.checkPatientOwnership, function(req, res) {
-    Patient.findById(req.params.id, function(err, foundPatient) {
+router.get("/:id/edit", middleware.checkPatientOwnership, function (req, res) {
+    Patient.findById(req.params.id, function (err, foundPatient) {
         //console.log(req.params.id)
         res.render("patients/edit", { p_id: req.params.id, patient: foundPatient });
     });
 });
 
 // Update Route
-router.put("/:id", middleware.checkPatientOwnership, function(req, res) {
-    Patient.findByIdAndUpdate(req.params.id, req.body.patient, function(err, updatedPatient) {
+router.put("/:id", middleware.checkPatientOwnership, function (req, res) {
+    Patient.findByIdAndUpdate(req.params.id, req.body.patient, function (err, updatedPatient) {
         //console.log(req.body)
         if (err) {
             res.redirect("/patients");
@@ -190,8 +218,8 @@ router.put("/:id", middleware.checkPatientOwnership, function(req, res) {
 });
 
 //Destroy Patient
-router.delete("/:id", middleware.checkPatientOwnership, function(req, res) {
-    Patient.findByIdAndRemove(req.params.id, function(err) {
+router.delete("/:id", middleware.checkPatientOwnership, function (req, res) {
+    Patient.findByIdAndRemove(req.params.id, function (err) {
         if (err) {
             res.redirect("/patients");
         } else {

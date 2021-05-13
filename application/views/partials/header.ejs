@@ -6,8 +6,10 @@
     <title></title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></link>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js">
+    </link>
     <link rel="stylesheet" type="text/css" href="public/stylesheets/main.css">
 
 
@@ -15,14 +17,14 @@
         .clickableRow {
             cursor: pointer;
         }
-        
+
         table {
             font-family: arial, sans-serif;
             border-collapse: collapse;
             width: 100%;
             background-color: #dddddd;
         }
-        
+
         td,
         th {
             border: 1px solid #dddddd;
@@ -30,23 +32,23 @@
             padding: 8px;
             background-color: white;
         }
-        
+
         tr:nth-child(even) {
             background-color: #dddddd;
         }
-        
+
         td:hover {
             background-color: #007bff;
         }
-        
+
         .alpha {
             color: black;
         }
-        
+
         .jumbotheelephant {
             margin-top: 2rem;
         }
-        
+
         .patient_row {
             border: 2px solid #007bff;
             padding: 8px;
@@ -64,9 +66,10 @@
 
 
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <% if(!currentUser){ %>
@@ -80,12 +83,12 @@
 </nav>
 
 <div class="container">
-    <% if(error && error.length > 0){ %>
+    <% if(error && error.length> 0){ %>
         <div class="alert alert-danger" role "alert">
             <%= error %>
         </div>
         <% } %>
-            <% if(success && success.length > 0){ %>
+            <% if(success && success.length> 0){ %>
                 <div class="alert alert-success" role "alert">
                     <%= success %>
                 </div>
