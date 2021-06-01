@@ -4,23 +4,32 @@ var mongoose = require("mongoose");
 
 //schema setup
 var patientSchema = new mongoose.Schema({
-    firstName: String,
-    lastName: String,
+    firstName: {
+        type: String,
+        required: [true]
+    },
+    patientAM: {
+        type: String,
+        required: true,
+    },
+    lastName: {
+        type: String,
+        required: [true]
+    },
+    patronym: {
+        type: String,
+        required: [true, 'Why no father name?']
+    },
+    weight: { type: Number, default: 0 },
+    height: { type: Number, default: 0 },
     birthday: { type: Date },
     mPhone: Number,
     sPhone: Number,
     city: String,
     address: String,
     bloodType: String,
-    allergies: Boolean,
-    diabetes: Boolean,
-    asthma: Boolean,
     doc: String,
     general: String,
-    alerg1: String,
-    alerg2: String,
-    alerg1_text: String,
-    alerg2_text: String,
     upFile: {
         id: String,
         info: { Object }
@@ -33,8 +42,7 @@ var patientSchema = new mongoose.Schema({
         },
         username: String
     },
-    diagnoses: [
-        {
+    diagnoses: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: "Diagnose"
         }

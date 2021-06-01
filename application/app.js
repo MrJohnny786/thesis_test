@@ -8,7 +8,6 @@ var express = require("express"),
     //Patient    = require("./models/patient"),
     //Diagnose = require("./models/diagnose"),
     //Treatment = require("./models/treatment"),
-    //Calendar = require("./models/calendar"),
     methodOverride = require('method-override'),
     User = require('./models/user'),
     path = require('path'),
@@ -54,7 +53,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
     res.locals.currentUser = req.user;
     res.locals.error = req.flash("error");
     res.locals.success = req.flash("success");
@@ -81,4 +80,3 @@ app.listen(port, hostname, () => {
 // app.listen(process.env.PORT, process.env.IP, function(){
 //     console.log("Started");
 // });
-
