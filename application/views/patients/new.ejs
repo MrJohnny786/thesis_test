@@ -7,7 +7,6 @@
         </ol>
     </nav>
 
-
     <div class="container">
         <div class="row">
             <div class="col-sm">
@@ -120,10 +119,14 @@
                         <div class="col-sm-5">
                             <select class="btn btn-secondary dropdown-toggle" class="doc" data-style="btn-info" name="doc">
                 <optgroup label="Select Table">
-                  <option name="-" value="-">-</option>
-                  <option name="Γεωργιαδη" value="Γεωργιαδη">Γεωργιαδη</option>
+                    <% for(var i=0; i<doctors.length; i++) {%>
+                        <% fullname = doctors[i].surname +' '+ doctors[i].name %>
+                        <option name="doctor" value=" <%= fullname%> "><%= fullname%></option>
+                    <% } %>
+                  <!-- <option name="-" value="-">-</option> -->
+                  <!-- <option name="Γεωργιαδη" value="Γεωργιαδη">Γεωργιαδη</option>
                   <option name="Αλεφραγκης" value="Αλεφραγκης">Αλεφραγκης</option>
-                  <option name="Ζαχαρακης" value="Ζαχαρακης">Ζαχαρακης</option>
+                  <option name="Ζαχαρακης" value="Ζαχαρακης">Ζαχαρακης</option> -->
                 </optgroup>
               </select>
                         </div>

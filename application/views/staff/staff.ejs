@@ -1,0 +1,59 @@
+<% include ../partials/header %>
+    <div class="container jumbotheelephant ">
+        <form>
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                    <label class="sr-only" for="name">Ονομα</label>
+                    <input type="text" class="form-control mb-2" id="name" name="name" placeholder="Ονομα">
+                </div>
+                <div class="col-auto">
+                    <label class="sr-only" for="surname">Επωνυμο</label>
+                    <input type="text" class="form-control mb-2" id="surname" name="surname" placeholder="Επωνυμο">
+                </div>
+                <div class="col-auto">
+                    <label class="sr-only" for="role">Ρολος</label>
+                    <select class="custom-select my-1 mr-sm-2" name="role" id="role">
+                        <option selected>Ρολος</option>
+                        <option value="Γιατρος">Γιατρος</option>
+                        <option value="Νοσηλευτης">Νοσηλευτης</option>
+                        <option value="Αλλο">Αλλο</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <label class="sr-only" for="description">Προσθετα</label>
+                    <input type="text" name="description" class="form-control mb-2 " id="description" placeholder="Επιπλεον στοιχεια">
+                </div>
+
+
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary mb-2 addbtn">Αποθηκευση</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <br>
+
+    <div class="container">
+        <div class="row">
+          <div class="col-sm">
+            <ul class="list-group docs">
+                <li class="list-group-item active">Γιατροι</li>
+              </ul>
+          </div>
+          <div class="col-sm">
+            <ul class="list-group">
+                <li class="list-group-item active">Νοσηλευτες</li>
+
+              </ul>
+          </div>
+          <div class="col-sm">
+            <ul class="list-group">
+                <li class="list-group-item active">Προσωπικο</li>
+              </ul>
+          </div>
+        </div>
+      </div>
+
+
+    <% include ../partials/footer %>

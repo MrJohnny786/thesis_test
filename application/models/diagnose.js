@@ -1,10 +1,11 @@
 var mongoose = require("mongoose");
 
-var diagnoseSchema = mongoose.Schema({
+var diagnoseSchema = mongoose.Schema({ // change the name to  ανοσοθεραπεια
+    courseOfTreatment: String,
     general: String,
-    disease: String,
     doc: String,
     date: { type: Date },
+    endDate: { type: Date },
     createdAt: { type: Date, default: Date.now },
     alpha: {
         id: {

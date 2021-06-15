@@ -26,7 +26,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
             console.log(err);
             res.redirect("/patients");
         } else {
-            console.log(req.body.diagnose);
+            // console.log(req.body.diagnose);
             Diagnose.create(req.body.diagnose, function(err, diagnose) {
                 if (err) {
                     req.flash("error", "Δημιουργηθηκε καποιο προβλημα")

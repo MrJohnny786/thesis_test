@@ -11,7 +11,7 @@ var express = require("express"),
     methodOverride = require('method-override'),
     User = require('./models/user'),
     path = require('path'),
-    seedDB = require("./seeds");
+    seedDB = require("./seed2");
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -19,11 +19,13 @@ const port = 3000;
 var patientRoutes = require("./routes/patients"),
     diagnoseRoutes = require("./routes/diagnoses"),
     treatmentRoutes = require("./routes/treatments"),
+    staffRoutes = require("./routes/staff"),
     indexRoutes = require("./routes/index");
 
 // WHENEVER I GIT PUSH CHANGE MONGOOSE CONNECT !!!!!!!!!!!!!!!!!
 mongoose.connect("mongodb://localhost/hospital");
 const mongoURI = 'mongodb://localhost/hospital';
+
 
 // To use the new parser, pass option { useNewUrlParser: true } to MongoClient.connect.
 
@@ -32,18 +34,22 @@ const mongoURI = 'mongodb://localhost/hospital';
 
 //mongodb://<john>:<kalamata1>@ds233541.mlab.com:33541/hospital
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '/public')));
+// app.use(express.static(path.join(__dirname).replace(/\\/g, '/') + '/public'));
+// console.log(path.join(__dirname).replace(/\\/g, '/') + '/public');
 app.set("view engine", "ejs");
-//app.use(express.static('./views/public'));
-app.use(express.static(__dirname + '/public'));
-//app.use(express.static(__dirname + "/public"));
+
+
 app.use(methodOverride("_method"));
 app.use(flash());
-//seedDB();
+// seedDB();
+
 app.use(require("express-session")({
     secret: "MrJohnny786",
     resave: false,
     saveUninitialized: false
 }));
+
 
 app.locals.moment = require('moment');
 app.use(passport.initialize());
@@ -61,11 +67,14 @@ app.use(function(req, res, next) {
 });
 
 
+
+
+
 app.use("/patients", patientRoutes);
 app.use("/patients/:id/diagnoses", diagnoseRoutes);
 app.use("/patients/:id/diagnoses/:diagnose_1/treatments", treatmentRoutes);
 app.use("/", indexRoutes);
-console.log('lmao')
+app.use("/staff", staffRoutes)
 process.on('unhandledRejection', (reason, p) => {
     console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
     // application specific logging, throwing an error, or other logic here

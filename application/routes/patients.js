@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 var Patient = require("../models/patient");
+var Staff = require("../models/staff");
+
 var middleware = require('../middleware');
 var multer = require('multer');
 var path = require('path');
@@ -145,7 +147,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
         bloodType: bloodType,
         doc: doc,
     };
-    console.log(newPatient)
+    // console.log(newPatient)
 
     Patient.create(newPatient, function(err, newlyCreated) {
         if (err) {
@@ -164,7 +166,14 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
 
 
 router.get("/new", middleware.isLoggedIn, function(req, res) {
-    res.render("patients/new.ejs");
+    Staff.find({"role": "Γιατρος"}, function(err, allStaff) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("patients/new.ejs", { doctors: allStaff });
+        }
+    });
+    // res.render("patients/new.ejs");
 });
 
 // Upload logic  *Careful redirect logic has been implemented which is not the best , needs refactoring
@@ -202,8 +211,14 @@ router.get("/:id", function(req, res) {
 // Edit Route
 router.get("/:id/edit", middleware.checkPatientOwnership, function(req, res) {
     Patient.findById(req.params.id, function(err, foundPatient) {
-        //console.log(req.params.id)
-        res.render("patients/edit", { p_id: req.params.id, patient: foundPatient });
+        Staff.find({"role": "Γιατρος"}, function(err, allStaff) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render("patients/edit", { p_id: req.params.id, patient: foundPatient, doctors:allStaff });
+            }
+        });
+        //console.log(req.params.id) 
     });
 });
 

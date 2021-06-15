@@ -123,9 +123,10 @@
                     <%= patient.doc %>
                   </option>
                   <option name="-" value="-">-</option>
-                  <option name="Γεωργιαδη" value="Γεωργιαδη">Γεωργιαδη</option>
-                  <option name="Αλεφραγκης" value="Αλεφραγκης">Αλεφραγκης</option>
-                  <option name="Ζαχαρακης" value="Ζαχαρακης">Ζαχαρακης</option>
+                  <% for(var i=0; i<doctors.length; i++) {%>
+                    <% fullname = doctors[i].surname +' '+ doctors[i].name %>
+                    <option name="doctor" value=" <%= fullname%> "><%= fullname%></option>
+                <% } %>
                 </optgroup>
               </select>
                         </div>
