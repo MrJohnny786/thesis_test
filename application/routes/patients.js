@@ -108,6 +108,16 @@ router.get("/", function(req, res) {
 
 });
 
+router.get('/getpatients', middleware.isLoggedIn, (req, res) => {
+    Patient.find({}, (err, patientData) => {
+        if (err) {
+            res.json({ msg: 'error' });
+        } else {
+            res.json({ msg: 'success', data: patientData });
+        }
+    });
+});
+
 // Create new Patient
 router.post("/", middleware.isLoggedIn, function(req, res) {
     var firstName = req.body.firstName;
@@ -166,7 +176,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
 
 
 router.get("/new", middleware.isLoggedIn, function(req, res) {
-    Staff.find({"role": "Γιατρος"}, function(err, allStaff) {
+    Staff.find({ "role": "Γιατρος" }, function(err, allStaff) {
         if (err) {
             console.log(err);
         } else {
@@ -211,11 +221,11 @@ router.get("/:id", function(req, res) {
 // Edit Route
 router.get("/:id/edit", middleware.checkPatientOwnership, function(req, res) {
     Patient.findById(req.params.id, function(err, foundPatient) {
-        Staff.find({"role": "Γιατρος"}, function(err, allStaff) {
+        Staff.find({ "role": "Γιατρος" }, function(err, allStaff) {
             if (err) {
                 console.log(err);
             } else {
-                res.render("patients/edit", { p_id: req.params.id, patient: foundPatient, doctors:allStaff });
+                res.render("patients/edit", { p_id: req.params.id, patient: foundPatient, doctors: allStaff });
             }
         });
         //console.log(req.params.id) 

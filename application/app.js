@@ -20,11 +20,28 @@ var patientRoutes = require("./routes/patients"),
     diagnoseRoutes = require("./routes/diagnoses"),
     treatmentRoutes = require("./routes/treatments"),
     staffRoutes = require("./routes/staff"),
+    effectRoutes = require("./routes/effects"),
     indexRoutes = require("./routes/index");
 
 // WHENEVER I GIT PUSH CHANGE MONGOOSE CONNECT !!!!!!!!!!!!!!!!!
-mongoose.connect("mongodb://localhost/hospital");
+
 const mongoURI = 'mongodb://localhost/hospital';
+// heroku config:set MONGODB_URI='mongodb+srv://mrjohnny786:<password>@patientsdata.c79pi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const ONLINEMONGODB_URI = 'mongodb+srv://mrjohnny786:kalamata1a@patientsdata.c79pi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+
+mongoose.connect(ONLINEMONGODB_URI);
+
+
+// const MongoClient = require('mongodb').MongoClient;
+// const uri = "mongodb+srv://mrjohnny786:<password>@patientsdata.c79pi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+// client.connect(err => {
+//   const collection = client.db("test").collection("devices");
+//   // perform actions on the collection object
+//   client.close();
+// });
+
+
 
 
 // To use the new parser, pass option { useNewUrlParser: true } to MongoClient.connect.
@@ -75,15 +92,18 @@ app.use("/patients/:id/diagnoses", diagnoseRoutes);
 app.use("/patients/:id/diagnoses/:diagnose_1/treatments", treatmentRoutes);
 app.use("/", indexRoutes);
 app.use("/staff", staffRoutes)
+app.use("/patients/:id/diagnoses/:diagnose_1/treatments/:treatment_id/effects", effectRoutes)
 process.on('unhandledRejection', (reason, p) => {
     console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
     // application specific logging, throwing an error, or other logic here
 });
 // listen for request on port 3000, and as a callback function have the port listened on logged
 // "C:\Program Files\MongoDB\Server\4.0\bin\mongo.exe"
-app.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
+
+
+// app.listen(port, hostname, () => {
+//     console.log(`Server running at http://${hostname}:${port}/`);
+// });
 
 
 // app.listen(process.env.PORT, process.env.IP, function(){

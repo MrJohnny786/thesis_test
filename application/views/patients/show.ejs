@@ -148,7 +148,7 @@
                                     <tr>
                                         <th scope="col">Αριθμος Ασθενειας :</th>
                                         <th scope="col">Ημ/νια Διάγνωσης :</th>
-                                        <th scope="col">Ασθένεια :</th>
+                                        <th scope="col">ΦΑΡΜΑΚΑ (ΟΔΗΓΙΕΣ - ΟΔΟΣ ΧΟΡΗΓΗΣΕΩΣ) :</th>
                                         <th scope="col">Γιατρος :</th>
                                         <th scope="col">Δημιουργηθηκε :</th>
                                     </tr>
@@ -170,7 +170,7 @@
                                                     </td>
                                                     <td>
                                                         <a class="alpha" href="/patients/<%= patient._id %>/diagnoses/<%= diagnose._id %>">
-                                                            <%= diagnose.disease %>
+                                                            <%= diagnose.courseOfTreatment %>
                                                     </td>
                                                     <td>
                                                         <a class="alpha" href="/patients/<%= patient._id %>/diagnoses/<%= diagnose._id %>">

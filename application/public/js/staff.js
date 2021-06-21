@@ -64,15 +64,14 @@ $(document).ready(function() {
                     } else {
                         // $('.tblData').show();
                         $.each(response.data, function(index, data) {
-                            console.log(1)
                             var url = url + data._id;
                             index += 1;
-                            if(data.role == 'Γιατρος'){
-                                $('body > div:nth-child(5) > div > div:nth-child(1) > ul').append('<li class="list-group-item doctor">'+ data.name +' '+ data.surname + '<button type="button" class="btn-sm btn-outline-danger float-right del" value='+data._id+'>X</button></li>');
-                            }else if(data.role == 'Νοσηλευτης'){
-                                $('body > div:nth-child(5) > div > div:nth-child(2) > ul').append('<li class="list-group-item nurse">'+ data.name +' '+ data.surname + ' <button type="button" class="btn-sm btn-outline-danger float-right del" value='+data._id+'>X</button></li>');
-                            }else{
-                                $('body > div:nth-child(5) > div > div:nth-child(3) > ul').append('<li class="list-group-item other">'+ data.name +' '+ data.surname + ' <button type="button" class="btn-sm btn-outline-danger float-right del" value='+data._id+'>X</button></li>');
+                            if (data.role == 'Γιατρος') {
+                                $('body > div:nth-child(5) > div > div:nth-child(1) > ul').append('<li class="list-group-item doctor">' + data.name + ' ' + data.surname + '<button type="button" class="btn-sm btn-outline-danger float-right del" value=' + data._id + '>X</button></li>');
+                            } else if (data.role == 'Νοσηλευτης') {
+                                $('body > div:nth-child(5) > div > div:nth-child(2) > ul').append('<li class="list-group-item nurse">' + data.name + ' ' + data.surname + ' <button type="button" class="btn-sm btn-outline-danger float-right del" value=' + data._id + '>X</button></li>');
+                            } else {
+                                $('body > div:nth-child(5) > div > div:nth-child(3) > ul').append('<li class="list-group-item other">' + data.name + ' ' + data.surname + ' <button type="button" class="btn-sm btn-outline-danger float-right del" value=' + data._id + '>X</button></li>');
                             }
                         });
                     }
@@ -85,5 +84,3 @@ $(document).ready(function() {
         });
     }
 });
-
-

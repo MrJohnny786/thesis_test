@@ -1,19 +1,32 @@
 var mongoose = require("mongoose");
 
 var treatmentSchema = mongoose.Schema({
-    number: Number,
-    disease: String,
     date: { type: Date },
-    doc: String,
-    general: String,
+    mg: Number,
+    numOfDose: String,
+    numOfApproval: String,
+    staff: String,
+    status: String,
+    observation: String,
     createdAt: { type: Date, default: Date.now },
+    // responsible: {
+    //     id: {
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         ref: "Staff"
+    //     },
+    //     surname: String
+    // },
     beta: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
         username: String
-    }
+    },
+    effects: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Effect"
+    }]
 
 })
 

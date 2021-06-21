@@ -8,9 +8,7 @@ router.get('/', (req, res) => {
     res.render('staff/staff');
 });
 
-router.post('/addstaff',(req,res)=>{
-    console.log('post handler')
-    console.log(req.body, req.body.data)
+router.post('/addstaff', (req, res) => {
     var newStaff = {
         name: req.body.data.name,
         surname: req.body.data.surname,
@@ -18,22 +16,21 @@ router.post('/addstaff',(req,res)=>{
         description: req.body.data.description,
     };
     Staff.create(newStaff, function(err) {
-        if(err){
-            res.json({msg:'error'});
-        }else{
-            res.json({msg:'success'});
+        if (err) {
+            res.json({ msg: 'error' });
+        } else {
+            res.json({ msg: 'success' });
         }
     });
 });
 
 //Destroy Patient
 router.delete("/removestaff", function(req, res) {
-    console.log(req.body.id)
     Staff.findByIdAndRemove(req.body.id, function(err) {
-        if(err){
-            res.json({msg:'error'});
-        }else{
-            res.json({msg:'success'});
+        if (err) {
+            res.json({ msg: 'error' });
+        } else {
+            res.json({ msg: 'success' });
         }
     });
 });

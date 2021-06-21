@@ -5,19 +5,35 @@ var Patient = require("../models/patient")
 var Diagnose = require("../models/diagnose")
 var Treatment = require("../models/treatment");
 var middleware = require('../middleware');
+var Staff = require("../models/staff");
+
 
 
 router.get("/new", middleware.isLoggedIn, function(req, res) {
     // find patient by id
     Patient.findById(req.params.id, function(err, patient) {
-        console.log(patient);
+        Staff.find({ "role": "Γιατρος" }, function(err, findDoctors) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render("diagnoses/new", { patient: patient, doctors: findDoctors });
+            }
+        });
+    });
+});
+
+router.get('/getdiagnoses', middleware.isLoggedIn, (req, res) => {
+    Patient.find({}, (err, diagnoseData) => {
         if (err) {
-            console.log(err);
+            res.json({ msg: 'error' });
         } else {
-            res.render("diagnoses/new", { patient: patient });
+            res.json({ msg: 'success', data: diagnoseData });
         }
     });
 });
+
+
+
 
 router.post("/", middleware.isLoggedIn, function(req, res) {
     //lookup patient using ID
@@ -61,13 +77,16 @@ router.get("/:diagnose_id", function(req, res) {
 //Edit Diagnose Route
 router.get("/:diagnose_id/edit", middleware.checkDiagnoseOwnership, function(req, res) {
     Diagnose.findById(req.params.diagnose_id, function(err, foundDiagnose) {
-        if (err) {
-            res.redirect("/patients");
-        } else {
-            res.render("diagnoses/edit", { patient_id: req.params.id, diagnose: foundDiagnose });
-        }
+        Staff.find({ "role": "Γιατρος" }, function(err, findDoctors) {
+            if (err) {
+                res.redirect("/patients");
+            } else {
+                res.render("diagnoses/edit", { patient_id: req.params.id, diagnose: foundDiagnose, doctors: findDoctors });
+            }
+        });
     });
 });
+
 
 // Update Diagnose Route
 router.put("/:diagnose_id", middleware.checkDiagnoseOwnership, function(req, res) {
