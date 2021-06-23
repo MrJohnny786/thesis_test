@@ -110,3 +110,5 @@ process.on('unhandledRejection', (reason, p) => {
 // app.listen(process.env.PORT, process.env.IP, function(){
 //     console.log("Started");
 // });
+
+app.listen(process.env.PORT || 5000)
