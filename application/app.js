@@ -87,6 +87,7 @@ app.use(function(req, res, next) {
 
 
 
+
 app.use("/patients", patientRoutes);
 app.use("/patients/:id/diagnoses", diagnoseRoutes);
 app.use("/patients/:id/diagnoses/:diagnose_1/treatments", treatmentRoutes);
