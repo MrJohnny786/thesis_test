@@ -8,3 +8,5 @@ sc.exe create MongoDB binPath= "\"C:\Program Files\MongoDB 2.6 Standard Legacy\b
 
 // Manually mongodb Start
 "C:\Program Files\MongoDB\Server\4.0\bin\mongod.exe" --dbpath="C:\data\db"
+
+heroku logs --tail

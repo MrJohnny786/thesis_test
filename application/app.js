@@ -27,7 +27,7 @@ var patientRoutes = require("./routes/patients"),
 
 const mongoURI = 'mongodb://localhost/hospital';
 // heroku config:set MONGODB_URI='mongodb+srv://mrjohnny786:<password>@patientsdata.c79pi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
-const ONLINEMONGODB_URI = 'mongodb+srv://mrjohnny786:kalamata1a@patientsdata.c79pi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const ONLINEMONGODB_URI = 'mongodb+srv://mrjohnny786:kalamata1a@patientsdata.c79pi.mongodb.net/PatientsData?retryWrites=true&w=majority';
 
 mongoose.connect(ONLINEMONGODB_URI);
 
