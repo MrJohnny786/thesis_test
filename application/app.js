@@ -32,14 +32,14 @@ const ONLINEMONGODB_URI = 'mongodb+srv://mrjohnny786:kalamata1a@patientsdata.c79
 mongoose.connect(ONLINEMONGODB_URI);
 
 
-// const MongoClient = require('mongodb').MongoClient;
-// const uri = "mongodb+srv://mrjohnny786:<password>@patientsdata.c79pi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-// client.connect(err => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   client.close();
-// });
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://mrjohnny786:kalamata1a@patientsdata.c79pi.mongodb.net/PatientsData?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+client.connect(err => {
+    //   const collection = client.db("test").collection("devices");
+    // perform actions on the collection object
+    client.close();
+});
 
 
 
