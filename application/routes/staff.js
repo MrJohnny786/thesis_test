@@ -9,11 +9,18 @@ router.get('/', (req, res) => {
 });
 
 router.post('/addstaff', (req, res) => {
+    var author = {
+        id: req.user._id,
+        username: req.user.username,
+        timeAdded: new Date().toLocaleString()
+    }
     var newStaff = {
         name: req.body.data.name,
         surname: req.body.data.surname,
         role: req.body.data.role,
         description: req.body.data.description,
+        information: author
+        
     };
     Staff.create(newStaff, function(err) {
         if (err) {

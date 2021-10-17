@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-var effectsSchema = mongoose.Schema({
+var effectsSchema = new mongoose.Schema({
     stomach_bowel: {
         baseName: String,
         effects: {
@@ -39,10 +39,6 @@ var effectsSchema = mongoose.Schema({
                 required: true,
                 default: false
             },
-            other: {
-                type: String,
-                default: '-',
-            },
         },
     },
     lungs: {
@@ -67,10 +63,6 @@ var effectsSchema = mongoose.Schema({
                 type: Boolean,
                 required: true,
                 default: false
-            },
-            other: {
-                type: String,
-                default: '-',
             },
         },
     },
@@ -102,10 +94,6 @@ var effectsSchema = mongoose.Schema({
                 required: true,
                 default: false
             },
-            other: {
-                type: String,
-                default: '-',
-            },
         },
     },
     muscle: {
@@ -125,11 +113,6 @@ var effectsSchema = mongoose.Schema({
                 type: Boolean,
                 required: true,
                 default: false
-            },
-            other: {
-                type: String,
-                name: 'Αλλο',
-                default: '-',
             },
         },
     },
@@ -170,10 +153,6 @@ var effectsSchema = mongoose.Schema({
                 type: Boolean,
                 required: true,
                 default: false
-            },
-            other: {
-                type: String,
-                default: '-',
             },
         },
     },
@@ -219,10 +198,6 @@ var effectsSchema = mongoose.Schema({
                 type: Boolean,
                 required: true,
                 default: false
-            },
-            other: {
-                type: String,
-                default: '-',
             },
         },
     },

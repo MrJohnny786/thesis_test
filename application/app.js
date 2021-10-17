@@ -65,7 +65,7 @@ app.use("/patients/:id/diagnoses", diagnoseRoutes);
 app.use("/patients/:id/diagnoses/:diagnose_1/treatments", treatmentRoutes);
 app.use("/", indexRoutes);
 app.use("/staff", staffRoutes)
-app.use("/patients/:id/diagnoses/:diagnose_1/treatments/:treatment_id/effects", effectRoutes)
+app.use("/effects", effectRoutes)
 
 //APP LISTENING
 app.listen(port, hostname, () => {

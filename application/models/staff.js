@@ -5,6 +5,14 @@ var staffSchema = new mongoose.Schema({
     surname: String,
     role: String,
     description: String,
+    information: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        username: String,
+        timeAdded: String,
+    },
 });
 
 module.exports = mongoose.model("Staff", staffSchema);
