@@ -14,9 +14,9 @@
         </script>
    <% } %> -->
 
-   <input type="hidden" id="patient" value="<%= patient_id %>" />
-   <input type="hidden" id="diagnose" value="<%= diagnose_id %>" />
-   <input type="hidden" id="treatment" value="<%= treatment._id %>" />
+    <input type="hidden" id="patient" value="<%= patient_id %>" />
+    <input type="hidden" id="diagnose" value="<%= diagnose_id %>" />
+    <input type="hidden" id="treatment" value="<%= treatment._id %>" />
 
 
     <div>
@@ -99,13 +99,13 @@
         <h1 class="text-center">Παρενεργειες
     </div>
 
+    <div class="container myc">
+        <div class="row mygrid">
+            <!-- js code added here via sideeffects.js -->
+        </div>
+    </div>
 
-    <p>Date: <input type="text" id="datepicker"></p>
 
-    
-
-
-    <p id="pdata"><%= effects %></p>
     <div class="container-fluid">
         <div id='effectsForm'>
             <form id='formEffects'>
@@ -114,30 +114,46 @@
                 <div class="row">
                     <% for (const [key, value] of Object.entries(effects)) { %>
 
-                        <div class="col-sm">
+                        <div class="col-sm mt-2">
                             <ul class="list-group docs">
 
                                 <li class="list-group-item active">
                                     <%= value.baseName %>
                                 </li>
                                 <% for (const [key1, value1] of Object.entries(value.effects)) { %>
+
                                     <li class="list-group-item ">
-                                        <input type="checkbox" id='<%= key1 %>' name='<%= key1 %>' class="btn-check checkers" !checked /><%= value1.name %>
-                                        <br>
-                                        
+                                        <input type="checkbox" id='<%= key1 %>' name='<%= key1 %>' class="btn-check checkers" !checked />
+                                        <%= value1.name %>
+                                            <!-- <input type="checkbox" class="btn-check" id='<%= key1 %>' name='<%= key1 %>' !checked autocomplete="off">
+                                        <label class="btn btn-primary" for='<%= key1 %>'><%= value1.name %></label> -->
+                                            <!-- <br> -->
+
                                     </li>
                                     <% } %>
 
                             </ul>
                         </div>
+
                         <% } %>
-                        <div class="col-auto">
-                            <button type="submit" class="addbtn1 btn btn-primary mb-2">Αποθηκευση</button>
-                        </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm col-form-label" for="colFormLabel">Ημερομηνία :</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control effectdate " id="colFormLabel" name="datep" placeholder="Ημερομηνία">
+                                </div>
+                            </div>
+
+                            <!-- <p>Date: <input type="text" id="datepicker" class='effectdate'></p>  2nd way with datepicker-->
+                            <div class="col-sm-10">
+                                <button type="submit" class="addbtn1 btn btn-primary mb-2">Αποθηκευση</button>
+                            </div>
                 </div>
 
             </form>
         </div>
+
+
 
         <button type="submit" class="btn btn-info showForm">Προσθηκη φορμας παρενεργειων</button>
     </div>

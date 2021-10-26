@@ -7,7 +7,7 @@ var effectsSchema = new mongoose.Schema({
             stomachache: {
                 type: Boolean,
                 required: true,
-                default: false
+                default: false,
             },
             cramps: {
                 type: Boolean,
@@ -74,7 +74,7 @@ var effectsSchema = new mongoose.Schema({
                 required: true,
                 default: false
             },
-            itch: {
+            itch_skin: {
                 type: Boolean,
                 required: true,
                 default: false
@@ -89,7 +89,7 @@ var effectsSchema = new mongoose.Schema({
                 required: true,
                 default: false
             },
-            sensitivityToLight: {
+            sensitivityToLightSkin: {
                 type: Boolean,
                 required: true,
                 default: false
@@ -119,7 +119,7 @@ var effectsSchema = new mongoose.Schema({
     eyesight: {
         baseName: String,
         effects: {
-            burn_pain: {
+            burn_pain_eye: {
                 type: Boolean,
                 required: true,
                 default: false
@@ -144,7 +144,7 @@ var effectsSchema = new mongoose.Schema({
                 required: true,
                 default: false
             },
-            itch: {
+            itch_eye: {
                 type: Boolean,
                 required: true,
                 default: false
@@ -164,11 +164,6 @@ var effectsSchema = new mongoose.Schema({
                 required: true,
                 default: false
             },
-            red_eyes: {
-                type: Boolean,
-                required: true,
-                default: false
-            },
             cloudy_eyesight: {
                 type: Boolean,
                 required: true,
@@ -179,26 +174,16 @@ var effectsSchema = new mongoose.Schema({
                 required: true,
                 default: false
             },
-            irritation_eyes: {
+            itch_p: {
                 type: Boolean,
                 required: true,
                 default: false
             },
-            itch: {
+            nauseus_fainting: {
                 type: Boolean,
                 required: true,
                 default: false
-            },
-            sensitivityToLight: {
-                type: Boolean,
-                required: true,
-                default: false
-            },
-            sensitivityToLight: {
-                type: Boolean,
-                required: true,
-                default: false
-            },
+            }
         },
     },
     date: { type: Date },

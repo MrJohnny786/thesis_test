@@ -43,11 +43,6 @@
                 "name": "Διαρροια",
                 "required": true,
                 "default": false
-            },
-            "other": {
-                "type": "String",
-                "name": "Αλλο",
-                "default": "-"
             }
         }
     },
@@ -77,11 +72,6 @@
                 "name": "Δύσπνοια",
                 "required": true,
                 "default": false
-            },
-            "other": {
-                "type": "String",
-                "name": "Αλλο",
-                "default": "-"
             }
         }
     },
@@ -94,7 +84,7 @@
                 "required": true,
                 "default": false
             },
-            "itch": {
+            "itch_skin": {
                 "type": "Boolean",
                 "name": "Φαγούρα",
                 "required": true,
@@ -112,16 +102,11 @@
                 "required": true,
                 "default": false
             },
-            "sensitivityToLight": {
+            "sensitivityToLightSkin": {
                 "type": "Boolean",
                 "name": "Ευαισθησια στο ηλιακο φως",
                 "required": true,
                 "default": false
-            },
-            "other": {
-                "type": "String",
-                "name": "Αλλο",
-                "default": "-"
             }
         }
     },
@@ -145,11 +130,6 @@
                 "name": "Σoβαρη μυικη αδυναμια/εξαντληση",
                 "required": true,
                 "default": false
-            },
-            "other": {
-                "type": "String",
-                "name": "Αλλο",
-                "default": "-"
             }
         }
     },
@@ -186,7 +166,7 @@
                 "required": true,
                 "default": false
             },
-            "itch": {
+            "itch_eye": {
                 "type": "Boolean",
                 "name": "Κνησμο",
                 "required": true,
@@ -197,11 +177,6 @@
                 "name": "Ευαισθησια στο φως",
                 "required": true,
                 "default": false
-            },
-            "other": {
-                "type": "String",
-                "name": "Αλλο",
-                "default": "-"
             }
         }
     },
@@ -211,12 +186,6 @@
             "burn_pain": {
                 "type": "Boolean",
                 "name": "Επιμονη/Ασυνηθιστη κεφαλαλγια",
-                "required": true,
-                "default": false
-            },
-            "red_eyes": {
-                "type": "Boolean",
-                "name": "Υπερβολικη κοπωση",
                 "required": true,
                 "default": false
             },
@@ -232,28 +201,17 @@
                 "required": true,
                 "default": false
             },
-            "irritation_eyes": {
-                "type": "Boolean",
-                "name": "Αυξημενη εφιδρωση",
-                "required": true,
-                "default": false
-            },
-            "itch": {
+            "itch_p": {
                 "type": "Boolean",
                 "name": "Απωλεια μαλλιων",
                 "required": true,
                 "default": false
             },
-            "sensitivityToLight": {
+            "nauseus_fainting": {
                 "type": "Boolean",
                 "name": "Ναυτια / λιποθυμικη ταση",
                 "required": true,
                 "default": false
-            },
-            "other": {
-                "type": "String",
-                "name": "Αλλο",
-                "default": "-"
             }
         }
     }

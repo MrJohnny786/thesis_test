@@ -30,7 +30,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
     //lookup patient using ID
 
     Patient.findById(req.params.id, function(err, patient) {
-        console.log(req.params.id);
+        // console.log(req.params.id);
         if (err) {
             console.log(err);
             res.redirect("/patients");
