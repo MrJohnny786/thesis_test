@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/addstaff', (req, res) => {
+    console.log(req.user)
     var author = {
         id: req.user._id,
         username: req.user.username,
@@ -20,7 +21,7 @@ router.post('/addstaff', (req, res) => {
         role: req.body.data.role,
         description: req.body.data.description,
         information: author
-        
+
     };
     Staff.create(newStaff, function(err) {
         if (err) {

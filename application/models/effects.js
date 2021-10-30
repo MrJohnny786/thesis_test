@@ -159,22 +159,32 @@ var effectsSchema = new mongoose.Schema({
     pancreas: {
         baseName: String,
         effects: {
-            burn_pain: {
+            headache_p: {
                 type: Boolean,
                 required: true,
                 default: false
             },
-            cloudy_eyesight: {
+            exhastion: {
                 type: Boolean,
                 required: true,
                 default: false
             },
-            discharge: {
+            weight_fluctuation: {
                 type: Boolean,
                 required: true,
                 default: false
             },
-            itch_p: {
+            tachycardia: {
+                type: Boolean,
+                required: true,
+                default: false
+            },
+            hair_loss: {
+                type: Boolean,
+                required: true,
+                default: false
+            },
+            constipation: {
                 type: Boolean,
                 required: true,
                 default: false
@@ -187,6 +197,9 @@ var effectsSchema = new mongoose.Schema({
         },
     },
     date: { type: Date },
+    patient_id: String,
+    diagnose_id: String,
+    treatment_id: String,
     createdAt: { type: Date, default: Date.now },
     user: {
         id: {

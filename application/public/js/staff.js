@@ -1,7 +1,9 @@
 $(document).ready(function() {
     // alert('application started');
 
-    getdata();
+    // getdata();
+
+
 
     $('.addbtn').click(function() {
         var staffData = {
@@ -17,6 +19,7 @@ $(document).ready(function() {
             data: { 'data': staffData },
             success: function(response) {
                 if (response.msg == 'success') {
+                    console.log('done')
                     getdata();
                 } else {
                     alert('some error occurred try again');
@@ -62,6 +65,7 @@ $(document).ready(function() {
                     if (response.data == undefined || response.data == null || response.data == '') {
                         console.log('no data found')
                     } else {
+
                         // $('.tblData').show();
                         $.each(response.data, function(index, data) {
                             var url = url + data._id;
@@ -83,4 +87,8 @@ $(document).ready(function() {
             }
         });
     }
+    getdata();
+    // $('#showMyStaff').on('load', function() {
+    //     getdata();
+    // });
 });

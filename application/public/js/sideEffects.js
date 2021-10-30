@@ -4,6 +4,8 @@ $(document).ready(function() {
         $('#effectsForm').toggle();
     })
 
+    // $('.$init').hide();
+
     var greekNames = {
         "stomach_bowel": {
             "baseName": "Στομαχι/Εντερο",
@@ -189,27 +191,39 @@ $(document).ready(function() {
         "pancreas": {
             "baseName": "Ενδοκρινεις αδενες/ Παγκρεας",
             "effects": {
-                "burn_pain": {
+                "headache_p": {
                     "type": "Boolean",
                     "name": "Επιμονη/Ασυνηθιστη κεφαλαλγια",
                     "required": true,
                     "default": false
                 },
-                "cloudy_eyesight": {
+                "exhastion": {
+                    "type": "Boolean",
+                    "name": "Υπερκόπωση",
+                    "required": true,
+                    "default": false
+                },
+                "weight_fluctuation": {
                     "type": "Boolean",
                     "name": "Αυξηση/απωλεια βαρους",
                     "required": true,
                     "default": false
                 },
-                "discharge": {
+                "tachycardia": {
                     "type": "Boolean",
                     "name": "Ταχυκαρδια",
                     "required": true,
                     "default": false
                 },
-                "itch_p": {
+                "hair_loss": {
                     "type": "Boolean",
                     "name": "Απωλεια μαλλιων",
+                    "required": true,
+                    "default": false
+                },
+                "constipation": {
+                    "type": "Boolean",
+                    "name": "Δυσκοιλιότητα",
                     "required": true,
                     "default": false
                 },
@@ -223,18 +237,32 @@ $(document).ready(function() {
         }
     }
 
-    function getdata(names) {
+    var idata = {}
+    var p_id = $('#patient').val();
+    var d_id = $('#diagnose').val();
+    var t_id = $('#treatment').val();
+    var e_id = $('#e_id').val();
+
+
+    function getdata(names, t_id) {
         $.ajax({
-            url: '/effects/geteffects',
+            url: '/effects/geteffects/' + t_id,
             method: 'get',
             dataType: 'json',
             success: function(response) {
+                // e.preventDefault();
                 if (response.msg == 'success') {
-                    console.log(response.data, 'response data')
+                    // console.log(response, 'here')
                     $.each(response.data, function(index, data) {
                         // console.log(data)
-                        var daty = data.date.split('T', 1)
-                        $('.mygrid').append('<div class="col-sm-2 mt-2"> <table class="table-responsive-sm "> <thead class="col-sm"> <tr class="col-sm"><th class="col-sm" scope="col">' + daty + '</th> </tr> </thead><tbody class="col-sm addTr' + index + '"></tbody> </div>')
+                        var daty;
+                        if (data.date) {
+                            daty = data.date.split('T', 1)
+                        } else {
+                            daty = '21/10/1996'
+                        }
+
+                        $('.mygrid').append('<div class="col-sm-2 mt-2"> <table class="table-responsive-sm "> <thead class="col-sm"> <tr class="col-sm"><th class="col-sm" scope="col"><a class="btn btn-warning btn-large" href="/effects/' + data._id + '/edit">Επεξεργασία </a></th> </tr> </thead><tbody class="col-sm addTr' + index + '"></tbody> </div>')
 
                         for (const [key, value] of Object.entries(data)) {
                             //console.log('value', value)
@@ -263,10 +291,7 @@ $(document).ready(function() {
     }
 
 
-    var idata = {}
-    var p_id = $('#patient').val();
-    var d_id = $('#diagnose').val();
-    var t_id = $('#treatment').val();
+
     // var datepick = $('.effectdate').val();
     idata['patient'] = p_id;
     idata['diagnose'] = d_id;
@@ -277,17 +302,24 @@ $(document).ready(function() {
         idata[data.name] = true
     }
 
-    function deleteEffect(data) {
-        delete idata[data.name]
+    function removeEffect(data) {
+        idata[data.name] = false
     }
 
     $(".checkers").click(function() {
-        if ($(this).prop("checked") == true) {
-            addEffect(this)
-        } else if ($(this).prop("checked") == false) {
-            deleteEffect(this)
-        }
-    })
+            if ($(this).prop("checked") == true) {
+                addEffect(this)
+            } else if ($(this).prop("checked") == false) {
+                removeEffect(this)
+            }
+        })
+        // $(".checkers", function() {
+        //     if ($(this).prop("checked") == true) {
+        //         addEffect(this)
+        //     } else if ($(this).prop("checked") == false) {
+        //         removeEffect(this)
+        //     }
+        // })
 
 
 
@@ -303,7 +335,7 @@ $(document).ready(function() {
             data: { 'data': idata },
             success: function(response) {
                 if (response.msg == 'success') {
-                    getdata();
+                    getdata(greekNames, t_id);
                 } else {
                     alert('some error occurred try again');
                 }
@@ -313,20 +345,29 @@ $(document).ready(function() {
             }
         });
     });
-    getdata(greekNames);
 
-
-    var disableDates = ["9-11-2021", "14-11-2021", "15-11-2019", "27-12-2021"];
-    $('.datepicker1').datepicker({
-        format: 'dd/mm/yyyy',
-        beforeShowDay: function(date) {
-            dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
-            if (disableDates.indexOf(dmy) != -1) {
-                return false;
-            } else {
-                return true;
+    $('.putbtn').click(function(e) {
+        // e.preventDefault();
+        // var datepick = $('#datepicker').val();
+        // var datepick = $('.effectdate').val();
+        $.ajax({
+            url: '/effects/' + e_id,
+            method: 'PUT',
+            dataType: 'json',
+            data: { 'data': idata },
+            success: function(response) {
+                if (response.msg == 'success') {
+                    getdata(greekNames, t_id);
+                } else {
+                    alert('some error occurred try again');
+                }
+            },
+            error: function(response) {
+                alert('server error occured')
             }
-        }
+        });
     });
+    getdata(greekNames, t_id);
+
 
 });

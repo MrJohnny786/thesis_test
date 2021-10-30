@@ -183,27 +183,39 @@
     "pancreas": {
         "baseName": "Ενδοκρινεις αδενες/ Παγκρεας",
         "effects": {
-            "burn_pain": {
+            "headache_p": {
                 "type": "Boolean",
                 "name": "Επιμονη/Ασυνηθιστη κεφαλαλγια",
                 "required": true,
                 "default": false
             },
-            "cloudy_eyesight": {
+            "exhastion": {
+                "type": "Boolean",
+                "name": "Υπερκόπωση",
+                "required": true,
+                "default": false
+            },
+            "weight_fluctuation": {
                 "type": "Boolean",
                 "name": "Αυξηση/απωλεια βαρους",
                 "required": true,
                 "default": false
             },
-            "discharge": {
+            "tachycardia": {
                 "type": "Boolean",
                 "name": "Ταχυκαρδια",
                 "required": true,
                 "default": false
             },
-            "itch_p": {
+            "hair_loss": {
                 "type": "Boolean",
                 "name": "Απωλεια μαλλιων",
+                "required": true,
+                "default": false
+            },
+            "constipation": {
+                "type": "Boolean",
+                "name": "Δυσκοιλιότητα",
                 "required": true,
                 "default": false
             },
