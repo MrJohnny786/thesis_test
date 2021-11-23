@@ -4,8 +4,6 @@ $(document).ready(function() {
         $('#effectsForm').toggle();
     })
 
-    // $('.$init').hide();
-
     var greekNames = {
         "stomach_bowel": {
             "baseName": "Στομαχι/Εντερο",
@@ -243,7 +241,15 @@ $(document).ready(function() {
     var t_id = $('#treatment').val();
     var e_id = $('#e_id').val();
 
+    idata['patient'] = p_id;
+    idata['diagnose'] = d_id;
+    idata['treatment'] = t_id;
 
+    /**
+     * @param  {} names The whole category object of the side-effects.
+     * @param  {} t_id The treatment id so we can get all the side-effects in our DB.
+     * Creates div for every side effect found of the treatment that we chose.
+     */
     function getdata(names, t_id) {
         $.ajax({
             url: '/effects/geteffects/' + t_id,
@@ -252,25 +258,20 @@ $(document).ready(function() {
             success: function(response) {
                 // e.preventDefault();
                 if (response.msg == 'success') {
-                    // console.log(response, 'here')
                     $.each(response.data, function(index, data) {
-                        // console.log(data)
                         var daty;
                         if (data.date) {
                             daty = data.date.split('T', 1)
                         } else {
                             daty = '21/10/1996'
                         }
-
-                        $('.mygrid').append('<div class="col-sm-2 mt-2"> <table class="table-responsive-sm "> <thead class="col-sm"> <tr class="col-sm"><th class="col-sm" scope="col"><a class="btn btn-warning btn-large" href="/effects/' + data._id + '/edit">Επεξεργασία </a></th> </tr> </thead><tbody class="col-sm addTr' + index + '"></tbody> </div>')
+                        $('.mygrid').append('<div class="col-sm-2 mt-2"> <table class="table-responsive-sm "> <thead class="col-sm"> <tr class="col-sm text-nowrap"><th class="col-sm" scope="col">' + daty + ' <a class="btn btn-sm btn-outline-success " href="/effects/' + data._id + '/edit">Ε</a><a class="btn btn-sm btn-outline-danger deletus" data-id=' + data._id + ' href="/effects/removeEffect">Δ</a></th> </tr> </thead><tbody class="col-sm addTr' + index + '"></tbody> </div>')
 
                         for (const [key, value] of Object.entries(data)) {
-                            //console.log('value', value)
                             if (typeof value === 'object' && value != null && (value.hasOwnProperty("effects"))) {
                                 for (const [key1, value1] of Object.entries(value.effects)) {
                                     if (value1) {
                                         var cc = '.addTr'.concat(index)
-                                            // console.log(key, key1)
                                         $(cc).append('<tr class="col-sm"><td class="col-sm">' + names[key]['effects'][key1]["name"] + '</td></tr>')
                                     } else {
                                         continue;
@@ -291,13 +292,10 @@ $(document).ready(function() {
     }
 
 
-
-    // var datepick = $('.effectdate').val();
-    idata['patient'] = p_id;
-    idata['diagnose'] = d_id;
-    idata['treatment'] = t_id;
-    // idata['date'] = datepick;
-
+    /**
+     * Makes the side-effect of the checkbox's value true.
+     * @param  {} data 
+     */
     function addEffect(data) {
         idata[data.name] = true
     }
@@ -307,25 +305,16 @@ $(document).ready(function() {
     }
 
     $(".checkers").click(function() {
-            if ($(this).prop("checked") == true) {
-                addEffect(this)
-            } else if ($(this).prop("checked") == false) {
-                removeEffect(this)
-            }
-        })
-        // $(".checkers", function() {
-        //     if ($(this).prop("checked") == true) {
-        //         addEffect(this)
-        //     } else if ($(this).prop("checked") == false) {
-        //         removeEffect(this)
-        //     }
-        // })
-
+        if ($(this).prop("checked") == true) {
+            addEffect(this)
+        } else if ($(this).prop("checked") == false) {
+            removeEffect(this)
+        }
+    })
 
 
     $('.addbtn1').click(function(e) {
         // e.preventDefault();
-        // var datepick = $('#datepicker').val();
         var datepick = $('.effectdate').val();
         idata['date'] = datepick;
         $.ajax({
@@ -346,18 +335,17 @@ $(document).ready(function() {
         });
     });
 
+
     $('.putbtn').click(function(e) {
         // e.preventDefault();
-        // var datepick = $('#datepicker').val();
-        // var datepick = $('.effectdate').val();
         $.ajax({
             url: '/effects/' + e_id,
             method: 'PUT',
             dataType: 'json',
             data: { 'data': idata },
             success: function(response) {
-                if (response.msg == 'success') {
-                    getdata(greekNames, t_id);
+                if (response.msg == 'success' && response.redirect == true) {
+                    window.location.href = response.url;
                 } else {
                     alert('some error occurred try again');
                 }
@@ -367,6 +355,30 @@ $(document).ready(function() {
             }
         });
     });
+
+
+    $(document).on('click', 'a.deletus', function(e) {
+        $target = $(e.target);
+        var id = $target.attr('data-id');
+        $.ajax({
+            url: '/effects/removeEffect',
+            method: 'delete',
+            dataType: 'json',
+            data: { 'id': id },
+            success: function(response) {
+                if (response.msg == 'success') {
+                    getdata(greekNames, t_id);
+                    window.location = '/patients/' + p_id + '/diagnoses/' + t_id + '/treatments/' + t_id;
+                } else {
+                    alert('did not get deleted');
+                }
+            },
+            error: function(response) {
+                alert('server error')
+            }
+        });
+    });
+
     getdata(greekNames, t_id);
 
 

@@ -75,7 +75,25 @@ function checkFileType(file, cb) {
     }
 }
 
-// Get all Patients
+/**
+ * Return every Patient in the database.
+ * @param  {} '/getpatients'
+ * @param  {} middleware.isLoggedIn Checks if you are logged in to perform this action.
+ */
+router.get('/getpatients', middleware.isLoggedIn, (req, res) => {
+    Patient.find({}, (err, diagnoseData) => {
+        if (err) {
+            res.json({ msg: 'error' });
+        } else {
+            res.json({ msg: 'success', data: diagnoseData });
+        }
+    });
+});
+
+/**
+ * Return all the Patients from the Database.
+ * @param  {} "/" The route name for returning all the patients.
+ */
 router.get("/", function(req, res) {
     if (req.query.search) {
         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
@@ -108,22 +126,16 @@ router.get("/", function(req, res) {
 
 });
 
-router.get('/getpatients', middleware.isLoggedIn, (req, res) => {
-    Patient.find({}, (err, patientData) => {
-        if (err) {
-            res.json({ msg: 'error' });
-        } else {
-            res.json({ msg: 'success', data: patientData });
-        }
-    });
-});
-
-// Create new Patient
+/**
+ * @param  {} "/" Route for posting a new Patient.
+ * @param  {} middleware.isLoggedIn Checks if you are logged in to perform this action.
+ * @param  {} function(req Gives as all the data from the form in order to create a new Patient
+ * @param  {} res Redirect to /patients.
+ */
 router.post("/", middleware.isLoggedIn, function(req, res) {
     var firstName = req.body.firstName;
     var lastName = req.body.lastName;
     var patronym = req.body.patronym
-        //var birthday = new Date();
     var birthday = req.body.birthday; // to do:   change how is the format of User Interface
     //var fomatted_date = moment(birthday).format('YYYY-DD-MM');
     var weight = req.body.weight;
@@ -157,11 +169,9 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
         bloodType: bloodType,
         doc: doc,
     };
-    // console.log(newPatient)
 
     Patient.create(newPatient, function(err, newlyCreated) {
         if (err) {
-            console.log(err);
             res.redirect("/patients");
         } else {
             res.redirect("/patients");
@@ -170,11 +180,15 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
 
 });
 
-router.post("/", middleware.isLoggedIn, function(req, res) {
-    res.render("patients/new.ejs");
-});
+// router.post("/", middleware.isLoggedIn, function(req, res) {
+//     res.render("patients/new.ejs");
+// });
 
-
+/**
+ * @param  {} "/new" Directs to the view in order to create a Patient.
+ * @param  {} middleware.isLoggedIn Checks if you are logged in to perform this action.
+ * @param  {} res Returns all the doctors found in the database.
+ */
 router.get("/new", middleware.isLoggedIn, function(req, res) {
     Staff.find({ "role": "Γιατρος" }, function(err, allStaff) {
         if (err) {
@@ -183,10 +197,15 @@ router.get("/new", middleware.isLoggedIn, function(req, res) {
             res.render("patients/new.ejs", { doctors: allStaff });
         }
     });
-    // res.render("patients/new.ejs");
 });
 
 // Upload logic  *Careful redirect logic has been implemented which is not the best , needs refactoring
+/**
+ * @param  {id"} "/ Uploads a file depending on the Patient's id
+ * @param  {} middleware.checkPatientOwnership Checks if the the one who is trying to upload something is the owner of the Patient posted.
+ * @param  {} function(req contains the id of the patient
+ * @param  {} res redirects depending on the outcome.
+ */
 router.post("/:id", middleware.checkPatientOwnership, function(req, res) {
     upload(req, res, (err) => {
         if (err) {
@@ -204,21 +223,25 @@ router.post("/:id", middleware.checkPatientOwnership, function(req, res) {
     })
 });
 
-//Show Patient Route
+/**
+ * @param  {id"} "/ Route that gets the data for the correct patient id.
+ * @param  {} res Returns the show view with the patient data.
+ */
 router.get("/:id", function(req, res) {
-    //find the patient with provided ID
     Patient.findById(req.params.id).populate("diagnoses").exec(function(err, foundPatient) {
         if (err) {
             console.log(err);
         } else {
-            //console.log(foundPatient);
-            //render show template with that patient
             res.render("patients/show", { patient: foundPatient });
         }
     });
 });
 
-// Edit Route
+/**
+ * @param  {id/edit"} "/ Edit route to edit the Patient based on the id.
+ * @param  {} middleware.checkPatientOwnership Checks if you created the Patient.
+ * @param  {} res Returns the patient_id , the current data of the patient and all the doctors to the edit view.
+ */
 router.get("/:id/edit", middleware.checkPatientOwnership, function(req, res) {
     Patient.findById(req.params.id, function(err, foundPatient) {
         Staff.find({ "role": "Γιατρος" }, function(err, allStaff) {
@@ -228,7 +251,6 @@ router.get("/:id/edit", middleware.checkPatientOwnership, function(req, res) {
                 res.render("patients/edit", { p_id: req.params.id, patient: foundPatient, doctors: allStaff });
             }
         });
-        //console.log(req.params.id) 
     });
 });
 

@@ -139,10 +139,8 @@ router.post('/add', (req, res) => {
 
     };
     var myData = req.body
-        // console.log(myData)
     for (const [key, value] of Object.entries(myData.data)) {
         for (const [key1, value1] of Object.entries(newEffect)) {
-            // console.log(value1)
             if (key in value1.effects) {
                 newEffect[key1]['effects'][key] = true
             } else {
@@ -214,8 +212,6 @@ router.get("/:effect_id/edit", function(req, res) { // add middleware.checkDiagn
 
 // Update Effect Route
 router.put("/:effect_id", function(req, res) { // middleware.checkDiagnoseOwnership,
-    //console.log(req)
-    // console.log(req.body)
     var newEffect = {
         // name: req.body.data.name,
         // surname: req.body.data.surname,
@@ -290,86 +286,55 @@ router.put("/:effect_id", function(req, res) { // middleware.checkDiagnoseOwners
 
     };
     var myData = req.body
-        // if (req.params.effect_id.match(/^[0-9a-fA-F]{24}$/)) {
-        //     console.log(req.params.effect_id)
-        // }
-        // console.log(myData)
-        // for (const [key, value] of Object.entries(myData.data)) {
-        //     for (const [key1, value1] of Object.entries(newEffect)) {
-        //         // console.log(value1)
-        //         if (key in value1.effects && value === true) {
-        //             newEffect[key1]['effects'][key] = true
 
-    //         } else if (key in value1.effects && value === false) {
-    //             newEffect[key1]['effects'][key] = false
-    //         } else {
-    //             newEffect[key1]['effects'][key] = false
-    //         }
-    //     }
-    // }
 
     Effect.findById(req.params.effect_id, function(err, foundEffect) {
+        newEffect['stomach_bowel'] = foundEffect['stomach_bowel']
+        newEffect['lungs'] = foundEffect['lungs']
+        newEffect['skin'] = foundEffect['skin']
+        newEffect['muscle'] = foundEffect['muscle']
+        newEffect['eyesight'] = foundEffect['eyesight']
+        newEffect['pancreas'] = foundEffect['pancreas']
         for (const [key, value] of Object.entries(myData.data)) {
-            for (const [key1, value1] of Object.entries(foundEffect)) {
-                // console.log(value1)
-                if (!('effects' in value1)) {
-                    continue;
-
-                } else if (key in value1.effects && value === false) {
-                    newEffect[key1]['effects'][key] = false
-                } else if (key in value1.effects && value === true) {
-                    newEffect[key1]['effects'][key] = true;
+            for (const [key1, value1] of Object.entries(newEffect)) {
+                if (key in value1.effects) {
+                    foundEffect[key1]['effects'][key] = value
                 } else {
-                    newEffect[key1]['effects'][key] = false
+                    continue;
                 }
             }
         }
-        Effect.updateOne(req.params.effect_id, newEffect, function(err, updatedEffect) {
+        Effect.updateOne({ "_id": req.params.effect_id }, newEffect, function(err, updatedEffect) {
             if (err) {
                 console.log('error', err)
                 res.redirect("back");
                 // console.log(err)
             } else {
-                res.redirect("/patients/" + updatedEffect.patient_id + "/diagnoses/" + updatedEffect.diagnose_id + "/treatments/" + updatedEffect.treatment_id);
+                console.log(foundEffect.patient_id)
+                    // res.redirect("back");
+                res.json({ msg: 'success', redirect: true, url: "/patients/" + foundEffect.patient_id + "/diagnoses/" + foundEffect.diagnose_id + "/treatments/" + foundEffect.treatment_id });
+
+                // res.redirect("/patients/" + foundEffect.patient_id + "/diagnoses/" + foundEffect.diagnose_id + "/treatments/" + foundEffect.treatment_id);
             }
         })
 
     })
 
-    // Effect.findByIdAndUpdate(req.params.effect_id, newEffect, function(err, updatedEffect) {
-    //         console.log(updatedEffect)
-    //         if (err) {
-    //             console.log('error', err)
-    //             res.redirect("back");
-    //             // console.log(err)
-    //         } else {
-    //             res.redirect("/patients/" + updatedEffect.patient_id + "/diagnoses/" + updatedEffect.diagnose_id + "/treatments/" + updatedEffect.treatment_id);
-    //         }
-    //     })
+
+});
 
 
-
-
-    // Effect.findById(req.params.effect_id, function(err, foundEffect) {
-    //     Effect.updateOne(req.params.effect_id, newEffect, function(err, updatedEffect) {
-    //             console.log('XD')
-    //                 //     if (err) {
-    //                 //         res.redirect("back");
-    //                 //         // console.log(err)
-    //                 //     } else {
-    //                 //         res.redirect("/patients/" + updatedEffect.patient_id + "/diagnoses/" + updatedEffect.diagnose_id + "/treatments/" + updatedEffect.treatment_id);
-    //                 //     }
-    //                 // });
-    //         })
-    //         // Effect.findByIdAndUpdate(req.params.effect_id, newEffect, function(err, updatedEffect) {
-    //         //     // console.log(updatedEffect)
-    //         //     if (err) {
-    //         //         res.redirect("back");
-    //         //         // console.log(err)
-    //         //     } else {
-    //         //         res.redirect("/patients/" + updatedEffect.patient_id + "/diagnoses/" + updatedEffect.diagnose_id + "/treatments/" + updatedEffect.treatment_id);
-    //         //     }
-    // });
+//Destroy Patient 617ea483b9a9a933a8c9b0ed
+router.delete("/removeEffect", function(req, res) {
+    console.log(req.body.id)
+    Effect.findByIdAndRemove(req.body.id, function(err) {
+        console.log(err)
+        if (err) {
+            res.json({ msg: 'error' });
+        } else {
+            res.json({ msg: 'success' });
+        }
+    });
 });
 
 

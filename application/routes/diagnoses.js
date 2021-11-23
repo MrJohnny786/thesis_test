@@ -8,9 +8,13 @@ var middleware = require('../middleware');
 var Staff = require("../models/staff");
 
 
-
+/**
+ * @param  {} "/new" The route name for creating a new Diagnose.
+ * @param  {} middleware.isLoggedIn Checks is you are logged in to perform this action.
+ * @param  {} function(req Gets the id of the Patient to find him on the MongoDB for needed data.
+ * @param  {} res Responds sending back the Patient data and the Staff-Doctors Data.
+ */
 router.get("/new", middleware.isLoggedIn, function(req, res) {
-    // find patient by id
     Patient.findById(req.params.id, function(err, patient) {
         Staff.find({ "role": "Γιατρος" }, function(err, findDoctors) {
             if (err) {
@@ -22,15 +26,6 @@ router.get("/new", middleware.isLoggedIn, function(req, res) {
     });
 });
 
-router.get('/getdiagnoses', middleware.isLoggedIn, (req, res) => {
-    Patient.find({}, (err, diagnoseData) => {
-        if (err) {
-            res.json({ msg: 'error' });
-        } else {
-            res.json({ msg: 'success', data: diagnoseData });
-        }
-    });
-});
 
 
 

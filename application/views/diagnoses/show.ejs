@@ -18,38 +18,38 @@
         <div class="row ">
             <div class="container  p-5 ">
 
-                <div class="row mt-3">
+                <div class="row mt-3 patient_row">
                     <div class="col-sm">ΦΑΡΜΑΚΑ (ΟΔΗΓΙΕΣ - ΟΔΟΣ ΧΟΡΗΓΗΣΕΩΣ):</div>
-                    <div class="col-sm">
+                    <div class="col-sm ">
                         <%= diagnose.courseOfTreatment %>
                     </div>
                 </div>
-                <div class="row mt-3">
+                <div class="row mt-3 patient_row">
                     <div class="col-sm">Ημερομηνία Διάγνωσης :</div>
                     <div class="col-sm">
                         <%= moment(diagnose.date).format('DD-MM-YYYY') %>
                     </div>
                 </div>
-                <div class="row mt-3">
+                <div class="row mt-3 patient_row">
                     <div class="col-sm">Υπευθυνος Γιατρος :</div>
                     <div class="col-sm">
                         <%= diagnose.doc %>
                     </div>
                 </div>
 
-                <div class="row mt-3">
+                <div class="row mt-3 patient_row">
                     <div class="col-sm">Γενικές Πληροφορίες :</div>
                     <div class="col-sm">
                         <%= diagnose.general %>
                     </div>
                 </div>
-                <div class="row mt-3">
+                <div class="row mt-3 patient_row">
                     <div class="col-sm">Ημερομηνία Ληξης Διάγνωσης :</div>
                     <div class="col-sm">
                         <%= moment(diagnose.EndDate).format('DD-MM-YYYY') %>
                     </div>
                 </div>
-                <div class="row mt-3">
+                <div class="row mt-3 patient_row">
                     <div class="col-sm">
                         <span class="pull-right">
                             <p>

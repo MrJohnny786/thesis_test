@@ -2,18 +2,22 @@ var Patient = require("../models/patient");
 var Diagnose = require("../models/diagnose");
 var Treatment = require("../models/treatment");
 
+// New object to add Ownership functions.
 var middlewareObj = {};
 
+/**
+ * Checks Ownership of the Patient.
+ * First checks if the user is authenticated.
+ * Afterwards it checks if the user created the Patient information or if he is a super user.
+ * Otherwise it returns a proper response.
+ */
 middlewareObj.checkPatientOwnership = function(req, res, next) {
     if (req.isAuthenticated()) {
         Patient.findById(req.params.id, function(err, foundPatient) {
-            //console.log(foundPatient.author.id)
             if (err) {
                 req.flash("error", "Δημιουργηθηκε καποιο προβλημα")
                 res.redirect("/patients");
             } else {
-                //console.log(foundPatient.author.id);
-                //console.log(req.user.id);
                 if (foundPatient.author.id.equals(req.user._id) || req.user.isAdmin) {
                     next();
                 } else {
@@ -28,14 +32,18 @@ middlewareObj.checkPatientOwnership = function(req, res, next) {
     }
 }
 
-
+/**
+ * Checks Ownership of the Diagnose.
+ * First checks if the user is authenticated.
+ * Afterwards it checks if the user created the Diagnose information or if he is a super user.
+ * Otherwise it returns a proper response.
+ */
 middlewareObj.checkDiagnoseOwnership = function(req, res, next) {
     if (req.isAuthenticated()) {
         Diagnose.findById(req.params.diagnose_id, function(err, foundDiagnose) {
             if (err) {
                 res.redirect("back");
             } else {
-                // does user own the diagnose?
                 if (foundDiagnose.alpha.id.equals(req.user._id) || req.user.isAdmin) {
                     next();
                 } else {
@@ -50,6 +58,12 @@ middlewareObj.checkDiagnoseOwnership = function(req, res, next) {
     }
 }
 
+/**
+ * Checks Ownership of the Treatment.
+ * First checks if the user is authenticated.
+ * Afterwards it checks if the user created the Treatment information or if he is a super user.
+ * Otherwise it returns a proper response.
+ */
 middlewareObj.checkTreatmentOwnership = function(req, res, next) {
     if (req.isAuthenticated()) {
         Treatment.findById(req.params.treatment_id, function(err, foundTreatment) {
@@ -71,7 +85,9 @@ middlewareObj.checkTreatmentOwnership = function(req, res, next) {
     }
 }
 
-
+/**
+ * Check if the user is logged in to do a curtain action
+ */
 middlewareObj.isLoggedIn = function(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
