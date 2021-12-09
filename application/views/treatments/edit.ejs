@@ -27,15 +27,15 @@
                     <div class="form-group row">
                         <label for="colFormLabel" class="col-sm-4 col-form-label">Γιατρος :</label>
                         <div class="col-sm-5">
-                            <select class="btn btn-secondary dropdown-toggle" class="doc" data-style="btn-info" name="diagnose[doc]">
+                            <select class="btn btn-secondary dropdown-toggle" class="staff" data-style="btn-info" name="treatment[staff]">
     <optgroup label="Select Table">
-      <option name="<%= diagnose.doc %>" value="<%= diagnose.doc %>">
-        <%= diagnose.doc %>
+      <option name="<%= treatment.staff %>" value="<%= treatment.staff %>">
+        <%= treatment.staff %>
       </option>
-      <% for(var i=0; i<doctors.length; i++) {%>
-        <% fullname=doctors[i].surname
-          +' '+ doctors[i].name %>
-<option name="doctor" value=" <%= fullname%> "><%= fullname%></option>
+      <% for(var i=0; i<staff.length; i++) {%>
+        <% fullname=staff[i].surname
+          +' '+ staff[i].name %>
+<option name="staff" value=" <%= fullname%> "><%= fullname%></option>
 <% } %>
 </optgroup>
 </select>

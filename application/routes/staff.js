@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Staff = require('../models/staff')
+const middleware = require('../middleware')
 
 /**
  * Route that directs you to the landing page of the staff.
@@ -12,8 +13,7 @@ router.get('/', (req, res) => {
 /**
  * Creates new staff from an Ajax request.
  */
-router.post('/addstaff', (req, res) => {
-  console.log(req.user)
+router.post('/addstaff', middleware.isLoggedIn, (req, res) => {
   const author = {
     id: req.user._id,
     username: req.user.username,
@@ -40,7 +40,7 @@ router.post('/addstaff', (req, res) => {
  * Deletes staff based on it's id.
  * Needs authorization middleware.
  */
-router.delete('/removestaff', function (req, res) {
+router.delete('/removestaff', middleware.isLoggedIn, function (req, res) {
   Staff.findByIdAndRemove(req.body.id, function (err) {
     if (err) {
       res.json({ msg: 'error' })

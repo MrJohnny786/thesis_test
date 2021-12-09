@@ -157,27 +157,27 @@
                                     <% patient.diagnoses.forEach(function(diagnose,i){ %>
                                         <%i+=1 %>
                                             <tbody>
-                                                <tr>
+                                                <tr class='clickable-row' data-href="/patients/<%= patient._id %>/diagnoses/<%= diagnose._id %>" style="cursor:pointer">
                                                     <td>
                                                         <a class="alpha">
                                                             <%= i %>
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" href="/patients/<%= patient._id %>/diagnoses/<%= diagnose._id %>">
+                                                        <a class="alpha">
                                                             <%= moment(diagnose.date).format('DD-MM-YYYY') %>
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" href="/patients/<%= patient._id %>/diagnoses/<%= diagnose._id %>">
+                                                        <a class="alpha">
                                                             <%= diagnose.courseOfTreatment %>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" href="/patients/<%= patient._id %>/diagnoses/<%= diagnose._id %>">
+                                                        <a class="alpha">
                                                             <%= diagnose.doc %>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" href="/patients/<%= patient._id %>/diagnoses/<%= diagnose._id %>">
+                                                        <a class="alpha">
                                                             <%= moment(diagnose.createdAt).fromNow() %>
                                                     </td>
                                                 </tr>

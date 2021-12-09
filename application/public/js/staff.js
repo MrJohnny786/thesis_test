@@ -37,7 +37,7 @@ $(document).ready(function () {
       dataType: 'json',
       data: { id: id },
       success: function (response) {
-        if (response.msg ==='success') {
+        if (response.msg === 'success') {
           alert('data deleted')
           getdata()
         } else {
@@ -45,6 +45,7 @@ $(document).ready(function () {
         }
       },
       error: function (response) {
+        console.log(response)
         alert('server error')
       }
     })
@@ -60,12 +61,12 @@ $(document).ready(function () {
           $('li.doctor').remove()
           $('li.nurse').remove()
           $('li.other').remove()
-          if (response.data == undefined || response.data == null || response.data == '') {
+          if (response.data === undefined || response.data == null || response.data === '') {
             console.log('no data found')
           } else {
             // $('.tblData').show();
             $.each(response.data, function (index, data) {
-              const url = url + data._id
+              // const url = url + data._id
               index += 1
               if (data.role === 'Γιατρος') {
                 $('body > div:nth-child(5) > div > div:nth-child(1) > ul').append('<li class="list-group-item doctor">' + data.name + ' ' + data.surname + '<button type="button" class="btn-sm btn-outline-danger float-right del" value=' + data._id + '>X</button></li>')

@@ -93,39 +93,39 @@
                                     <% diagnose.treatments.forEach(function(treatment,i){ %>
                                         <%i+=1 %>
                                             <tbody>
-                                                <tr>
+                                                <tr class='clickable-row' data-href="/patients/<%= patient_id %>/diagnoses/<%= diagnose.id %>/treatments/<%=treatment._id %>" style="cursor:pointer">
                                                     <td>
                                                         <a class="alpha">
                                                             <%= i %>
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" href="/patients/<%= patient_id %>/diagnoses/<%= diagnose.id %>/treatments/<%=treatment._id %>">
+                                                        <a class="alpha" >
                                                             <%= moment(treatment.date).format('DD-MM-YYYY') %>
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" href="/patients/<%= patient_id %>/diagnoses/<%= diagnose.id %>/treatments/<%=treatment._id %>">
+                                                        <a class="alpha" >
                                                             <%= treatment.mg +' '+ treatment.numOfDose %>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" href="/patients/<%= patient_id %>/diagnoses/<%= diagnose.id %>/treatments/<%=treatment._id %>">
+                                                        <a class="alpha" >
                                                             <%= treatment.numOfApproval %>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" href="/patients/<%= patient_id %>/diagnoses/<%= diagnose.id %>/treatments/<%=treatment._id %>">
+                                                        <a class="alpha" >
                                                             <%= treatment.staff %>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" href="/patients/<%= patient_id %>/diagnoses/<%= diagnose.id %>/treatments/<%=treatment._id %>">
+                                                        <a class="alpha" >
                                                             <%= treatment.status %>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" href="/patients/<%= patient_id %>/diagnoses/<%= diagnose.id %>/treatments/<%=treatment._id %>">
+                                                        <a class="alpha" >
                                                             <%= treatment.observation %>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" href="/patients/<%= patient_id %>/diagnoses/<%= diagnose.id %>/treatments/<%=treatment._id %>">
+                                                        <a class="alpha" >
                                                             <%= diagnose.alpha.username %>
                                                     </td>
                                                 </tr>
