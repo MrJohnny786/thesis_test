@@ -9,15 +9,19 @@
 
 
 
-    <div>
-        <h1 class="text-center">Πληροφορίες Ασθενή</h1>
-    </div>
+    
 
 
 
-    <div class="container">
-        <div class="row ">
-            <div class="container  p-5 ">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2">
+                <div class="text-center" >
+                    <h1 >Στοιχεια Ασθενή</h1>
+                </div>
+                <div class="card text-center mx-auto" >
+                    <img src="https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png"  class="card-img-top" >
+                    <div class="card-body">
                 <div class="row patient_row">
                     <div class="col-sm">Όνομα :</div>
                     <div class="col-sm">
@@ -115,14 +119,9 @@
                 </div>
 
 
-                <form action="/patients/<%= patient._id %>" method="POST" enctype="multipart/form-data">
-                    <!--?_method=PUT -->
-                    <div class="form-group ">
-                        <label for="exampleFormControlFile1">File input</label>
-                        <input name="myImage" type="file" class="form-control-file" id="exampleFormControlFile1">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                
+
+                
 
 
 
@@ -138,58 +137,79 @@
                         <button class="btn btn-xs btn-danger">Διαγραφή</button>
                     </form>
                     <% } %>
-                        <hr>
-                        <div>
-                            <h1 class="text-center p-2">Διαγνώσεις</h1>
-                        </div>
-                        <div>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Αριθμος Ασθενειας :</th>
-                                        <th scope="col">Ημ/νια Διάγνωσης :</th>
-                                        <th scope="col">ΦΑΡΜΑΚΑ (ΟΔΗΓΙΕΣ - ΟΔΟΣ ΧΟΡΗΓΗΣΕΩΣ) :</th>
-                                        <th scope="col">Γιατρος :</th>
-                                        <th scope="col">Δημιουργηθηκε :</th>
-                                    </tr>
-                                </thead>
-                                <%var i=0 %>
-                                    <% patient.diagnoses.forEach(function(diagnose,i){ %>
-                                        <%i+=1 %>
-                                            <tbody>
-                                                <tr class='clickable-row' data-href="/patients/<%= patient._id %>/diagnoses/<%= diagnose._id %>" style="cursor:pointer">
-                                                    <td>
-                                                        <a class="alpha">
-                                                            <%= i %>
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a class="alpha">
-                                                            <%= moment(diagnose.date).format('DD-MM-YYYY') %>
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a class="alpha">
-                                                            <%= diagnose.courseOfTreatment %>
-                                                    </td>
-                                                    <td>
-                                                        <a class="alpha">
-                                                            <%= diagnose.doc %>
-                                                    </td>
-                                                    <td>
-                                                        <a class="alpha">
-                                                            <%= moment(diagnose.createdAt).fromNow() %>
-                                                    </td>
-                                                </tr>
-                                                <% }) %>
-                                            </tbody>
-                            </table>
-                        </div>
-                        <p>
-                            <a class="btn btn-primary btn-large" href="/patients/<%= patient._id %>/diagnoses/new">Πρόσθεστε Διάγνωση</a>
-                        </p>
             </div>
         </div>
+    </div>
+            <div class="col-5">
+                <div>
+                    <h1 class="text-center ">Ανοσοθεραπείες</h1>
+                </div>
+
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Αριθμος Ασθενειας :</th>
+                                <th scope="col">Ημ/νια Διάγνωσης :</th>
+                                <th scope="col">ΦΑΡΜΑΚΑ (ΟΔΗΓΙΕΣ - ΟΔΟΣ ΧΟΡΗΓΗΣΕΩΣ) :</th>
+                                <th scope="col">Γιατρος :</th>
+                                <th scope="col">Δημιουργηθηκε :</th>
+                            </tr>
+                        </thead>
+                        <%var i=0 %>
+                            <% patient.diagnoses.forEach(function(diagnose,i){ %>
+                                <%i+=1 %>
+                                    <tbody>
+                                        <tr class='clickable-row'
+                                            data-href="/patients/<%= patient._id %>/diagnoses/<%= diagnose._id %>"
+                                            style="cursor:pointer">
+                                            <td>
+                                                <a class="alpha">
+                                                    <%= i %>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a class="alpha">
+                                                    <%= moment(diagnose.date).format('DD-MM-YYYY') %>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a class="alpha">
+                                                    <%= diagnose.courseOfTreatment %>
+                                            </td>
+                                            <td>
+                                                <a class="alpha">
+                                                    <%= diagnose.doc %>
+                                            </td>
+                                            <td>
+                                                <a class="alpha">
+                                                    <%= moment(diagnose.createdAt).fromNow() %>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                    </table>
+                </div>
+                <p>
+                    <a class="btn btn-primary btn-large" href="/patients/<%= patient._id %>/diagnoses/new">Πρόσθεστε
+                        Διάγνωση</a>
+                </p>
+            </div>
+            <div class="col-5">
+                <div>
+                    <h1 class="text-center ">Αρχεία</h1>
+                </div>
+                <form action="/patients/<%= patient._id %>" method="POST" enctype="multipart/form-data">
+                    <!--?_method=PUT -->
+                    <div class="form-group ">
+                        <label for="exampleFormControlFile1">File input</label>
+                        <input name="myImage" type="file" class="form-control-file" id="exampleFormControlFile1">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+
     </div>
 
 
