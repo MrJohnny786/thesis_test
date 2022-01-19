@@ -183,10 +183,8 @@
 
 
                                         <% data.treatment.forEach(function(y, index){ %>
-                                            <%if (x.treatments.includes(y._id)){%>
-                                                <div class="card-body">
-
-
+                                            <div class="card-body">
+                                                <%if (x.treatments.includes(y._id)){%>
                                                     <% var tIndex="heading1_" +index %>
                                                         <% var zIndex="collapse1_" +index %>
                                                             <div class="card-header" id="<%=tIndex%>_dose">
@@ -221,79 +219,78 @@
                                                                         <% } %>
                                                                 </h2>
                                                             </div>
+                                                            <% } %>
+                                            </div>
+                                            <div id="<%=zIndex%>_dose" class="collapse" aria-labelledby="<%=tIndex%>_dose">
+                                                <div class="card-body">
 
-                                                </div>
-                                                <% }%>
-                                                    <div id="<%=zIndex%>_dose" class="collapse" aria-labelledby="<%=tIndex%>_dose">
-                                                        <div class="card-body">
+                                                    <% y.effects.forEach(function(ef, index){ %>
 
-                                                            <% y.effects.forEach(function(ef, index){ %>
+                                                        <%arr=[]%>
 
-                                                                <%arr=[]%>
-
-                                                                    <%['pancreas', 'eyesight' , 'muscle' , 'skin' , 'lungs'
+                                                            <%['pancreas', 'eyesight' , 'muscle' , 'skin' , 'lungs'
                                                                 , 'stomach_bowel' ].forEach(function(des){%>
-                                                                        <% dat=ef[des].effects %>
+                                                                <% dat=ef[des].effects %>
 
-                                                                            <% for (let [skey, svalue] of Object.entries(dat)) {
+                                                                    <% for (let [skey, svalue] of Object.entries(dat)) {
                                                                         %>
-                                                                                <% if(svalue && skey!=='$init' ){ %>
+                                                                        <% if(svalue && skey!=='$init' ){ %>
 
 
-                                                                                    <% for (let [keyy, valuee] of
+                                                                            <% for (let [keyy, valuee] of
                                                                                 Object.entries(effects)) { %>
 
-                                                                                        <% for (let [keyy1, valuee1] of
+                                                                                <% for (let [keyy1, valuee1] of
                                                                                     Object.entries(valuee.effects)) { %>
 
-                                                                                            <%if (keyy1===skey){%>
-                                                                                                <% arr.push(valuee1.name)%>
+                                                                                    <%if (keyy1===skey){%>
+                                                                                        <% arr.push(valuee1.name)%>
+                                                                                            <%}%>
+                                                                                                <%}%>
                                                                                                     <%}%>
-                                                                                                        <%}%>
+
+
+                                                                                                        <% } %>
                                                                                                             <%}%>
+                                                                                                                <%})%>
 
-
-                                                                                                                <% } %>
-                                                                                                                    <%}%>
-                                                                                                                        <%})%>
-
-                                                                                                                            <div class='card-group'>
-                                                                                                                                <div class="card bg-info">
-                                                                                                                                    <div class="card-body">
-                                                                                                                                        <h4 class="card-title">
-                                                                                                                                            <%= moment(ef.date).format('DD-MM-YYYY')
+                                                                                                                    <div class='card-group'>
+                                                                                                                        <div class="card bg-info">
+                                                                                                                            <div class="card-body">
+                                                                                                                                <h4 class="card-title">
+                                                                                                                                    <%= moment(ef.date).format('DD-MM-YYYY')
                                                                                                                                         %>
-                                                                                                                                        </h4>
-                                                                                                                                        <p class="card-text font-weight-bold">
+                                                                                                                                </h4>
+                                                                                                                                <p class="card-text font-weight-bold">
 
-                                                                                                                                            <%= arr.join(',')
+                                                                                                                                    <%= arr.join(',')
                                                                                                                                         %>
-                                                                                                                                        </p>
-                                                                                                                                        <div class="btn-group" role="group" aria-label="Basic example">
-                                                                                                                                            <form action="" class='mr-2'>
-                                                                                                                                                <button name="button" class="btn btn-warning">
+                                                                                                                                </p>
+                                                                                                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                                                                                                    <form action="" class='mr-2'>
+                                                                                                                                        <button name="button" class="btn btn-warning">
                                                                                                                                             <a
                                                                                                                                                 href="/effects/<%= ef._id %>/edit">Επεξεργασία</a></button>
-                                                                                                                                            </form>
-                                                                                                                                            <form id="delete-form" action="/effects/delete/<%= ef._id %>?_method=DELETE" method="POST">
-                                                                                                                                                <button class="btn btn-danger">Διαγραφή</button>
-                                                                                                                                            </form>
-                                                                                                                                        </div>
-                                                                                                                                    </div>
+                                                                                                                                    </form>
+                                                                                                                                    <form id="delete-form" action="/effects/delete/<%= ef._id %>?_method=DELETE" method="POST">
+                                                                                                                                        <button class="btn btn-danger">Διαγραφή</button>
+                                                                                                                                    </form>
                                                                                                                                 </div>
                                                                                                                             </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
 
 
 
 
 
 
-                                                                                                                            <% })%>
+                                                                                                                    <% })%>
 
-                                                        </div>
-                                                    </div>
+                                                </div>
+                                            </div>
 
-                                                    <% }) %>
+                                            <% }) %>
                                     </div>
                                     <% }) %>
 
@@ -306,23 +303,68 @@
                 </p>
                 <hr>
 
+                <!-- TABLE VIEW OF DIAGNOSES/ΑΝΟΣΟΘΕΡΑΠΕΙΕΣ -->
+                <!-- <div>  
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Αριθμος Ασθενειας :</th>
+                                <th scope="col">Ημ/νια Διάγνωσης :</th>
+                                <th scope="col">ΦΑΡΜΑΚΑ (ΟΔΗΓΙΕΣ - ΟΔΟΣ ΧΟΡΗΓΗΣΕΩΣ) :</th>
+                                <th scope="col">Γιατρος :</th>
+                                <th scope="col">Δημιουργηθηκε :</th>
+                            </tr>
+                        </thead>
+                        <%var i=0 %>
+                            <% patient.diagnoses.forEach(function(diagnose,i){ %>
+                                <%i+=1 %>
+                                    <tbody>
+                                        <tr class='clickable-row' data-href="/patients/<%= patient._id %>/diagnoses/<%= diagnose._id %>" style="cursor:pointer">
+                                            <td>
+                                                <a class="alpha">
+                                                    <%= i %>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a class="alpha">
+                                                    <%= moment(diagnose.date).format('DD-MM-YYYY') %>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a class="alpha">
+                                                    <%= diagnose.courseOfTreatment %>
+                                            </td>
+                                            <td>
+                                                <a class="alpha">
+                                                    <%= diagnose.doc %>
+                                            </td>
+                                            <td>
+                                                <a class="alpha">
+                                                    <%= moment(diagnose.createdAt).fromNow() %>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                    </table>
+                </div> -->
+
             </div>
 
-            <div class="col-3">
-                <div>
-                    <h1 class="text-center ">Αρχεία</h1>
-                </div>
-                <form action="/patients/<%= patient._id %>" method="POST" enctype="multipart/form-data">
-                    <!--?_method=PUT -->
-                    <div class="form-group ">
-                        <label for="exampleFormControlFile1">File input</label>
-                        <input name="myImage" type="file" class="form-control-file" id="exampleFormControlFile1">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
+
         </div>
-
+        <div class="col-3">
+            <div>
+                <h1 class="text-center ">Αρχεία</h1>
+            </div>
+            <form action="/patients/<%= patient._id %>" method="POST" enctype="multipart/form-data">
+                <!--?_method=PUT -->
+                <div class="form-group ">
+                    <label for="exampleFormControlFile1">File input</label>
+                    <input name="myImage" type="file" class="form-control-file" id="exampleFormControlFile1">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
     </div>
 
     <%if(patient.diagnoses.length === 0){%>

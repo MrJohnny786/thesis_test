@@ -62,34 +62,12 @@
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script src="https://code.jquery.com/jquery-migrate-3.3.2.js"></script>
 
-    <!-- <script>
-        $(function() {
-            $("#datepicker").datepicker();
-        });
-    </script> -->
-
-
-
-
-
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
-
-    <!-- <script>
-        $("#planned_checked").change(function() {
-            if ($(this).prop('!checked')) {
-                alert("Checked Box Selected");
-            } else {
-                alert("Checked Box deselect");
-            }
-        });
-    </script> -->
-
 
 </head>
 
 
 
-<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+<!-- <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
     <% if(currentUser){ %>
         <a class="navbar-brand" href="/patients">Συνδεδεμενος ως <%= currentUser.username %></a>
         <% } %>
@@ -110,16 +88,41 @@
                             <% } %>
                 </div>
             </div>
+</nav> -->
+<nav class="navbar navbar-expand-lg navbar-light " style="background-color: #e3f2fd; ">
+    <% if(currentUser){ %>
+        <a class="navbar-brand" href="/patients">Συνδεδεμενος ως <%= currentUser.username %></a>
+        <% } %>
+            <button class="navbar-toggler " type="button " data-toggle="collapse " data-target="#navbarNavAltMarkup " aria-controls="navbarNavAltMarkup " aria-expanded="false " aria-label="Toggle navigation ">
+      <span class="navbar-toggler-icon "></span>
+    </button>
+            <div class="collapse navbar-collapse " id="navbarNavAltMarkup ">
+                <div class="navbar-nav ">
+                    <% if(!currentUser){ %>
+                        <a class="nav-item nav-link active" href="/">Σύνδεση <span class="sr-only">(current)</span></a>
+                        <a class="nav-item nav-link" href="/register">Εγγραφή</a>
+                        <% } else { %>
+                            <a class="nav-item nav-link " href="/patients">Αρχική</a>
+                            <a class="nav-item nav-link " href="/staff">Προσωπικό Νοσοκομείου</a>
+                            <a class="nav-item nav-link " href="/logout">Αποσύνδεση</a>
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/logout" data-target="#myModal" data-toggle="modal">Αποσύνδεση</a>
+                                </li>
+                            </ul>
+                            <% } %>
+                </div>
+            </div>
 </nav>
 
-<div class="container">
+<div class="container ">
     <% if(error && error.length> 0){ %>
-        <div class="alert alert-danger" role "alert">
+        <div class="alert alert-danger " role "alert ">
             <%= error %>
         </div>
         <% } %>
             <% if(success && success.length> 0){ %>
-                <div class="alert alert-success" role "alert">
+                <div class="alert alert-success " role "alert ">
                     <%= success %>
                 </div>
                 <% } %>

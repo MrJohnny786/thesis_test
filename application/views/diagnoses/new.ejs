@@ -2,7 +2,7 @@
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/patients/<%= patient._id %>">Πισω</a></li>
+            <li class="breadcrumb-item"><a href="/patients/<%= patient._id %>">Πίσω</a></li>
         </ol>
     </nav>
 
@@ -10,12 +10,12 @@
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <h1 class="text-center display-4 my-4">Διάγνωση </h1>
+                <h1 class="text-center display-4 my-4">Ανοσοθεραπεία </h1>
 
                 <form action="/patients/<%= patient._id %>/diagnoses" method="POST">
 
                     <div class="form-group row">
-                        <label class="col-sm-4 col-form-label" for="colFormLabel">Ημερομηνία Διάγνωσης :</label>
+                        <label class="col-sm-4 col-form-label" for="colFormLabel">Ημερομηνία Ανοσοθεραπείας :</label>
                         <div class="col-sm-5">
                             <input type="date" class="form-control" id="colFormLabel" name="diagnose[date]" placeholder="Ημερομηνία Διάγνωσης">
                         </div>

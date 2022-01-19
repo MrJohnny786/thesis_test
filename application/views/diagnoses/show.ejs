@@ -8,7 +8,7 @@
     </nav>
 
     <div>
-        <h1 class="text-center">Πληροφορίες Διάγνωσης
+        <h1 class="text-center">Πληροφορίες Aνοσοθεραπείας
             <!-- <%= diagnose.disease %> -->
     </div>
     </h1>
@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="row mt-3 patient_row">
-                    <div class="col-sm">Ημερομηνία Διάγνωσης :</div>
+                    <div class="col-sm">Ημερομηνία Aνοσοθεραπείας :</div>
                     <div class="col-sm">
                         <%= moment(diagnose.date).format('DD-MM-YYYY') %>
                     </div>
@@ -73,14 +73,14 @@
                     <% } %>
                         <hr>
                         <div>
-                            <h1 class="text-center p-2">Θεραπείες</h1>
+                            <h1 class="text-center p-2">Δοσεις</h1>
                         </div>
                         <div>
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Αριθμος Θεραπειας :</th>
-                                        <th scope="col">Ημ/νια Θεραπείας :</th>
+                                        <th scope="col">Αριθμος Δόσης :</th>
+                                        <th scope="col">Ημ/νια Δόσης :</th>
                                         <th scope="col">Δοσολογεια :</th>
                                         <th scope="col">Αριθμος Εγκρισης :</th>
                                         <th scope="col">Νοσηλευτης :</th>
@@ -100,32 +100,32 @@
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" >
+                                                        <a class="alpha">
                                                             <%= moment(treatment.date).format('DD-MM-YYYY') %>
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" >
+                                                        <a class="alpha">
                                                             <%= treatment.mg +' '+ treatment.numOfDose %>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" >
+                                                        <a class="alpha">
                                                             <%= treatment.numOfApproval %>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" >
+                                                        <a class="alpha">
                                                             <%= treatment.staff %>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" >
+                                                        <a class="alpha">
                                                             <%= treatment.status %>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" >
+                                                        <a class="alpha">
                                                             <%= treatment.observation %>
                                                     </td>
                                                     <td>
-                                                        <a class="alpha" >
+                                                        <a class="alpha">
                                                             <%= diagnose.alpha.username %>
                                                     </td>
                                                 </tr>

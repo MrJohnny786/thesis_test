@@ -21,6 +21,21 @@
         });
     });
 </script>
+<script>
+    var checkDiagnoses = $('#checkDiagnoses').val()
+    var checkTreatments = $('#checkTreatments').val()
+    var checkEffects = $('#checkEffects').val()
+
+    checkDisableButton(checkDiagnoses, '#disableBtnPatient')
+        //checkDisableButton(checkTreatments, '#disableBtnDiagnose')
+        // checkDisableButton(checkEffects, '#disableBtnEffect')
+
+    function checkDisableButton(value, _id) {
+        console.log(value)
+        let myBool = (value === 'true');
+        $(_id).prop('disabled', myBool);
+    }
+</script>
 
 <!-- <script>
     $(function() {
