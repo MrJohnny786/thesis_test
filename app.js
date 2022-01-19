@@ -34,9 +34,9 @@ app.set('view engine', 'ejs')
 app.use(methodOverride('_method'))
 app.use(flash())
 app.use(require('express-session')({
-  secret: mySecret,
-  resave: false,
-  saveUninitialized: false
+    secret: mySecret,
+    resave: false,
+    saveUninitialized: false
 }))
 app.locals.moment = require('moment')
 
@@ -51,11 +51,11 @@ passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
 // AUTH RESPONSE
-app.use(function (req, res, next) {
-  res.locals.currentUser = req.user
-  res.locals.error = req.flash('error')
-  res.locals.success = req.flash('success')
-  next()
+app.use(function(req, res, next) {
+    res.locals.currentUser = req.user
+    res.locals.error = req.flash('error')
+    res.locals.success = req.flash('success')
+    next()
 })
 
 // ROUTES LOGIC
@@ -67,22 +67,22 @@ app.use('/staff', staffRoutes)
 app.use('/effects', effectRoutes)
 
 // APP LISTENING
-app.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`)
-})
+// app.listen(port, hostname, () => {
+//   console.log(`Server running at http://${hostname}:${port}/`)
+// })
 
 // HEROKU LOGIC NEEDS FIX
-// app.listen(process.env.PORT, process.env.IP, function(){
-//     console.log("Started");
-// });
+app.listen(process.env.PORT, process.env.IP, function() {
+    console.log("Started");
+});
 
-// app.listen(process.env.PORT || 3000)
+app.listen(process.env.PORT || 3000)
 
-// const MongoClient = require('mongodb').MongoClient;
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const MongoClient = require('mongodb').MongoClient;
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-// client.connect(err => {
-//     //   const collection = client.db("test").collection("devices");
-//     // perform actions on the collection object
-//     client.close();
-// });
+client.connect(err => {
+    //   const collection = client.db("test").collection("devices");
+    // perform actions on the collection object
+    client.close();
+});
