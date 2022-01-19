@@ -124,10 +124,11 @@
                                 </p>
                             </div>
 
-
-                            <form id="delete-form" action="/patients/<%= patient._id %>?_method=DELETE" method="POST">
-                                <button id='disableBtnPatient' class="btn btn-xs btn-danger">Διαγραφή</button>
-                            </form>
+                            <div data-toggle="tooltip" data-placement="right" title="Για να διαγραψετε αυτη την εγγραφη , πρεπει πρωτα να διαγραφουν ολες οι ανοσοθεραπειες της.">
+                                <form id="delete-form" action="/patients/<%= patient._id %>?_method=DELETE" method="POST">
+                                    <button id='disableBtnPatient' class="btn btn-xs btn-danger">Διαγραφή</button>
+                                </form>
+                            </div>
 
                             <% } %>
                     </div>
@@ -166,13 +167,21 @@
                                                                 href="/patients/<%= patient._id %>/diagnoses/<%= x._id %>/edit">Επεξεργασία</a></button>
                                                     </form>
 
-                                                    <form id="delete-form" action="/patients/<%= patient._id %>/diagnoses/<%= x._id %>?_method=DELETE" method="POST">
+                                                    <!-- <form id="delete-form" action="/patients/<%= patient._id %>/diagnoses/<%= x._id %>?_method=DELETE" method="POST">
                                                         <button class="btn btn-danger checkDeletion">Διαγραφή</button>
-                                                    </form>
-                                                    <%if(data.treatment){%>
-                                                        <input type="hidden" id="checkTreatments" name="checkTreatments" value="true">
+                                                    </form> -->
+
+                                                    <%if(Object.keys(x.treatments).length === 0){%>
+
+                                                        <form id="delete-form" action="/patients/<%= patient._id %>/diagnoses/<%= x._id %>?_method=DELETE" method="POST">
+                                                            <button class="btn btn-danger checkDeletion">Διαγραφή</button>
+                                                        </form>
                                                         <%} else {%>
-                                                            <input type="hidden" id="checkTreatments" name="checkTreatments" value="false">
+                                                            <div data-toggle="tooltip" data-placement="right" title="Για να διαγραψετε αυτη την εγγραφη , πρεπει πρωτα να διαγραφουν ολες οι Δοσεις της.">
+                                                                <form id="delete-form" action="/patients/<%= patient._id %>/diagnoses/<%= x._id %>?_method=DELETE" method="POST">
+                                                                    <button class="btn btn-danger checkDeletion" disabled>Διαγραφή</button>
+                                                                </form>
+                                                            </div>
                                                             <%}%>
                                                 </div>
                                                 <% } %>
@@ -212,10 +221,17 @@
                                                                                 <button name="button" class="btn btn-warning"> <a
                                                                                         href="/patients/<%= patient._id %>/diagnoses/<%= x.id %>/treatments/<%=y._id %>/edit">Επεξεργασία</a></button>
                                                                             </form>
-
-                                                                            <form id="delete-form" action="/patients/<%= patient._id %>/diagnoses/<%= x.id %>/treatments/<%=y._id %>?_method=DELETE" method="POST">
-                                                                                <button class="btn btn-danger">Διαγραφή</button>
-                                                                            </form>
+                                                                            <% if(Object.keys(y.effects).length === 0 ){%>
+                                                                                <form id="delete-form" action="/patients/<%= patient._id %>/diagnoses/<%= x.id %>/treatments/<%=y._id %>?_method=DELETE" method="POST">
+                                                                                    <button class="btn btn-danger">Διαγραφή</button>
+                                                                                </form>
+                                                                                <% }else{%>
+                                                                                    <div data-toggle="tooltip" data-placement="right" title="Για να διαγραψετε αυτη την εγγραφη , πρεπει πρωτα να διαγραφουν ολες οι παρενέργειες της.">
+                                                                                        <form id="delete-form" action="/patients/<%= patient._id %>/diagnoses/<%= x.id %>/treatments/<%=y._id %>?_method=DELETE" method="POST">
+                                                                                            <button class="btn btn-danger" disabled>Διαγραφή</button>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                    <%}%>
 
                                                                         </div>
                                                                         <% } %>
