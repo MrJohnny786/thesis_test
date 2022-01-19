@@ -11,7 +11,7 @@ const path = require('path')
 const conf = require('./config')
 
 // USE CONFIG FILE
-const environment = conf[process.env.NODE_ENV]
+const environment = conf['prod']
 const hostname = environment.app.host || null
 const port = environment.app.port || process.env.PORT || 3000
 const db = environment.app.db
@@ -67,22 +67,22 @@ app.use('/staff', staffRoutes)
 app.use('/effects', effectRoutes)
 
 // APP LISTENING
-// app.listen(port, hostname, () => {
-//   console.log(`Server running at http://${hostname}:${port}/`)
-// })
+app.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`)
+})
 
-// HEROKU LOGIC NEEDS FIX
-app.listen(process.env.PORT, process.env.IP, function() {
-    console.log("Started");
-});
+// // HEROKU LOGIC NEEDS FIX
+// app.listen(process.env.PORT, process.env.IP, function() {
+//     console.log("Started");
+// });
 
-app.listen(process.env.PORT || 3000)
+// app.listen(process.env.PORT || 3000)
 
-const MongoClient = require('mongodb').MongoClient;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+// const MongoClient = require('mongodb').MongoClient;
+// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-client.connect(err => {
-    //   const collection = client.db("test").collection("devices");
-    // perform actions on the collection object
-    client.close();
-});
+// client.connect(err => {
+//     //   const collection = client.db("test").collection("devices");
+//     // perform actions on the collection object
+//     client.close();
+// });
