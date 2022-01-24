@@ -11,7 +11,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-2">
+            <div class="col-3">
                 <div class="text-center">
                     <h1>Στοιχεία Ασθενή</h1>
                 </div>
@@ -135,6 +135,7 @@
                 </div>
             </div>
             <div class="col-7">
+
                 <div>
                     <h1 class="text-center ">Ανοσοθεραπείες <button style="display:none" type="button" class="btn btn-primary">Expand/Collapse All</button></h1>
                 </div>
@@ -145,26 +146,31 @@
                 <div class="accordion" id="accordionExample">
                     <div class="card">
                         <% data.patient.diagnoses.forEach(function(x, index){ %>
-
                             <% var tIndex="heading_" +index %>
                                 <% var zIndex="collapse_" +index %>
                                     <div class="card-header" id="<%=tIndex%>">
                                         <h2 class="mb-0">
                                             <button class="btn btn-block text-left btn-success" type="button" data-toggle="collapse" data-target="#<%=zIndex%>" aria-expanded="true" aria-controls="<%=zIndex%>">
-                                                <a class="link-success"
+                                                <a class="link-success text-white"
                                                     href="/patients/<%= patient._id %>/diagnoses/<%= x._id %>">ΑΝΟΣΟΘΕΡΑΠΕΙΑ
                                                     <%= moment(x.date).format('DD-MM-YYYY') %> -
                                                         <%= x.courseOfTreatment %> -
                                                             <%= x.doc %> </a>
-                                                <span class="badge badge-secondary float-right">Δοσεις <%=
-                                                        x.treatments.length %></span>
-                                            </button>
+                                                            <span class="badge badge-secondary float-right"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle-fill" viewBox="0 0 16 16">
+                                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+                                                              </svg>Δοσεις <%=
+                                                                    x.treatments.length %></span>
+                                                
+                                                </button>
+                                            <button class="btn btn-primary">
+                                                    <a class = 'text-white' href="/patients/<%= patient._id %>/diagnoses/<%= x._id %>/treatments/new">Δημιουργία Δοσης</a>
+                                                </button>
                                             <% if(currentUser && patient.author.id.equals(currentUser._id) ||
                                                 currentUser && currentUser.isAdmin){ %>
                                                 <div class="btn-group" role="group" aria-label="Basic example">
                                                     <form action="" class='mr-2'>
                                                         <button name="button" class="btn btn-warning"> <a
-                                                                href="/patients/<%= patient._id %>/diagnoses/<%= x._id %>/edit">Επεξεργασία</a></button>
+                                                                href="/patients/<%= patient._id %>/diagnoses/<%= x._id %>/edit">Επεξεργασία </a></button>
                                                     </form>
 
                                                     <!-- <form id="delete-form" action="/patients/<%= patient._id %>/diagnoses/<%= x._id %>?_method=DELETE" method="POST">
@@ -174,12 +180,12 @@
                                                     <%if(Object.keys(x.treatments).length === 0){%>
 
                                                         <form id="delete-form" action="/patients/<%= patient._id %>/diagnoses/<%= x._id %>?_method=DELETE" method="POST">
-                                                            <button class="btn btn-danger checkDeletion">Διαγραφή</button>
+                                                            <button class="btn btn-danger ">Διαγραφή</button>
                                                         </form>
                                                         <%} else {%>
                                                             <div data-toggle="tooltip" data-placement="right" title="Για να διαγραψετε αυτη την εγγραφη , πρεπει πρωτα να διαγραφουν ολες οι Δοσεις της.">
                                                                 <form id="delete-form" action="/patients/<%= patient._id %>/diagnoses/<%= x._id %>?_method=DELETE" method="POST">
-                                                                    <button class="btn btn-danger checkDeletion" disabled>Διαγραφή</button>
+                                                                    <button class="btn btn-danger" disabled>Διαγραφή</button>
                                                                 </form>
                                                             </div>
                                                             <%}%>
@@ -241,6 +247,7 @@
                                                 </div>
                                                 <% }%>
                                                     <div id="<%=zIndex%>_dose" class="collapse" aria-labelledby="<%=tIndex%>_dose">
+
                                                         <div class="card-body">
 
                                                             <% y.effects.forEach(function(ef, index){ %>
@@ -307,6 +314,57 @@
                                                                                                                             <% })%>
 
                                                         </div>
+                                                        <div class="container-fluid">
+                                                            <div id='effectsForm'>
+                                                                <form id='formEffects'>
+
+
+                                                                    <div class="row">
+                                                                        <% for (const [key, value] of Object.entries(effects)) { %>
+
+                                                                            <div class="col-sm mt-2">
+                                                                                <ul class="list-group docs">
+
+                                                                                    <li class="list-group-item active">
+                                                                                        <%= value.baseName %>
+                                                                                    </li>
+                                                                                    <% for (const [key1, value1] of Object.entries(value.effects)) { %>
+
+                                                                                        <li class="list-group-item ">
+                                                                                            <input type="checkbox" id='<%= key1 %>' name='<%= key1 %>' class="btn-check checkers" !checked />
+                                                                                            <%= value1.name %>
+                                                                                                <!-- <input type="checkbox" class="btn-check" id='<%= key1 %>' name='<%= key1 %>' !checked autocomplete="off">
+                                                                                            <label class="btn btn-primary" for='<%= key1 %>'><%= value1.name %></label> -->
+                                                                                                <!-- <br> -->
+
+                                                                                        </li>
+                                                                                        <% } %>
+
+                                                                                </ul>
+                                                                            </div>
+
+                                                                            <% } %>
+
+                                                                                <div class="form-group row">
+                                                                                    <label class="col-sm col-form-label" for="colFormLabel">Ημερομηνία :</label>
+                                                                                    <div class="col-sm-10">
+                                                                                        <input type="date" class="form-control effectdate " id="colFormLabel" name="datep" placeholder="Ημερομηνία">
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <!-- <p>Date: <input type="text" id="datepicker" class='effectdate'></p>  2nd way with datepicker-->
+                                                                                <div class="col-sm-10">
+                                                                                    <button type="submit" class="addbtn1 btn btn-primary mb-4">Αποθηκευση</button>
+                                                                                </div>
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+
+
+
+                                                            <button type="submit" class="btn btn-info showForm">Προσθηκη φορμας παρενεργειων</button>
+                                                        </div>
                                                     </div>
 
                                                     <% }) %>
@@ -316,15 +374,20 @@
                     </div>
 
                 </div>
-                <p>
-                    <a class="btn btn-primary btn-large" href="/patients/<%= patient._id %>/diagnoses/new">Πρόσθεστε
-                        Διάγνωση</a>
-                </p>
-                <hr>
+
+
+                <button class="btn btn-primary">
+                    <a class='text-white' href="/patients/<%= patient._id %>/diagnoses/new">Δημιουργία
+                        Ανοσοθεραπείας</a>
+                    </button>
 
             </div>
 
-            <div class="col-3">
+            <div class="col-2">
+
+
+
+
                 <div>
                     <h1 class="text-center ">Αρχεία</h1>
                 </div>

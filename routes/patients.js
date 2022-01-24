@@ -234,10 +234,11 @@ router.get('/:id', function(req, res) {
             data['patient'] = foundPatient
                 // console.log(data.patient.diagnoses)
             var treats = foundPatient.diagnoses.map(x => {
-                var n = {}
-                n[x._id] = x.treatments
-                return n
-            })
+                    var n = {}
+                    n[x._id] = x.treatments
+                    return n
+                })
+                //console.log(treats)
             data['diagnose'] = treats
             var treat = foundPatient.diagnoses.map(x => {
                 return x.treatments
@@ -245,6 +246,7 @@ router.get('/:id', function(req, res) {
             var merged = [].concat.apply([], treat);
             var genre = ['pancreas', 'eyesight', 'muscle', 'skin', 'lungs', 'stomach_bowel']
             Treatment.find().where('_id').in(merged).populate('effects').exec(function(err, foundTreatment) {
+                //console.log(foundTreatment)
                 data['treatment'] = foundTreatment
                 res.render('patients/show', { patient: foundPatient, data: data, effects: staticEffects })
             })
