@@ -222,7 +222,7 @@
                                                                               </svg>
                                                                         </span>
                                                                     </button>
-                                                                    <button type="submit" class="btn btn-info showForm">Προσθηκη φορμας παρενεργειων</button>
+
                                                                     <% if(currentUser &&
                                                                         patient.author.id.equals(currentUser._id) ||
                                                                         currentUser && currentUser.isAdmin){ %>
@@ -253,11 +253,13 @@
                                                     <div id="<%=zIndex%>_dose" class="collapse" aria-labelledby="<%=tIndex%>_dose">
 
                                                         <div class="card-body">
+
                                                             <% if(y.effects.length ===0){%>
 
                                                                 <div class="badge badge-primary text-wrap" style="width: 6rem;">
                                                                     Δεν υπαρχουν παρενεργειες
                                                                 </div>
+
                                                                 <%}%>
                                                                     <% y.effects.forEach(function(ef, index){ %>
 
@@ -313,6 +315,7 @@
                                                                                                                                                 </div>
                                                                                                                                             </div>
                                                                                                                                         </div>
+
                                                                                                                                     </div>
 
 
@@ -374,7 +377,10 @@
 
 
                                                         </div>
+
+                                                        <button type="submit" class="btn btn-info showForm">Προσθηκη φορμας παρενεργειων</button>
                                                     </div>
+
 
                                                     <% }) %>
                                     </div>

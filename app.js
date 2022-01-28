@@ -30,7 +30,7 @@ const effectRoutes = require('./routes/effects')
 const indexRoutes = require('./routes/index')
 
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(express.static(path.join(__dirname, '../public')))
+app.use(express.static(path.join(__dirname, '/public'))) // __dirname starts where the script is running which in this particular case is routes
 app.set('view engine', 'ejs')
 app.use(methodOverride('_method'))
 app.use(flash())
