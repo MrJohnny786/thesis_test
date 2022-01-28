@@ -114,6 +114,7 @@ router.post('/add', (req, res) => {
         }
     }
     const myData = req.body
+    console.log('mydata', myData)
     for (const [key, value] of Object.entries(myData.data)) {
         for (const [key1, value1] of Object.entries(newEffect)) {
             if (key in value1.effects) {
@@ -130,6 +131,7 @@ router.post('/add', (req, res) => {
             console.log(err)
             res.json({ msg: 'error' })
         } else {
+            console.log('treatment', treatment)
             Effect.create(newEffect, function(err, effect) {
                 effect.user.id = req.user._id || '5f718d6a515aee44e04261c8' // both user id and username need middleware check
                 effect.user.username = req.user.username || 'q'

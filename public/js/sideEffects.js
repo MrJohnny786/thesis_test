@@ -1,7 +1,7 @@
 $(document).ready(function() {
-    $('#effectsForm').hide(); // Hide effects checkboxes
+    $('.effectsForm').hide(); // Hide effects checkboxes
     $('.showForm').on('click', function() {
-        $('#effectsForm').toggle()
+        $('.effectsForm').toggle()
     })
 
     const greekNames = {
@@ -310,9 +310,12 @@ $(document).ready(function() {
         }
     })
 
+
     $('.addbtn1').click(function(e) {
         // e.preventDefault();
-        const datepick = $('.effectdate').val()
+        idata.treatment = $(this).attr("data-id")
+        var dateClass = '.' + idata.treatment + "Date"
+        const datepick = $(dateClass).val()
         idata.date = datepick
         $.ajax({
             url: '/effects/add',
@@ -321,7 +324,7 @@ $(document).ready(function() {
             data: { data: idata },
             success: function(response) {
                 if (response.msg === 'success') {
-                    getdata(greekNames, t_id)
+                    getdata(greekNames, idata.treatment)
                 } else {
                     alert('some error occurred try again')
                 }

@@ -10,6 +10,9 @@ const path = require('path')
 const fs = require('fs')
 const staticEffects = require('../public/effects.json')
 
+
+
+
 // Init Storage *Needs to be refactored for better naming of the uploaded files :)
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -227,18 +230,25 @@ router.post('/:id', middleware.checkPatientOwnership, function(req, res) {
  */
 router.get('/:id', function(req, res) {
     var data = {}
+    const testFolder = path.join(__dirname, '../public/uploads/');
+
     Patient.findById(req.params.id).populate('diagnoses').exec(function(err, foundPatient) {
         if (err) {
             console.log(err)
         } else {
+            var folderName = foundPatient.lastName + ' ' + foundPatient.firstName + ' ' + foundPatient._id
+            folderName = testFolder.concat(folderName)
+            var folderContents = []
+            fs.readdirSync(folderName).forEach(file => {
+                folderContents.push(file)
+            });
             data['patient'] = foundPatient
-                // console.log(data.patient.diagnoses)
+
             var treats = foundPatient.diagnoses.map(x => {
-                    var n = {}
-                    n[x._id] = x.treatments
-                    return n
-                })
-                //console.log(treats)
+                var n = {}
+                n[x._id] = x.treatments
+                return n
+            })
             data['diagnose'] = treats
             var treat = foundPatient.diagnoses.map(x => {
                 return x.treatments
@@ -246,9 +256,8 @@ router.get('/:id', function(req, res) {
             var merged = [].concat.apply([], treat);
             var genre = ['pancreas', 'eyesight', 'muscle', 'skin', 'lungs', 'stomach_bowel']
             Treatment.find().where('_id').in(merged).populate('effects').exec(function(err, foundTreatment) {
-                //console.log(foundTreatment)
                 data['treatment'] = foundTreatment
-                res.render('patients/show', { patient: foundPatient, data: data, effects: staticEffects })
+                res.render('patients/show', { patient: foundPatient, data: data, effects: staticEffects, folderContents: folderContents })
             })
 
         }
@@ -308,5 +317,8 @@ router.delete('/:id', middleware.checkPatientOwnership, function(req, res) {
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
 }
+
+
+
 
 module.exports = router

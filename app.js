@@ -9,6 +9,7 @@ const methodOverride = require('method-override')
 const User = require('./models/user')
 const path = require('path')
 const conf = require('./config')
+const fs = require('fs');
 
 // USE CONFIG FILE
 const environment = conf['prod']
@@ -29,7 +30,7 @@ const effectRoutes = require('./routes/effects')
 const indexRoutes = require('./routes/index')
 
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(express.static(path.join(__dirname, '/public')))
+app.use(express.static(path.join(__dirname, '../public')))
 app.set('view engine', 'ejs')
 app.use(methodOverride('_method'))
 app.use(flash())
@@ -65,6 +66,8 @@ app.use('/patients/:id/diagnoses/:diagnose_1/treatments', treatmentRoutes)
 app.use('/', indexRoutes)
 app.use('/staff', staffRoutes)
 app.use('/effects', effectRoutes)
+
+
 
 // APP LISTENING
 app.listen(port, hostname, () => {
