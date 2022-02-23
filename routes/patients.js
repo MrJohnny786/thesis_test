@@ -224,6 +224,7 @@ router.post('/:id', middleware.checkPatientOwnership, function(req, res) {
     })
 })
 
+
 /**
  * @param  {id"} "/ Route that gets the data for the correct patient id.
  * @param  {} res Returns the show view with the patient data.
@@ -238,10 +239,18 @@ router.get('/:id', function(req, res) {
         } else {
             var folderName = foundPatient.lastName + ' ' + foundPatient.firstName + ' ' + foundPatient._id
             folderName = testFolder.concat(folderName)
-            var folderContents = []
-            fs.readdirSync(folderName).forEach(file => {
-                folderContents.push(file)
-            });
+            if (fs.existsSync(folderName)) {
+                var folderContents = []
+                fs.readdirSync(folderName).forEach(file => {
+                    var objFile = {
+                        path: folderName,
+                        file: file
+                    }
+                    folderContents.push(objFile)
+                });
+            } else {
+                var folderContents = []
+            }
             data['patient'] = foundPatient
 
             var treats = foundPatient.diagnoses.map(x => {
@@ -317,6 +326,51 @@ router.delete('/:id', middleware.checkPatientOwnership, function(req, res) {
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
 }
+// IN PROGRESS WORK FOR DOWNLOADING A FILE
+// // Trying to download a file.
+// router.get('/downloaded', function(req, res) {
+
+//     // console.log('download')
+//     // const file = req.data;
+//     // res.download('D:/Downloads/Sample_CV.pdf'); // Set disposition and send it.
+//     res.download('D:/Downloads/Sample_CV.pdf', 'Sample_CV.pdf', function(err) {
+//         if (err) {
+//             console.log(err)
+//                 // Handle error, but keep in mind the response may be partially-sent
+//                 // so check res.headersSent
+//             res.redirect('/patients')
+//         } else {
+//             // decrement a download credit, etc.
+//             res.redirect('back')
+//         }
+//     })
+// });
+
+// router.get('/download', function(req, res) {
+
+//     var file = 'D:/Downloads/Sample_CV.pdf'
+
+//     var filename = path.basename(file);
+//     var mimetype = mime.lookup(file);
+
+//     res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+//     res.setHeader('Content-type', mimetype);
+
+//     var filestream = fs.createReadStream(file);
+//     filestream.pipe(res);
+// });
+
+// var url = 'C:\Users\Johnny786\github\thesis_test\public\uploads\ΚΑΤΩΓΙΑΣ ΚΑΤΩΓΙΑΣ 61eef87a86dfcc00041a57ac\ΚΑΤΩΓΙΑΣ ΚΑΤΩΓΙΑΣ-2022-1-27-17-19.pdf'
+// https.get(url,(res) => {
+//     // Image will be stored at this path
+//     const path = `${__dirname}/files/img.jpeg`; 
+//     const filePath = fs.createWriteStream(path);
+//     res.pipe(filePath);
+//     filePath.on('finish',() => {
+//         filePath.close();
+//         console.log('Download Completed'); 
+//     })
+// })
 
 
 

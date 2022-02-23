@@ -114,7 +114,6 @@ router.post('/add', (req, res) => {
         }
     }
     const myData = req.body
-    console.log('mydata', myData)
     for (const [key, value] of Object.entries(myData.data)) {
         for (const [key1, value1] of Object.entries(newEffect)) {
             if (key in value1.effects) {
@@ -131,7 +130,6 @@ router.post('/add', (req, res) => {
             console.log(err)
             res.json({ msg: 'error' })
         } else {
-            console.log('treatment', treatment)
             Effect.create(newEffect, function(err, effect) {
                 effect.user.id = req.user._id || '5f718d6a515aee44e04261c8' // both user id and username need middleware check
                 effect.user.username = req.user.username || 'q'
@@ -141,11 +139,11 @@ router.post('/add', (req, res) => {
                 effect.patient_id = req.body.data.patient
                 effect.diagnose_id = req.body.data.diagnose
                 effect.treatment_id = req.body.data.treatment
-                    // console.log(req.body.data, 'hear')
+                console.log(req.body.data.patient, 'hear')
                 effect.save()
                 treatment.effects.push(effect)
                 treatment.save()
-                res.json({ msg: 'success' })
+                res.json({ msg: 'success', redirect: true, url: '/patients/' })
             })
         }
     })
@@ -309,9 +307,10 @@ router.delete('/removeEffect', function(req, res) {
 router.delete('/delete/:effect_id', function(req, res) {
     Effect.findByIdAndRemove(req.params.effect_id, function(err) {
         if (err) {
-            res.redirect('back')
+            console.log(err)
+            res.redirect('patients')
         } else {
-            res.redirect('/patients')
+            res.redirect('back')
         }
     })
 })

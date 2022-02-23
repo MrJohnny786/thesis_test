@@ -317,14 +317,17 @@ $(document).ready(function() {
         var dateClass = '.' + idata.treatment + "Date"
         const datepick = $(dateClass).val()
         idata.date = datepick
+        console.log(p_id)
         $.ajax({
             url: '/effects/add',
             method: 'post',
             dataType: 'json',
             data: { data: idata },
             success: function(response) {
-                if (response.msg === 'success') {
+                if (response.msg === 'success' && response.redirect === true) {
                     getdata(greekNames, idata.treatment)
+                    window.location.reload();
+
                 } else {
                     alert('some error occurred try again')
                 }
@@ -378,4 +381,15 @@ $(document).ready(function() {
     })
 
     getdata(greekNames, t_id)
+    var last = $.cookie('activeAccordionGroup');
+    if (last != null) {
+        //remove default collapse settings
+        $("#accordionExample .collapse").removeClass('in');
+        //show the last visible group
+        $("#" + last).collapse("show");
+    }
+    $("#accordionExample").bind('shown', function() {
+        var active = $("#accordionExample .in").attr('id');
+        $.cookie('activeAccordionGroup', active)
+    });
 })

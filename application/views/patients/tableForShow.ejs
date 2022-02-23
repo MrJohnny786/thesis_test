@@ -1,0 +1,44 @@
+<!-- TABLE VIEW OF DIAGNOSES/ΑΝΟΣΟΘΕΡΑΠΕΙΕΣ -->
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Αριθμος Ασθενειας :</th>
+                <th scope="col">Ημ/νια Διάγνωσης :</th>
+                <th scope="col">ΦΑΡΜΑΚΑ (ΟΔΗΓΙΕΣ - ΟΔΟΣ ΧΟΡΗΓΗΣΕΩΣ) :</th>
+                <th scope="col">Γιατρος :</th>
+                <th scope="col">Δημιουργηθηκε :</th>
+            </tr>
+        </thead>
+        <%var i=0 %>
+            <% patient.diagnoses.forEach(function(diagnose,i){ %>
+                <%i+=1 %>
+                    <tbody>
+                        <tr class='clickable-row' data-href="/patients/<%= patient._id %>/diagnoses/<%= diagnose._id %>" style="cursor:pointer">
+                            <td>
+                                <a class="alpha">
+                                    <%= i %>
+                                </a>
+                            </td>
+                            <td>
+                                <a class="alpha">
+                                    <%= moment(diagnose.date).format('DD-MM-YYYY') %>
+                                </a>
+                            </td>
+                            <td>
+                                <a class="alpha">
+                                    <%= diagnose.courseOfTreatment %>
+                            </td>
+                            <td>
+                                <a class="alpha">
+                                    <%= diagnose.doc %>
+                            </td>
+                            <td>
+                                <a class="alpha">
+                                    <%= moment(diagnose.createdAt).fromNow() %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+    </table>
+</div>

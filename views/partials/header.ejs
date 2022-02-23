@@ -6,59 +6,15 @@
     <title></title>
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        .clickableRow {
-            cursor: pointer;
-        }
-        
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-            background-color: #dddddd;
-        }
-        
-        td,
-        th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-            background-color: white;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #dddddd;
-        }
-        
-        td:hover {
-            background-color: #007bff;
-        }
-        
-        .alpha {
-            color: black;
-        }
-        
-        .jumbotheelephant {
-            margin-top: 2rem;
-        }
-        
-        .patient_row {
-            border: 2px solid #007bff;
-            padding: 8px;
-            background-color: #E0E0E0;
-        }
-        
-        body {
-            background-color: #f8f9fa !important;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <!-- <link rel="stylesheet" type="text/css" href="public/stylesheets/main.css"> -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 
     <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script src="https://code.jquery.com/jquery-migrate-3.3.2.js"></script>
 
@@ -67,7 +23,7 @@
 
 
 <!-- NAVBAR OLD WORKING -->
-<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+<!-- <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
     <% if(currentUser){ %>
         <a class="navbar-brand" href="/patients">Συνδεδεμενος ως <%= currentUser.username %></a>
         <% } %>
@@ -88,10 +44,10 @@
                             <% } %>
                 </div>
             </div>
-</nav>
+</nav> -->
 
-<!-- NAVBAR NEW NOT WORKING PROPERLY -->
-<!-- <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #e3f2fd; ">
+<!-- NAVBAR NEW NOT WORKING PROPERLY
+<nav class="navbar navbar-expand-lg navbar-light " style="background-color: #e3f2fd; ">
     <% if(currentUser){ %>
         <a class="navbar-brand" href="/patients">Συνδεδεμενος ως <%= currentUser.username %></a>
         <% } %>
@@ -115,6 +71,40 @@
                 </div>
             </div>
 </nav> -->
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <% if(currentUser){ %>
+            <a class="navbar-brand" href="/patients">Aρχικη Σελιδα </a>
+            <% } %>
+                <% if(!currentUser){ %>
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="nav-item ">
+                            <a class="nav-item nav-link active" href="/">Σύνδεση <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-item nav-link" href="/register">Εγγραφή</a>
+                        </li>
+                    </ul>
+                    <%}else{%>
+                        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                            <li class="nav-item ">
+                                <a class="nav-item nav-link ajaxStaff font-italic" href="/staff">Προσωπικό Νοσοκομείου</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav my-2 my-lg-0">
+                            <li class="nav-item ">
+                                <a class="nav-item nav-link ">Συνδεδεμενος ως <%= currentUser.username %></a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-item nav-link" href="/logout">Αποσύνδεση</a>
+                            </li>
+                        </ul>
+                        <%}%>
+    </div>
+</nav>
 
 
 

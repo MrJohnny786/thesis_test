@@ -53,7 +53,7 @@ router.post('/', middleware.isLoggedIn, function(req, res) {
 
                     patient.diagnoses.push(diagnose)
                     patient.save()
-                    req.flash('success', 'Δημιουργηθηκε καινουρια Διαγνωση')
+                    req.flash('success', 'Δημιουργήθηκε καινούρια Ανοσοθεραπεία.')
                     res.redirect('/patients/' + patient._id)
                 }
             })
