@@ -3,6 +3,8 @@ const router = express.Router()
 const Patient = require('../models/patient')
 const Staff = require('../models/staff')
 const Treatment = require('../models/treatment')
+const mongoose = require('mongoose')
+const methodOverride = require('method-override')
 
 const middleware = require('../middleware')
 const multer = require('multer')
@@ -13,69 +15,70 @@ const staticEffects = require('../public/effects.json')
 
 
 
-// Init Storage *Needs to be refactored for better naming of the uploaded files :)
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const id = req.url.replace('/', '')
-        Patient.findById(id, function(err, user) {
-            const patient_name = user.firstName
-            const patient_lastname = user.lastName
-            const pname = patient_lastname + ' ' + patient_name + ' ' + id
-            const dir = `./public/uploads/${pname}`
-            if (err) {
-                return fs.mkdir(dir, error => cb(error, dir))
-            } else {
-                fs.exists(dir, exist => {
-                    if (!exist) {
-                        return fs.mkdir(dir, error => cb(error, dir))
-                    }
-                    return cb(null, dir)
-                })
-            }
-        })
-    },
-    filename: function(req, file, cb) {
-        const id = req.url.replace('/', '')
-        Patient.findById(id, function(err, user) {
-            if (err) {
-                cb(null, '-' + path.extname(file.originalname))
-            } else {
-                const patient_name = user.firstName
-                const patient_lastname = user.lastName
-                const pname = patient_lastname + ' ' + patient_name
-                const timestamp = Date.now()
-                const date = new Date(timestamp) //Changed from date , to const date.
-                const date_c = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getHours() + '-' + date.getMinutes()
-                cb(null, pname + '-' + date_c + path.extname(file.originalname))
-            }
-        })
-    }
-})
 
-// Init Upload
-const upload = multer({
+// // Init Storage *Needs to be refactored for better naming of the uploaded files :)
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         const id = req.url.replace('/', '')
+//         Patient.findById(id, function(err, user) {
+//             const patient_name = user.firstName
+//             const patient_lastname = user.lastName
+//             const pname = patient_lastname + ' ' + patient_name + ' ' + id
+//             const dir = `./public/uploads/${pname}`
+//             if (err) {
+//                 return fs.mkdir(dir, error => cb(error, dir))
+//             } else {
+//                 fs.exists(dir, exist => {
+//                     if (!exist) {
+//                         return fs.mkdir(dir, error => cb(error, dir))
+//                     }
+//                     return cb(null, dir)
+//                 })
+//             }
+//         })
+//     },
+//     filename: function(req, file, cb) {
+//         const id = req.url.replace('/', '')
+//         Patient.findById(id, function(err, user) {
+//             if (err) {
+//                 cb(null, '-' + path.extname(file.originalname))
+//             } else {
+//                 const patient_name = user.firstName
+//                 const patient_lastname = user.lastName
+//                 const pname = patient_lastname + ' ' + patient_name
+//                 const timestamp = Date.now()
+//                 const date = new Date(timestamp) //Changed from date , to const date.
+//                 const date_c = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getHours() + '-' + date.getMinutes()
+//                 cb(null, pname + '-' + date_c + path.extname(file.originalname))
+//             }
+//         })
+//     }
+// })
 
-    storage: storage,
-    limits: { fileSize: 1000000 },
-    fileFilter: function(req, file, cb) {
-        checkFileType(file, cb)
-    }
-}).single('myImage')
+// // Init Upload
+// const upload = multer({
 
-// Check File Type
-function checkFileType(file, cb) {
-    // Allowed ext
-    const filetypes = /jpeg|jpg|png|pdf|doc|docx/
-        // Check ext
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
-        // Check mime
-    const mimetype = filetypes.test(file.mimetype)
-    if (extname) {
-        return cb(null, true)
-    } else {
-        cb('Error: File problem!')
-    }
-}
+//     storage: storage,
+//     limits: { fileSize: 1000000 },
+//     fileFilter: function(req, file, cb) {
+//         checkFileType(file, cb)
+//     }
+// }).single('myImage')
+
+// // Check File Type
+// function checkFileType(file, cb) {
+//     // Allowed ext
+//     const filetypes = /jpeg|jpg|png|pdf|doc|docx/
+//         // Check ext
+//     const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
+//         // Check mime
+//     const mimetype = filetypes.test(file.mimetype)
+//     if (extname) {
+//         return cb(null, true)
+//     } else {
+//         cb('Error: File problem!')
+//     }
+// }
 
 /**
  * Return every Patient in the database.
@@ -210,7 +213,6 @@ router.get('/new', middleware.isLoggedIn, function(req, res) {
 router.post('/:id', middleware.checkPatientOwnership, function(req, res) {
     upload(req, res, (err) => {
         if (err) {
-            console.log('error')
             console.log(err)
             res.redirect('/patients/' + req.params.id)
         } else {
@@ -223,7 +225,16 @@ router.post('/:id', middleware.checkPatientOwnership, function(req, res) {
         }
     })
 })
+const mongooseUpload = mongoose.connection;
+const GridFsStorage = require('multer-gridfs-storage')
+const Grid = require('gridfs-stream')
 
+let gfs;
+mongooseUpload.once('open', () => {
+    // init stream
+    gfs = Grid(mongooseUpload.db, mongoose.mongo)
+    gfs.collection('uploads')
+})
 
 /**
  * @param  {id"} "/ Route that gets the data for the correct patient id.
@@ -237,6 +248,28 @@ router.get('/:id', function(req, res) {
         if (err) {
             console.log(err)
         } else {
+
+            ////////////////////// SHOW FILES
+            var allFiles;
+            gfs.files.find().toArray((err, files) => {
+                //Check if files
+                if (!files || files.length === 0) {
+                    oneFile = false
+                } else {
+                    files.map(file => {
+                        if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+                            file.isImage = true
+                        } else {
+                            file.isImage = false
+                        }
+                    })
+                    allFiles = files
+                }
+
+            })
+
+
+            ////////////////////
             var folderName = foundPatient.lastName + ' ' + foundPatient.firstName + ' ' + foundPatient._id
             folderName = testFolder.concat(folderName)
             if (fs.existsSync(folderName)) {
@@ -262,11 +295,12 @@ router.get('/:id', function(req, res) {
             var treat = foundPatient.diagnoses.map(x => {
                 return x.treatments
             })
+
             var merged = [].concat.apply([], treat);
             var genre = ['pancreas', 'eyesight', 'muscle', 'skin', 'lungs', 'stomach_bowel']
             Treatment.find().where('_id').in(merged).populate('effects').exec(function(err, foundTreatment) {
                 data['treatment'] = foundTreatment
-                res.render('patients/show', { patient: foundPatient, data: data, effects: staticEffects, folderContents: folderContents })
+                res.render('patients/show', { patient: foundPatient, data: data, effects: staticEffects, folderContents: folderContents, allFiles: allFiles, host: req.headers.host })
             })
 
         }
@@ -346,19 +380,19 @@ function escapeRegex(text) {
 //     })
 // });
 
-// router.get('/download', function(req, res) {
+router.get('/downloade', function(req, res) {
 
-//     var file = 'D:/Downloads/Sample_CV.pdf'
+    var file = 'D:/Downloads/Sample_CV.pdf'
 
-//     var filename = path.basename(file);
-//     var mimetype = mime.lookup(file);
+    var filename = path.basename(file);
+    var mimetype = mime.lookup(file);
 
-//     res.setHeader('Content-disposition', 'attachment; filename=' + filename);
-//     res.setHeader('Content-type', mimetype);
+    res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+    res.setHeader('Content-type', mimetype);
 
-//     var filestream = fs.createReadStream(file);
-//     filestream.pipe(res);
-// });
+    var filestream = fs.createReadStream(file);
+    filestream.pipe(res);
+});
 
 // var url = 'C:\Users\Johnny786\github\thesis_test\public\uploads\ΚΑΤΩΓΙΑΣ ΚΑΤΩΓΙΑΣ 61eef87a86dfcc00041a57ac\ΚΑΤΩΓΙΑΣ ΚΑΤΩΓΙΑΣ-2022-1-27-17-19.pdf'
 // https.get(url,(res) => {
