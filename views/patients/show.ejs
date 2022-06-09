@@ -135,7 +135,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-7">
+            <div class="col-6">
 
                 <div>
                     <h1 class="text-center ">Ανοσοθεραπείες <button style="display:none" type="button" class="btn btn-primary">Expand/Collapse All</button></h1>
@@ -400,7 +400,7 @@
 
             </div>
 
-            <div class="col-3">
+            <div class="col-4">
 
 
 
@@ -419,23 +419,32 @@
                             </form>
                             <hr>
                             <% if(allFiles){ %>
-                                <% allFiles.forEach(function(file){%>
-                                    <div class="card card-body mb-3">
-                                        <% if (file.isImage) {%>
-                                            <img src="http://<%=host%>/serve/<%=file.filename%>" alt="">
+                                <table id="myTable" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% allFiles.forEach(function(file){%>
 
-                                            <%}else{%>
-                                                <%= file.filename %>
+                                            <tr>
+                                                <td>
+                                                    <%= file.filename.split('.')[0] %>
+                                                </td>
+                                                <td>Ανέβηκε στις
+                                                    <%= moment().toISOString('file.uploadDate') %>
+                                                </td>
+
+                                            </tr>
+
+                                            <%})%>
+                                                <% } else { %>
+                                                    <p>No files to show.</p>
                                                     <% } %>
-                                                        <button class="btn btn-primary btn-block mt-4" onclick="window.open('http://<%=host%>/serve/<%=file.filename%>')">Άνοιγμα</button>
-                                                        <form method="POST" action="/files/<%= file._id%>?_method=DELETE">
-                                                            <button class="btn btn-danger btn-block mt-4">Διαγραφή</button>
-                                                        </form>
-                                    </div>
-                                    <%})%>
-                                        <% } else { %>
-                                            <p>No files to show.</p>
-                                            <% } %>
+                                    </tbody>
+                                </table>
                         </div>
                     </div>
                 </div>

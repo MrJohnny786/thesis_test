@@ -69,3 +69,8 @@ th {
 body {
     background-color: #f8f9fa;
 }
+
+#myTable {
+    table-layout: fixed;
+    /* width: 100% !important; */
+}

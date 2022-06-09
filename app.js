@@ -87,17 +87,21 @@ const storage = new GridFsStorage({
     url: db,
     file: (req, file) => {
         return new Promise((resolve, reject) => {
-            crypto.randomBytes(16, (err, buf) => {
-                if (err) {
-                    return reject(err);
-                }
-                const filename = buf.toString('hex') + path.extname(file.originalname);
-                const fileInfo = {
-                    filename: filename,
-                    bucketName: 'uploads'
-                };
-                resolve(fileInfo);
-            });
+            console.log('req', req)
+            console.log('file', file)
+                // crypto.randomBytes(16, (err, buf) => {
+                //     if (err) {
+                //         return reject(err);
+                //     }
+                // const filename = buf.toString('hex') + path.extname(file.originalname);
+            const filename = file.originalname
+            const fileInfo = {
+                filename: filename,
+
+                bucketName: 'uploads'
+            };
+            resolve(fileInfo);
+            // });
         });
     }
 });
@@ -157,7 +161,7 @@ app.get('/files/:filename', (req, res) => {
 app.get('/serve/:filename', (req, res) => {
 
     gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-        console.log(file)
+        //console.log(file)
         if (!file || file.length === 0) {
             return res.status(404).json({
                 err: 'No file exist'
