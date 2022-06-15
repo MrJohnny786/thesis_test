@@ -251,7 +251,7 @@ router.get('/:id', function(req, res) {
 
             ////////////////////// SHOW FILES
             var allFiles;
-            gfs.files.find().toArray((err, files) => {
+            gfs.files.find({ aliases: req.params.id }).toArray((err, files) => {
                 //Check if files
                 if (!files || files.length === 0) {
                     oneFile = false

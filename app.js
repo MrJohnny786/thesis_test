@@ -87,7 +87,7 @@ const storage = new GridFsStorage({
     url: db,
     file: (req, file) => {
         return new Promise((resolve, reject) => {
-            console.log('req', req)
+            console.log('req', req.params.id)
             console.log('file', file)
                 // crypto.randomBytes(16, (err, buf) => {
                 //     if (err) {
@@ -97,7 +97,7 @@ const storage = new GridFsStorage({
             const filename = file.originalname
             const fileInfo = {
                 filename: filename,
-
+                aliases: req.params.id,
                 bucketName: 'uploads'
             };
             resolve(fileInfo);
@@ -111,7 +111,7 @@ const upload = multer({ storage });
 
 // @route POST /upload
 // @desc Upload file to DB
-app.post('/upload', upload.single('file'), (req, res) => {
+app.post('/upload/:id', upload.single('file'), (req, res) => {
     // res.json({ file: req.file })
     res.redirect('back')
 })
