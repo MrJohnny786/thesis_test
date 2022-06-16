@@ -7,11 +7,55 @@
         </ol>
     </nav>
 
+    <!-- <div class="jumbotron jumbotron-fluid">
+        <div class="container-md">
+            <div class="row">
+                <div class="col-md">
+                    Όνομα :
+                    <%= patient.firstName %>
+                </div>
+                <div class="col-md">
+                    One of three columns
+                </div>
+                <div class="col-md">
+                    One of three columns
+                </div>
+                <div class="col-md">
+                    One of three columns
+                </div>
+                <div class="col-md">
+                    One of three columns
+                </div>
+                <div class="col-md">
+                    <ul class="list-group">
+                        <li class="list-group-item disabled">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Morbi leo risus</li>
+                        <li class="list-group-item">Porta ac consectetur ac</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div> -->
+    <!-- <div class="card">
+        <div class="card-header">
+            Όνοματεπωνυμο :
+            <%= patient.firstName %>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Special title treatment</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div> -->
+
 
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3">
+            <div class="col-2">
                 <div class="text-center">
                     <h1>Στοιχεία Ασθενή</h1>
                 </div>
@@ -135,7 +179,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-7">
+            <div class="col-6">
 
                 <div>
                     <h1 class="text-center ">Ανοσοθεραπείες <button style="display:none" type="button" class="btn btn-primary">Expand/Collapse All</button></h1>
@@ -400,60 +444,78 @@
 
             </div>
 
-            <div class="col-2">
+            <div class="col-4">
 
 
 
 
-                <div>
-                    <h1 class="text-center ">Αρχεία</h1>
-                </div>
-                <form action="/patients/<%= patient._id %>" method="POST" enctype="multipart/form-data">
-                    <!--?_method=PUT -->
-                    <div class="form-group ">
-                        <label for="exampleFormControlFile1">File input</label>
-                        <input name="myImage" type="file" class="form-control-file" id="exampleFormControlFile1">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <h1 class="text-center display-4 my-4">Αρχεία</h1>
+                            <form action="/upload/<%= patient._id %>" method="POST" enctype="multipart/form-data">
+                                <div class="custom-file mb-3">
+                                    <input type="file" name="file" id="file" class="custom-file-input">
+                                    <label for="file" class="custom-file-label">Choose File</label>
+                                </div>
+                                <input type="submit" value="Submit" class="btn btn-primary btn-block">
+                            </form>
+                            <hr>
+                            <% if(allFiles){ %>
+                                <table id="myTable" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Ονομασια Αρχειου</th>
+                                            <th>Ημερομηνια Εισαγωgης</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% allFiles.forEach(function(file){%>
+
+                                            <tr>
+                                                <td>
+                                                    <%= file.filename.split('.')[0] %>
+                                                </td>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-sm">
+                                                            Aνέβηκε στις
+                                                            <%= moment(file.uploadDate).toISOString() %>
+                                                        </div>
+                                                        <div class="col-sm">
+                                                            <span><button class="btn-sm btn-primary btn-block mt-4" onclick="window.open('http://<%=host%>/serve/<%=file.filename%>')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-window-stack" viewBox="0 0 16 16">
+                                                                <path d="M4.5 6a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1ZM6 6a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm2-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z"/>
+                                                                <path d="M12 1a2 2 0 0 1 2 2 2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2 2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h10ZM2 12V5a2 2 0 0 1 2-2h9a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1Zm1-4v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V8H3Zm12-1V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v2h12Z"/>
+                                                              </svg></button></span>
+                                                        </div>
+                                                        <div class="col-sm">
+                                                            <form method="POST" action="/files/<%= file._id%>?_method=DELETE">
+                                                                <span><button class="btn-sm btn-danger btn-block mt-4">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                                                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                                                  </svg>
+                                                            </button></span>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+
+
+
+
+
+                                                </td>
+
+                                            </tr>
+
+                                            <%})%>
+                                                <% } else { %>
+                                                    <p>No files to show.</p>
+                                                    <% } %>
+                                    </tbody>
+                                </table>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-                <div class="list-group mt-3">
-                    <%=folderContents%>
-                        <% folderContents.forEach(function(file){%>
-
-                            <% fileType =  file.file.split('.')[1]%>
-                                <% if(fileType === 'pdf'){%>
-                                    <button type="submit"> <a href="/patients/downloade">Download</a> </button>
-                                    <div class="list-group-item list-group-item-action list-group-item-success">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-pdf" viewBox="0 0 16 16">
-                                            <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
-                                            <path d="M4.603 12.087a.81.81 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.68 7.68 0 0 1 1.482-.645 19.701 19.701 0 0 0 1.062-2.227 7.269 7.269 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.187-.012.395-.047.614-.084.51-.27 1.134-.52 1.794a10.954 10.954 0 0 0 .98 1.686 5.753 5.753 0 0 1 1.334.05c.364.065.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.856.856 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.716 5.716 0 0 1-.911-.95 11.642 11.642 0 0 0-1.997.406 11.311 11.311 0 0 1-1.021 1.51c-.29.35-.608.655-.926.787a.793.793 0 0 1-.58.029zm1.379-1.901c-.166.076-.32.156-.459.238-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361.01.022.02.036.026.044a.27.27 0 0 0 .035-.012c.137-.056.355-.235.635-.572a8.18 8.18 0 0 0 .45-.606zm1.64-1.33a12.647 12.647 0 0 1 1.01-.193 11.666 11.666 0 0 1-.51-.858 20.741 20.741 0 0 1-.5 1.05zm2.446.45c.15.162.296.3.435.41.24.19.407.253.498.256a.107.107 0 0 0 .07-.015.307.307 0 0 0 .094-.125.436.436 0 0 0 .059-.2.095.095 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a3.881 3.881 0 0 0-.612-.053zM8.078 5.8a6.7 6.7 0 0 0 .2-.828c.031-.188.043-.343.038-.465a.613.613 0 0 0-.032-.198.517.517 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822.024.111.054.227.09.346z"/>
-                                          </svg>
-
-                                        <%=file.file%>
-                                    </div>
-
-
-                                    <%}else if(fileType === 'png' || fileType === 'img'){%>
-                                        <div>
-                                            <a href="#" class="list-group-item list-group-item-action list-group-item-success">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-image" viewBox="0 0 16 16">
-                                                <path d="M8.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                                                <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v8l-2.083-2.083a.5.5 0 0 0-.76.063L8 11 5.835 9.7a.5.5 0 0 0-.611.076L3 12V2z"/>
-                                              </svg>
-                                                <%=file.file%>
-                                            </a>
-                                        </div>
-
-                                        <%}else{%>
-                                            <a href="#" class="list-group-item list-group-item-action list-group-item-success">
-                                                <%=file.file%>
-                                            </a>
-                                            <%}%>
-                                                <%})%>
-
-
-
-
                 </div>
             </div>
         </div>

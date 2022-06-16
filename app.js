@@ -10,6 +10,13 @@ const User = require('./models/user')
 const path = require('path')
 const conf = require('./config')
 const fs = require('fs');
+const crypto = require('crypto')
+const GridFsStorage = require('multer-gridfs-storage')
+const Grid = require('gridfs-stream')
+const multer = require('multer')
+
+// let mongoObjectId = require('mongodb').ObjectId;
+// let mongodb = require('mongodb').MongoClient;
 
 // USE CONFIG FILE
 const environment = conf['prod']
@@ -19,7 +26,8 @@ const db = environment.app.db
 const mySecret = environment.app.secret
 
 // CCONNECT TO DB (EITHER LOCAL OR ONLINE)
-mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+var conn = mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+const mongooseUpload = mongoose.connection;
 
 // ROUTES LOGIC
 const patientRoutes = require('./routes/patients')
@@ -68,6 +76,112 @@ app.use('/staff', staffRoutes)
 app.use('/effects', effectRoutes)
 
 
+//UPLOAD FILE WITH GRIDFS
+let gfs;
+mongooseUpload.once('open', () => {
+    // init stream
+    gfs = Grid(mongooseUpload.db, mongoose.mongo)
+    gfs.collection('uploads')
+})
+const storage = new GridFsStorage({
+    url: db,
+    file: (req, file) => {
+        return new Promise((resolve, reject) => {
+            console.log('req', req.params.id)
+            console.log('file', file)
+                // crypto.randomBytes(16, (err, buf) => {
+                //     if (err) {
+                //         return reject(err);
+                //     }
+                // const filename = buf.toString('hex') + path.extname(file.originalname);
+            const filename = file.originalname
+            const fileInfo = {
+                filename: filename,
+                aliases: req.params.id,
+                bucketName: 'uploads'
+            };
+            resolve(fileInfo);
+            // });
+        });
+    }
+});
+const upload = multer({ storage });
+// @route GET/
+// @desc Loads form
+
+// @route POST /upload
+// @desc Upload file to DB
+app.post('/upload/:id', upload.single('file'), (req, res) => {
+    // res.json({ file: req.file })
+    res.redirect('back')
+})
+
+// @route GET /files
+// @desc Dsiplay all files in JSON
+app.get('/files', (req, res) => {
+    gfs.files.find().toArray((err, files) => {
+        //Check if files
+        if (!files || files.length === 0) {
+            return res.status(404).json({
+                err: 'No files exist'
+            })
+        }
+        return res.json(files);
+    })
+})
+
+// @route DELETE //files/:_id
+// @desc Delete file
+app.delete('/files/:id', (req, res) => {
+    gfs.remove({ _id: req.params.id, root: 'uploads' }, (err, gridStore) => {
+        if (err) {
+            return res.status(404).json({ err: err })
+        } else {
+            res.redirect('/patients');
+        }
+    })
+})
+
+// @route GET /files/:filename
+// @desc Dsiplay a single file in JSON
+app.get('/files/:filename', (req, res) => {
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+        if (!file || file.length === 0) {
+            return res.status(404).json({
+                err: 'No file exist'
+            })
+        }
+        return res.json(file);
+    })
+
+})
+
+// @route GET /files/:filename
+// @desc Display image
+app.get('/serve/:filename', (req, res) => {
+
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+        //console.log(file)
+        if (!file || file.length === 0) {
+            return res.status(404).json({
+                err: 'No file exist'
+            })
+        }
+        if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+            // Read output to browser
+            const readstream = gfs.createReadStream(file._id)
+            readstream.pipe(res);
+        } else if (file.contentType === 'application/pdf') {
+            const readstream = gfs.createReadStream(file._id)
+            readstream.pipe(res);
+        } else {
+            res.status(404).json({
+                err: "Not an image"
+            })
+        }
+    })
+
+})
 
 // APP LISTENING
 app.listen(port, hostname, () => {
