@@ -43,7 +43,6 @@ $(document).ready(function() {
                 }
             },
             error: function(response) {
-                console.log(response)
                 alert('server error')
             }
         })
@@ -67,18 +66,19 @@ $(document).ready(function() {
                             // const url = url + data._id
                             index += 1
                             if (data.role === 'Γιατρος') {
-                                $('body > div:nth-child(5) > div > div:nth-child(1) > ul').append('<li class="list-group-item doctor">' + data.name + ' ' + data.surname + '<button type="button" class="btn-sm btn-outline-danger float-right del" value=' + data._id + '>X</button></li>')
+                                $('body> div.container-fluid> div.container-fluid> div.row> div:nth-child(2) > div.container > div:nth-child(1)> div:nth-child(1)').append('<li class="list-group-item doctor">' + data.name + ' ' + data.surname + '<button type="button" class="btn-outline-danger float-right del" value=' + data._id + '>X</button></li>')
+                                    // $('body > div:nth-child(5) > div > div:nth-child(1) > ul').append('<li class="list-group-item doctor">' + data.name + ' ' + data.surname + '<button type="button" class="btn-sm btn-outline-danger float-right del" value=' + data._id + '>X</button></li>')
                             } else if (data.role === 'Νοσηλευτης') {
-                                $('body > div:nth-child(5) > div > div:nth-child(2) > ul').append('<li class="list-group-item nurse">' + data.name + ' ' + data.surname + ' <button type="button" class="btn-sm btn-outline-danger float-right del" value=' + data._id + '>X</button></li>')
+                                $('body> div.container-fluid> div.container-fluid> div.row> div:nth-child(2) > div.container > div:nth-child(1)> div:nth-child(2)').append('<li class="list-group-item nurse">' + data.name + ' ' + data.surname + ' <button type="button" class="btn-outline-danger float-right del" value=' + data._id + '>X</button></li>')
                             } else {
-                                $('body > div:nth-child(5) > div > div:nth-child(3) > ul').append('<li class="list-group-item other">' + data.name + ' ' + data.surname + ' <button type="button" class="btn-sm btn-outline-danger float-right del" value=' + data._id + '>X</button></li>')
+                                $('body> div.container-fluid> div.container-fluid> div.row> div:nth-child(2) > div.container > div:nth-child(1)> div:nth-child(3)').append('<li class="list-group-item other">' + data.name + ' ' + data.surname + ' <button type="button" class="btn-outline-danger float-right del" value=' + data._id + '>X</button></li>')
                             }
                         })
                     }
                 }
             },
             error: function(response) {
-                alert('server error')
+                alert(response)
             }
         })
     }

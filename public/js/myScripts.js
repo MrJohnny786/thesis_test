@@ -6,6 +6,7 @@ $('input[type="file"]').change(function(e) {
 
 $(document).ready(function() {
 
+    // $('body> div.container-fluid> div.container-fluid> div.row> div:nth-child(2)').hide()
     $('#myTable').DataTable({
         columnDefs: [{
             targets: 0,
@@ -14,4 +15,5 @@ $(document).ready(function() {
             }
         }]
     });
+    $('#myPatientsTable').DataTable();
 });
