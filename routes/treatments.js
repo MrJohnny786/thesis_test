@@ -65,6 +65,7 @@ router.get('/:treatment_id', function(req, res) {
         if (err) {
             res.redirect('/patients')
         } else {
+            console.log('controller ', foundTreatment)
             res.render('treatments/show', { patient_id: req.params.id, diagnose_id: req.params.diagnose_1, treatment: foundTreatment, effects: staticEffects })
         }
     })

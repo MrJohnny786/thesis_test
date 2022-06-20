@@ -48,6 +48,7 @@ router.get('/geteffects/:treatment_id', (req, res) => {
  * ps Change the static saving of the user as author.
  */
 router.post('/add', (req, res) => {
+    console.log('req.body', req.body)
     const newEffect = {
         stomach_bowel: {
             baseName: 'Στομαχι/Εντερο',
@@ -126,6 +127,7 @@ router.post('/add', (req, res) => {
 
     // SAVE THE CURRENT USER , NOT THE STATIC ONE JESUS CHRIST
     Treatment.findById(myData.data.treatment, function(err, treatment) {
+        console.log('treatment here', treatment)
         if (err) {
             console.log(err)
             res.json({ msg: 'error' })
@@ -139,7 +141,8 @@ router.post('/add', (req, res) => {
                 effect.patient_id = req.body.data.patient
                 effect.diagnose_id = req.body.data.diagnose
                 effect.treatment_id = req.body.data.treatment
-                console.log(req.body.data.patient, 'hear')
+
+                // console.log(treatment.effects, 'hear')
                 effect.save()
                 treatment.effects.push(effect)
                 treatment.save()

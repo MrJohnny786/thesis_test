@@ -239,11 +239,13 @@ $(document).ready(function() {
     const p_id = $('#patient').val()
     const d_id = $('#diagnose').val()
     const t_id = $('#treatment').val()
+    console.log('t_id', t_id)
     const e_id = $('#e_id').val()
 
     idata.patient = p_id
     idata.diagnose = d_id
     idata.treatment = t_id
+    console.log('idata', idata)
 
     /**
      * @param  {} names The whole category object of the side-effects.
@@ -251,12 +253,14 @@ $(document).ready(function() {
      * Creates div for every side effect found of the treatment that we chose.
      */
     function getdata(names, t_id) {
+
         $.ajax({
             url: '/effects/geteffects/' + t_id,
             method: 'get',
             dataType: 'json',
             success: function(response) {
                 // e.preventDefault();
+                console.log('mpes t_id', t_id)
                 if (response.msg == 'success') {
                     $.each(response.data, function(index, data) {
                         let daty
@@ -285,6 +289,7 @@ $(document).ready(function() {
                 }
             },
             error: function(response) {
+                console.log('mpes t_id11111', t_id)
                 alert('server error')
             }
         })
@@ -317,7 +322,6 @@ $(document).ready(function() {
         var dateClass = '.' + idata.treatment + "Date"
         const datepick = $(dateClass).val()
         idata.date = datepick
-        console.log(p_id)
         $.ajax({
             url: '/effects/add',
             method: 'post',
@@ -325,6 +329,7 @@ $(document).ready(function() {
             data: { data: idata },
             success: function(response) {
                 if (response.msg === 'success' && response.redirect === true) {
+                    console.log('posting ', idata)
                     getdata(greekNames, idata.treatment)
                     window.location.reload();
 
