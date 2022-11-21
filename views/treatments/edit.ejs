@@ -1,8 +1,9 @@
-<% include ../partials/header %>
+<%- include('../partials/header') -%>
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/patients/<%= patient_id %>/diagnoses/<%= diagnose_id%>/treatments/<%= treatment._id %>">Πισω</a></li>
+            <!-- <li class="breadcrumb-item"><a href="/patients/<%= patient_id %>/diagnoses/<%= diagnose_id%>/treatments/<%= treatment._id %>">Πισω</a></li> -->
+            <li class="breadcrumb-item"></li><a ><button type="button" onclick="history.go(-1)"" class="btn btn-info">Πίσω</button></a></li>
         </ol>
     </nav>
 
@@ -20,7 +21,7 @@
                     <div class="form-group row">
                         <label for="colFormLabel" class="col-sm-4 col-form-label">Ημερομηνία Δόσης :</label>
                         <div class="col-sm-5">
-                            <input type="date" class="form-control" name="treatment[date]" id="colFormLabel" value="<%= moment(treatment.date).format('YYYY-MM-DD') %>" required minlength="1" maxlength="20">
+                            <input type="date" class="form-control" name="treatment[date]" id="colFormLabel" min="<%= moment(treatment.date).format('YYYY-MM-DD') %>" value="<%= moment(treatment.date).format('YYYY-MM-DD') %>" required minlength="1" maxlength="20">
                         </div>
                     </div>
 
@@ -29,8 +30,8 @@
                         <div class="col-sm-5">
                             <select class="btn btn-secondary dropdown-toggle" class="staff" data-style="btn-info" name="treatment[staff]">
     <optgroup label="Select Table">
-      <option name="<%= treatment.staff %>" value="<%= treatment.staff %>">
-        <%= treatment.staff %>
+      <option name="-" value="-">
+        -
       </option>
       <% for(var i=0; i<staff.length; i++) {%>
         <% fullname=staff[i].surname
@@ -62,4 +63,4 @@
         </div>
     </div>
 
-    <% include ../partials/footer %>
+    <%- include('../partials/footer') -%>

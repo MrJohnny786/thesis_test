@@ -1,76 +1,85 @@
 .btnColor {
-    background-color: #003B46 !important;
+  background-color: #003b46 !important;
 }
 
 .btnColor1 {
-    background-color: #66A5AD !important;
+  background-color: #66a5ad !important;
 }
 
 .btnColor2 {
-    background-color: #e3f2fd !important;
+  background-color: #e3f2fd !important;
 }
 
 img {
-    width: 100%
+  width: 100%;
 }
 
 .clickableRow {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    background-color: #dddddd;
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  background-color: #dddddd;
 }
 
 td,
 th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-    background-color: #e3f2fd;
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  background-color: #e3f2fd;
 }
-
 
 /* tr:nth-child(even) {
     background-color: #dddddd;
 } */
 
-
 /* #waypointsTable tr:hover {
     background-color: yellow;
 } */
-
 
 /* tr:hover {
     background-color: #007bff;
 } */
 
 .hoveri td th {
-    background-color: red;
+  background-color: red;
 }
 
 .alpha {
-    color: black;
+  color: black;
 }
 
 .jumbotheelephant {
-    margin-top: 2rem;
+  margin-top: 2rem;
 }
 
 .patient_row {
-    border: 2px solid #007bff;
-    padding: 8px;
-    background-color: #E0E0E0;
+  border: 2px solid #007bff;
+  padding: 8px;
+  background-color: #e0e0e0;
 }
 
 body {
-    background-color: #f8f9fa;
+  background-color: #f8f9fa;
 }
 
 #myTable {
-    table-layout: fixed;
-    /* width: 100% !important; */
+  table-layout: fixed;
+  /* width: 100% !important; */
+}
+
+/* Chrome, Safari, Edge, Opera */
+#noStep input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+#noStep input[type="number"] {
+  -moz-appearance: textfield;
 }

@@ -1,4 +1,4 @@
-<% include ../partials/header %>
+<%- include('../partials/header') -%>
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -144,7 +144,7 @@
                                 </div>
                             </div>
 
-                            <!-- <p>Date: <input type="text" id="datepicker" class='effectdate'></p>  2nd way with datepicker-->
+                            <!-- <p>Date: <input type="text" id="datepicker" class=''></p>  2nd way with datepicker-->
                             <div class="col-sm-10">
                                 <button data-id='<%=treatment._id%>' type="submit" class="addbtn1 btn btn-primary mb-2">Αποθηκευση</button>
                             </div>
@@ -153,9 +153,6 @@
             </form>
         </div>
 
-
-
-        <button type="submit" class="btn btn-info showForm">Προσθηκη φορμας παρενεργειων</button>
     </div>
 
 
@@ -183,4 +180,4 @@
     </div> -->
 
 
-    <% include ../partials/footer %>
+    <%- include('../partials/footer') -%>

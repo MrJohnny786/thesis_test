@@ -1,0 +1,9 @@
+effect-edit view
+    -Fix going back.
+    -Fix changing the date properly.
+    -Remove effects button form from edit view of effects
+
+After deleting an effect , properly redirect the user.
+Update/validate patient forms.
+Doses have minimum date which is the latest dose the patient has taken in the current treatment, if there are no doses , the latest date is the date the anosotherapy was made
+Add download button for files.

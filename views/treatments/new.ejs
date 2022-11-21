@@ -1,11 +1,11 @@
-<% include ../partials/header %>
+<%- include('../partials/header') -%>
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/patients/<%= patient_id %>/diagnoses/<%= diagnose._id%>">Πισω</a></li>
+            <!-- <li class="breadcrumb-item"><a href="/patients/<%= patient_id %>/diagnoses/<%= diagnose._id%>">Πισω</a></li> -->
+            <li class="breadcrumb-item"></li><a ><button type="button" onclick="history.go(-1)"" class="btn btn-info">Πίσω</button></a></li>
         </ol>
     </nav>
-
 
     <div class="container">
         <div class="row">
@@ -19,7 +19,7 @@
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label" for="colFormLabel">Ημερομηνία Δοσης :</label>
                         <div class="col-sm-5">
-                            <input type="date" class="form-control" id="colFormLabel" name="treatment[date]" placeholder="Ημερομηνία Δοσης">
+                            <input type="date" class="form-control" id="colFormLabel" min="<%=latestTreatmentDate%>" name="treatment[date]" placeholder="Ημερομηνία Δοσης">
                         </div>
                     </div>
 
@@ -103,4 +103,4 @@
     </div>
     </div>
 
-    <% include ../partials/footer %>
+    <%- include('../partials/footer') -%>
