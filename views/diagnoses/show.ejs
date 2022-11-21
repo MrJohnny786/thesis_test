@@ -1,4 +1,4 @@
-<% include ../partials/header %>
+<%- include('../partials/header') -%>
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -135,11 +135,11 @@
                         </div>
                         <p>
                             <a class="btn btn-primary btn-large" href="/patients/<%= patient_id %>/diagnoses/<%= diagnose._id %>/treatments/new">Πρόσθεστε
-                                Θεραπεία</a>
+                                Δοση</a>
                         </p>
             </div>
         </div>
     </div>
 
 
-    <% include ../partials/footer %>
+    <%- include('../partials/footer') -%>

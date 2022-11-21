@@ -1,66 +1,106 @@
-<% include ../partials/header %>
+<%- include('../partials/header') -%>
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/patients/<%= effect.patient_id %>/diagnoses/<%= effect.diagnose_id%>/treatments/<%= effect.treatment_id %>">Πισω</a></li>
-        </ol>
-    </nav>
-    <div class="container myc">
-        <div class="row mygrid">
-            <!-- js code added here via sideeffects.js -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a ><button type="button" onclick="history.go(-1)"" class="btn btn-info">Πίσω</button></a>
+      
+    </li>
+  </ol>
+</nav>
+<div class="container myc">
+  <div class="row mygrid">
+    <!-- js code added here via sideeffects.js -->
+  </div>
+</div>
+<input type="hidden" id="e_id" value="<%= effect._id %>" />
+<p class="lead align-items-center">
+  Ημερομηνια φορμας παρενεργειας <%= moment(effect.date).format('YYYY-MM-DD') %>
+</p>
+<div class="container-fluid">
+  <!-- <div class="form-group row">
+    <label for="colFormLabel" class="col-sm-4 col-form-label"
+      >Ημερομηνία Δόσης :</label
+    >
+    <div class="col-sm-5">
+      <input
+        type="date"
+        class="form-control"
+        name="effect[date]"
+        id="colFormLabel"
+        value="<%= moment(effect.date).format('YYYY-MM-DD') %>"
+        required
+        minlength="1"
+        maxlength="20"
+      />
+    </div> 
+  </div> -->
+  <div id="effectsForm">
+    <form id="formEffects">
+      <div class="row">
+        <% for (const [key, value] of Object.entries(effects)) { %>
+        <div class="col-sm mt-2">
+          <ul class="list-group docs">
+            <li class="list-group-item active"><%= value.baseName %></li>
+            <% for (const [key1, value1] of Object.entries(value.effects)) { %>
+            <% if (value1.type === true){ %>
+            <li class="list-group-item">
+              <input
+                type="checkbox"
+                id="<%= key1 %>"
+                name="<%= key1 %>"
+                class="btn-check checkers"
+                checked
+              />
+              <%= value1.name %>
+            </li>
+            <% }else if (value1.type === false){ %>
+            <li class="list-group-item">
+              <input
+                type="checkbox"
+                id="<%= key1 %>"
+                name="<%= key1 %>"
+                class="btn-check checkers"
+                !checked
+              />
+              <%= value1.name %>
+            </li>
+            <% } %> <% } %>
+          </ul>
         </div>
-    </div>
-    <input type="hidden" id="e_id" value="<%= effect._id %>" />
-    <p class="lead align-items-center">
-        Ημερομηνια φορμας παρενεργειας
-        <%= effect.date%>
-    </p>
-    <div class="container-fluid">
-        <div id='effectsForm'>
-            <form id='formEffects'>
 
-                <div class="row">
-                    <% for (const [key, value] of Object.entries(effects)) { %>
-                        <div class="col-sm mt-2">
-                            <ul class="list-group docs">
+        <% } %>
 
-                                <li class="list-group-item active">
-                                    <%= value.baseName %>
-                                </li>
-                                <% for (const [key1, value1] of Object.entries(value.effects)) { %>
-                                    <% if (value1.type === true){ %>
-                                        <li class="list-group-item ">
-                                            <input type="checkbox" id='<%= key1 %>' name='<%= key1 %>' class="btn-check checkers" checked />
-                                            <%= value1.name %>
-                                        </li>
-                                        <% }else if (value1.type === false){ %>
-                                            <li class="list-group-item ">
-                                                <input type="checkbox" id='<%= key1 %>' name='<%= key1 %>' class="btn-check checkers" !checked />
-                                                <%= value1.name %>
-                                            </li>
-                                            <% } %>
-                                                <% } %>
-
-                            </ul>
-                        </div>
-
-                        <% } %>
-
-                            <!-- <p>Date: <input type="text" id="datepicker" class='effectdate'></p>  2nd way with datepicker-->
-                            <div class="col-sm-10">
-                                <button type="submit" class="putbtn btn btn-primary mb-2">Αποθηκευση</button>
-                            </div>
-                </div>
-
-
-
-            </form>
+        <div class="form-group row">
+          <label for="colFormLabel" class="col-sm-4 col-form-label"
+            >Ημερομηνία Ανοσοθεραπείας :</label
+          >
+          <div class="col-sm-5">
+            <input
+              type="date"
+              class="form-control dateClass"
+              name="effect[date]"
+              id="colFormLabel"
+              value="<%= moment(effect.date).format('YYYY-MM-DD') %>"
+              required
+              minlength="1"
+              maxlength="20"
+            />
+          </div>
+          <div class="col-sm-7">
+            <button type="submit" class="putbtn btn btn-primary mb-2">
+              Αποθηκευση
+            </button>
+          </div>
+          
         </div>
 
+        <!-- <p>Date: <input type="text" id="datepicker" class='effectdate'></p>  2nd way with datepicker-->
 
+      </div>
+    </form>
+  </div>
 
-        <button type="submit" class="btn btn-info showForm">Προσθηκη φορμας παρενεργειων</button>
-    </div>
+</div>
 
-
-    <% include ../partials/footer %>
+<%- include('../partials/footer') -%>

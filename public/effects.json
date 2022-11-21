@@ -1,230 +1,230 @@
 {
-    "stomach_bowel": {
-        "baseName": "Στομαχι/Εντερο",
-        "effects": {
-            "stomachache": {
-                "type": "Boolean",
-                "name": "Πονο στο στομαχι",
-                "required": true,
-                "default": false
-            },
-            "cramps": {
-                "type": "Boolean",
-                "name": "Κραμπες",
-                "required": true,
-                "default": false
-            },
-            "stomachBurn": {
-                "type": "Boolean",
-                "name": "Καψιμο στο στομαχι",
-                "required": true,
-                "default": false
-            },
-            "acid_reflux": {
-                "type": "Boolean",
-                "name": "Καουρες",
-                "required": true,
-                "default": false
-            },
-            "indigestion": {
-                "type": "Boolean",
-                "name": "Δυσπεψία",
-                "required": true,
-                "default": false
-            },
-            "nausea": {
-                "type": "Boolean",
-                "name": "Ναυτια",
-                "required": true,
-                "default": false
-            },
-            "diarrhea": {
-                "type": "Boolean",
-                "name": "Διαρροια",
-                "required": true,
-                "default": false
-            }
-        }
-    },
-    "lungs": {
-        "baseName": "Πνευμονες",
-        "effects": {
-            "cough1": {
-                "type": "Boolean",
-                "name": "Βηχα με η χωρις φλεματα",
-                "required": true,
-                "default": false
-            },
-            "cough2": {
-                "type": "Boolean",
-                "name": "Βηχα διαφορετικο απο οτι συνηθως",
-                "required": true,
-                "default": false
-            },
-            "cough3": {
-                "type": "Boolean",
-                "name": "Βηχα με η χωρις πυρετο",
-                "required": true,
-                "default": false
-            },
-            "shortOfBreath": {
-                "type": "Boolean",
-                "name": "Δύσπνοια",
-                "required": true,
-                "default": false
-            }
-        }
-    },
-    "skin": {
-        "baseName": "Δερμα",
-        "effects": {
-            "rash": {
-                "type": "Boolean",
-                "name": "Εξανθηματα",
-                "required": true,
-                "default": false
-            },
-            "itch_skin": {
-                "type": "Boolean",
-                "name": "Φαγούρα",
-                "required": true,
-                "default": false
-            },
-            "blister": {
-                "type": "Boolean",
-                "name": "Φουσκάλες",
-                "required": true,
-                "default": false
-            },
-            "dryness": {
-                "type": "Boolean",
-                "name": "Ξηρότητα",
-                "required": true,
-                "default": false
-            },
-            "sensitivityToLightSkin": {
-                "type": "Boolean",
-                "name": "Ευαισθησια στο ηλιακο φως",
-                "required": true,
-                "default": false
-            }
-        }
-    },
-    "muscle": {
-        "baseName": "Μυς/Αρθρωσεις/Νευρα",
-        "effects": {
-            "pain_discomfort": {
-                "type": "Boolean",
-                "name": "Πονους και ενοχλησεις",
-                "required": true,
-                "default": false
-            },
-            "tingle_numb": {
-                "type": "Boolean",
-                "name": "Μουδιασμα η μυρμιγκιασμα στα ακρα",
-                "required": true,
-                "default": false
-            },
-            "muscle_weakness": {
-                "type": "Boolean",
-                "name": "Σoβαρη μυικη αδυναμια/εξαντληση",
-                "required": true,
-                "default": false
-            }
-        }
-    },
-    "eyesight": {
-        "baseName": "Οραση",
-        "effects": {
-            "burn_pain_eye": {
-                "type": "Boolean",
-                "name": "Καψιμο/πονο",
-                "required": true,
-                "default": false
-            },
-            "red_eyes": {
-                "type": "Boolean",
-                "name": "Κοκκινισμα στα ματια",
-                "required": true,
-                "default": false
-            },
-            "cloudy_eyesight": {
-                "type": "Boolean",
-                "name": "Θολεροτητα στην οραση",
-                "required": true,
-                "default": false
-            },
-            "discharge": {
-                "type": "Boolean",
-                "name": "Εκκρισεις",
-                "required": true,
-                "default": false
-            },
-            "irritation_eyes": {
-                "type": "Boolean",
-                "name": "Ερεθισμο στα ματια",
-                "required": true,
-                "default": false
-            },
-            "itch_eye": {
-                "type": "Boolean",
-                "name": "Κνησμο",
-                "required": true,
-                "default": false
-            },
-            "sensitivityToLight": {
-                "type": "Boolean",
-                "name": "Ευαισθησια στο φως",
-                "required": true,
-                "default": false
-            }
-        }
-    },
-    "pancreas": {
-        "baseName": "Ενδοκρινεις αδενες/ Παγκρεας",
-        "effects": {
-            "headache_p": {
-                "type": "Boolean",
-                "name": "Επιμονη/Ασυνηθιστη κεφαλαλγια",
-                "required": true,
-                "default": false
-            },
-            "exhastion": {
-                "type": "Boolean",
-                "name": "Υπερκόπωση",
-                "required": true,
-                "default": false
-            },
-            "weight_fluctuation": {
-                "type": "Boolean",
-                "name": "Αυξηση/απωλεια βαρους",
-                "required": true,
-                "default": false
-            },
-            "tachycardia": {
-                "type": "Boolean",
-                "name": "Ταχυκαρδια",
-                "required": true,
-                "default": false
-            },
-            "hair_loss": {
-                "type": "Boolean",
-                "name": "Απωλεια μαλλιων",
-                "required": true,
-                "default": false
-            },
-            "constipation": {
-                "type": "Boolean",
-                "name": "Δυσκοιλιότητα",
-                "required": true,
-                "default": false
-            },
-            "nauseus_fainting": {
-                "type": "Boolean",
-                "name": "Ναυτια / λιποθυμικη ταση",
-                "required": true,
-                "default": false
-            }
-        }
+  "stomach_bowel": {
+    "baseName": "Στομαχι/Εντερο",
+    "effects": {
+      "stomachache": {
+        "type": "Boolean",
+        "name": "Πονο στο στομαχι",
+        "required": true,
+        "default": false
+      },
+      "cramps": {
+        "type": "Boolean",
+        "name": "Κραμπες",
+        "required": true,
+        "default": false
+      },
+      "stomachBurn": {
+        "type": "Boolean",
+        "name": "Καψιμο στο στομαχι",
+        "required": true,
+        "default": false
+      },
+      "acid_reflux": {
+        "type": "Boolean",
+        "name": "Καουρες",
+        "required": true,
+        "default": false
+      },
+      "indigestion": {
+        "type": "Boolean",
+        "name": "Δυσπεψία",
+        "required": true,
+        "default": false
+      },
+      "nausea": {
+        "type": "Boolean",
+        "name": "Ναυτια",
+        "required": true,
+        "default": false
+      },
+      "diarrhea": {
+        "type": "Boolean",
+        "name": "Διαρροια",
+        "required": true,
+        "default": false
+      }
     }
+  },
+  "lungs": {
+    "baseName": "Πνευμονες",
+    "effects": {
+      "cough1": {
+        "type": "Boolean",
+        "name": "Βηχα με η χωρις φλεματα",
+        "required": true,
+        "default": false
+      },
+      "cough2": {
+        "type": "Boolean",
+        "name": "Βηχα διαφορετικο απο οτι συνηθως",
+        "required": true,
+        "default": false
+      },
+      "cough3": {
+        "type": "Boolean",
+        "name": "Βηχα με η χωρις πυρετο",
+        "required": true,
+        "default": false
+      },
+      "shortOfBreath": {
+        "type": "Boolean",
+        "name": "Δύσπνοια",
+        "required": true,
+        "default": false
+      }
+    }
+  },
+  "skin": {
+    "baseName": "Δερμα",
+    "effects": {
+      "rash": {
+        "type": "Boolean",
+        "name": "Εξανθηματα",
+        "required": true,
+        "default": false
+      },
+      "itch_skin": {
+        "type": "Boolean",
+        "name": "Φαγούρα",
+        "required": true,
+        "default": false
+      },
+      "blister": {
+        "type": "Boolean",
+        "name": "Φουσκάλες",
+        "required": true,
+        "default": false
+      },
+      "dryness": {
+        "type": "Boolean",
+        "name": "Ξηρότητα",
+        "required": true,
+        "default": false
+      },
+      "sensitivityToLightSkin": {
+        "type": "Boolean",
+        "name": "Ευαισθησια στο ηλιακο φως",
+        "required": true,
+        "default": false
+      }
+    }
+  },
+  "muscle": {
+    "baseName": "Μυς/Αρθρωσεις/Νευρα",
+    "effects": {
+      "pain_discomfort": {
+        "type": "Boolean",
+        "name": "Πονους και ενοχλησεις",
+        "required": true,
+        "default": false
+      },
+      "tingle_numb": {
+        "type": "Boolean",
+        "name": "Μουδιασμα η μυρμιγκιασμα στα ακρα",
+        "required": true,
+        "default": false
+      },
+      "muscle_weakness": {
+        "type": "Boolean",
+        "name": "Σoβαρη μυικη αδυναμια/εξαντληση",
+        "required": true,
+        "default": false
+      }
+    }
+  },
+  "eyesight": {
+    "baseName": "Οραση",
+    "effects": {
+      "burn_pain_eye": {
+        "type": "Boolean",
+        "name": "Καψιμο/πονο",
+        "required": true,
+        "default": false
+      },
+      "red_eyes": {
+        "type": "Boolean",
+        "name": "Κοκκινισμα στα ματια",
+        "required": true,
+        "default": false
+      },
+      "cloudy_eyesight": {
+        "type": "Boolean",
+        "name": "Θολεροτητα στην οραση",
+        "required": true,
+        "default": false
+      },
+      "discharge": {
+        "type": "Boolean",
+        "name": "Εκκρισεις",
+        "required": true,
+        "default": false
+      },
+      "irritation_eyes": {
+        "type": "Boolean",
+        "name": "Ερεθισμο στα ματια",
+        "required": true,
+        "default": false
+      },
+      "itch_eye": {
+        "type": "Boolean",
+        "name": "Κνησμο",
+        "required": true,
+        "default": false
+      },
+      "sensitivityToLight": {
+        "type": "Boolean",
+        "name": "Ευαισθησια στο φως",
+        "required": true,
+        "default": false
+      }
+    }
+  },
+  "pancreas": {
+    "baseName": "Ενδοκρινεις αδενες/ Παγκρεας",
+    "effects": {
+      "headache_p": {
+        "type": "Boolean",
+        "name": "Επιμονη/Ασυνηθιστη κεφαλαλγια",
+        "required": true,
+        "default": false
+      },
+      "exhaustion": {
+        "type": "Boolean",
+        "name": "Υπερκόπωση",
+        "required": true,
+        "default": false
+      },
+      "weight_fluctuation": {
+        "type": "Boolean",
+        "name": "Αυξηση/απωλεια βαρους",
+        "required": true,
+        "default": false
+      },
+      "tachycardia": {
+        "type": "Boolean",
+        "name": "Ταχυκαρδια",
+        "required": true,
+        "default": false
+      },
+      "hair_loss": {
+        "type": "Boolean",
+        "name": "Απωλεια μαλλιων",
+        "required": true,
+        "default": false
+      },
+      "constipation": {
+        "type": "Boolean",
+        "name": "Δυσκοιλιότητα",
+        "required": true,
+        "default": false
+      },
+      "nauseus_fainting": {
+        "type": "Boolean",
+        "name": "Ναυτια / λιποθυμικη ταση",
+        "required": true,
+        "default": false
+      }
+    }
+  }
 }

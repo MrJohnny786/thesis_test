@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 const effectsSchema = new mongoose.Schema({
   stomach_bowel: {
@@ -7,39 +7,39 @@ const effectsSchema = new mongoose.Schema({
       stomachache: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       cramps: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       stomachBurn: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       acid_reflux: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       indigestion: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       nausea: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       diarrhea: {
         type: Boolean,
         required: true,
-        default: false
-      }
-    }
+        default: false,
+      },
+    },
   },
   lungs: {
     baseName: String,
@@ -47,24 +47,24 @@ const effectsSchema = new mongoose.Schema({
       cough1: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       cough2: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       cough3: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       shortOfBreath: {
         type: Boolean,
         required: true,
-        default: false
-      }
-    }
+        default: false,
+      },
+    },
   },
   skin: {
     baseName: String,
@@ -72,29 +72,29 @@ const effectsSchema = new mongoose.Schema({
       rash: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       itch_skin: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       blister: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       dryness: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       sensitivityToLightSkin: {
         type: Boolean,
         required: true,
-        default: false
-      }
-    }
+        default: false,
+      },
+    },
   },
   muscle: {
     baseName: String,
@@ -102,19 +102,19 @@ const effectsSchema = new mongoose.Schema({
       pain_discomfort: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       tingle_numb: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       muscle_weakness: {
         type: Boolean,
         required: true,
-        default: false
-      }
-    }
+        default: false,
+      },
+    },
   },
   eyesight: {
     baseName: String,
@@ -122,39 +122,39 @@ const effectsSchema = new mongoose.Schema({
       burn_pain_eye: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       red_eyes: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       cloudy_eyesight: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       discharge: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       irritation_eyes: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       itch_eye: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       sensitivityToLight: {
         type: Boolean,
         required: true,
-        default: false
-      }
-    }
+        default: false,
+      },
+    },
   },
   pancreas: {
     baseName: String,
@@ -162,39 +162,39 @@ const effectsSchema = new mongoose.Schema({
       headache_p: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
-      exhastion: {
+      exhaustion: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       weight_fluctuation: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       tachycardia: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       hair_loss: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       constipation: {
         type: Boolean,
         required: true,
-        default: false
+        default: false,
       },
       nauseus_fainting: {
         type: Boolean,
         required: true,
-        default: false
-      }
-    }
+        default: false,
+      },
+    },
   },
   date: { type: Date },
   patient_id: String,
@@ -204,11 +204,10 @@ const effectsSchema = new mongoose.Schema({
   user: {
     id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: "User",
     },
-    username: String
-  }
+    username: String,
+  },
+});
 
-})
-
-module.exports = mongoose.model('Effect', effectsSchema)
+module.exports = mongoose.model("Effect", effectsSchema);

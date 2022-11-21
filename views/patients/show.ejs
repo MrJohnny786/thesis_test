@@ -1,13 +1,12 @@
-<% include ../partials/header %>
+<%- include('../partials/header')-%>
 
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/patients">Ασθενεις</a></li>
+  </ol>
+</nav>
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/patients">Ασθενεις</a></li>
-        </ol>
-    </nav>
-
-    <!-- <div class="jumbotron jumbotron-fluid">
+<!-- <div class="jumbotron jumbotron-fluid">
         <div class="container-md">
             <div class="row">
                 <div class="col-md">
@@ -39,7 +38,7 @@
 
         </div>
     </div> -->
-    <!-- <div class="card">
+<!-- <div class="card">
         <div class="card-header">
             Όνοματεπωνυμο :
             <%= patient.firstName %>
@@ -51,481 +50,575 @@
         </div>
     </div> -->
 
-
-
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-2">
-                <div class="text-center">
-                    <h1>Στοιχεία Ασθενή</h1>
-                </div>
-                <div class="card text-center mx-auto">
-                    <img src="https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png" class="card-img-top">
-                    <div class="card-body">
-                        <div class="row patient_row">
-                            <div class="col-sm">Όνομα :</div>
-                            <div class="col-sm font-weight-bold">
-                                <%= patient.firstName %>
-
-                            </div>
-                        </div>
-                        <div class="row mt-3 patient_row">
-                            <div class="col-sm">Επώνυμο :</div>
-                            <div class="col-sm font-weight-bold">
-                                <%= patient.lastName %>
-                            </div>
-                        </div>
-                        <div class="row mt-3 patient_row">
-                            <div class="col-sm">Πατρώνυμο:</div>
-                            <div class="col-sm">
-                                <%= patient.patronym %>
-                            </div>
-                        </div>
-                        <div class="row mt-3 patient_row">
-                            <div class="col-sm">Ηλικία :</div>
-                            <div class="col-sm">
-                                <%= moment(patient.birthday).format('DD-MM-YYYY') %>
-                            </div>
-
-                        </div>
-                        <div class="row mt-3 patient_row">
-                            <div class="col-sm">AM :</div>
-                            <div class="col-sm">
-                                <%= patient.patientAM %>
-                            </div>
-                        </div>
-                        <div class="row mt-3 patient_row">
-                            <div class="col-sm">Bάρος :</div>
-                            <div class="col-sm">
-                                <%= patient.weight %> kg
-                            </div>
-                        </div>
-                        <div class="row mt-3 patient_row">
-                            <div class="col-sm">Ύψος :</div>
-                            <div class="col-sm">
-                                <%= patient.height %> m
-                            </div>
-                        </div>
-                        <div class="row mt-3 patient_row">
-                            <div class="col-sm">Κινητό Τηλέφωνο :</div>
-                            <div class="col-sm">
-                                <%= patient.mPhone %>
-                            </div>
-                        </div>
-
-                        <div class="row mt-3 patient_row">
-                            <div class="col-sm">Πόλη/Χωριό :</div>
-                            <div class="col-sm">
-                                <%= patient.city %>
-                            </div>
-                        </div>
-                        <div class="row mt-3 patient_row">
-                            <div class="col-sm">Διεύθυνση :</div>
-                            <div class="col-sm">
-                                <%= patient.address %>
-                            </div>
-                        </div>
-                        <div class="row mt-3 patient_row">
-                            <div class="col-sm">Τύπος Αίματος :</div>
-                            <div class="col-sm">
-                                <%= patient.bloodType %>
-                            </div>
-                        </div>
-
-                        <div class="row mt-3 patient_row">
-                            <div class="col-sm">Γιατρός :</div>
-                            <div class="col-sm">
-                                <%= patient.doc %>
-                            </div>
-                        </div>
-
-
-
-                        <div class="row mt-3 patient_row">
-                            <div class="col-sm">Γενικές Πληροφορίες :</div>
-                            <div class="col-sm">
-                                <%= patient.general %>
-                            </div>
-                        </div>
-
-                        <div class="row mt-3 patient_row">
-                            <div class="col-sm">
-                                <span class="pull-right">
-                                    <p>
-                                        Δημιουργήθηκε απο τον/την : <%= patient.author.username %>, <%=
-                                                moment(patient.createdAt).fromNow() %>
-                                    </p>
-                                </span>
-                            </div>
-                        </div>
-
-
-
-                        <% if(currentUser && patient.author.id.equals(currentUser._id) || currentUser &&
-                            currentUser.isAdmin){ %>
-                            <div class="row mt-3">
-                                <p class="col-sm">
-                                    <a class="btn btn-warning btn-larg" href="/patients/<%= patient._id %>/edit">Επεξεργασία</a>
-                                </p>
-                            </div>
-
-                            <div data-toggle="tooltip" data-placement="right" title="Για να διαγραψετε αυτη την εγγραφη , πρεπει πρωτα να διαγραφουν ολες οι ανοσοθεραπειες της.">
-                                <form id="delete-form" action="/patients/<%= patient._id %>?_method=DELETE" method="POST">
-                                    <button id='disableBtnPatient' class="btn btn-xs btn-danger">Διαγραφή</button>
-                                </form>
-                            </div>
-
-                            <% } %>
-                    </div>
-                </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2">
+      <div class="text-center">
+        <h1>Στοιχεία Ασθενή</h1>
+      </div>
+      <div class="card text-center mx-auto">
+        <img
+          src="https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png"
+          class="card-img-top"
+        />
+        <div class="card-body">
+          <div class="row patient_row">
+            <div class="col-sm">Όνομα :</div>
+            <div class="col-sm font-weight-bold"><%= patient.firstName %></div>
+          </div>
+          <div class="row mt-3 patient_row">
+            <div class="col-sm">Επώνυμο :</div>
+            <div class="col-sm font-weight-bold"><%= patient.lastName %></div>
+          </div>
+          <div class="row mt-3 patient_row">
+            <div class="col-sm">Πατρώνυμο:</div>
+            <div class="col-sm"><%= patient.patronym %></div>
+          </div>
+          <div class="row mt-3 patient_row">
+            <div class="col-sm">Ηλικία :</div>
+            <div class="col-sm">
+              <%= moment(patient.birthday).format('DD-MM-YYYY') %>
             </div>
-            <div class="col-6">
+          </div>
+          <div class="row mt-3 patient_row">
+            <div class="col-sm">AM :</div>
+            <div class="col-sm"><%= patient.patientAM %></div>
+          </div>
+          <div class="row mt-3 patient_row">
+            <div class="col-sm">Bάρος :</div>
+            <div class="col-sm"><%= patient.weight %> kg</div>
+          </div>
+          <div class="row mt-3 patient_row">
+            <div class="col-sm">Ύψος :</div>
+            <div class="col-sm"><%= patient.height %> m</div>
+          </div>
+          <div class="row mt-3 patient_row">
+            <div class="col-sm">Κινητό Τηλέφωνο :</div>
+            <div class="col-sm"><%= patient.mPhone %></div>
+          </div>
 
-                <div>
-                    <h1 class="text-center ">Ανοσοθεραπείες <button style="display:none" type="button" class="btn btn-primary">Expand/Collapse All</button></h1>
-                </div>
+          <div class="row mt-3 patient_row">
+            <div class="col-sm">Πόλη/Χωριό :</div>
+            <div class="col-sm"><%= patient.city %></div>
+          </div>
+          <div class="row mt-3 patient_row">
+            <div class="col-sm">Διεύθυνση :</div>
+            <div class="col-sm"><%= patient.address %></div>
+          </div>
+          <div class="row mt-3 patient_row">
+            <div class="col-sm">Τύπος Αίματος :</div>
+            <div class="col-sm"><%= patient.bloodType %></div>
+          </div>
 
+          <div class="row mt-3 patient_row">
+            <div class="col-sm">Γιατρός :</div>
+            <div class="col-sm"><%= patient.doc %></div>
+          </div>
 
+          <div class="row mt-3 patient_row">
+            <div class="col-sm">Γενικές Πληροφορίες :</div>
+            <div class="col-sm"><%= patient.general %></div>
+          </div>
 
+          <div class="row mt-3 patient_row">
+            <div class="col-sm">
+              <span class="pull-right">
+                <p>
+                  Δημιουργήθηκε απο τον/την : <%= patient.author.username %>,
+                  <%= moment(patient.createdAt).fromNow() %>
+                </p>
+              </span>
+            </div>
+          </div>
 
-                <div class="accordion" id="accordionExample">
-                    <div class="card">
-                        <% data.patient.diagnoses.forEach(function(x, index){ %>
-                            <% var tIndex="heading_" +index %>
-                                <% var zIndex="collapse_" +index %>
-                                    <div class="card-header" id="<%=tIndex%>">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-block text-left btnColor" type="button" data-toggle="collapse" data-target="#<%=zIndex%>" aria-expanded="true" aria-controls="<%=zIndex%>">
-                                                <a class="link-success font-weight-bold text-white"
-                                                    href="/patients/<%= patient._id %>/diagnoses/<%= x._id %>">ΑΝΟΣΟΘΕΡΑΠΕΙΑ
-                                                    <%= moment(x.date).format('DD-MM-YYYY') %> -
-                                                        <%= x.courseOfTreatment %> -
-                                                            <%= x.doc %> </a>
-                                                            <span class="badge badge-light float-right"><%=
-                                                              x.treatments.length %> Δοσεις <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle-fill" viewBox="0 0 16 16">
-                                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
-                                                              </svg></span>
-                                                
-                                                </button>
-                                            <button class="btn btn-primary">
-                                                    <a class = 'text-white' href="/patients/<%= patient._id %>/diagnoses/<%= x._id %>/treatments/new">Δημιουργία Δοσης</a>
-                                                </button>
-                                            <% if(currentUser && patient.author.id.equals(currentUser._id) ||
-                                                currentUser && currentUser.isAdmin){ %>
-                                                <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <form action="" class='mr-2'>
-                                                        <button name="button" class="btn btn-warning"> <a
-                                                                href="/patients/<%= patient._id %>/diagnoses/<%= x._id %>/edit">Επεξεργασία </a></button>
-                                                    </form>
+          <% if(currentUser && patient.author.id.equals(currentUser._id) ||
+          currentUser && currentUser.isAdmin){ %>
+          <div class="row mt-3">
+            <p class="col-sm">
+              <a
+                class="btn btn-warning btn-larg"
+                href="/patients/<%= patient._id %>/edit"
+                >Επεξεργασία</a
+              >
+            </p>
+          </div>
 
-                                                    <!-- <form id="delete-form" action="/patients/<%= patient._id %>/diagnoses/<%= x._id %>?_method=DELETE" method="POST">
+          <div
+            data-toggle="tooltip"
+            data-placement="right"
+            title="Για να διαγραψετε αυτη την εγγραφη , πρεπει πρωτα να διαγραφουν ολες οι ανοσοθεραπειες της."
+          >
+            <form
+              id="delete-form"
+              action="/patients/<%= patient._id %>?_method=DELETE"
+              method="POST"
+            >
+              <button id="disableBtnPatient" class="btn btn-xs btn-danger">
+                Διαγραφή
+              </button>
+            </form>
+          </div>
+
+          <% } %>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div>
+        <h1 class="text-center">
+          Ανοσοθεραπείες
+          <button style="display: none" type="button" class="btn btn-primary">
+            Expand/Collapse All
+          </button>
+        </h1>
+      </div>
+
+      <div class="accordion" id="accordionExample">
+        <div class="card">
+          <% data.patient.diagnoses.forEach(function(x, index){ %> <% var
+          tIndex="heading_" +index %> <% var zIndex="collapse_" +index %>
+          <div class="card-header" id="<%=tIndex%>">
+            <h2 class="mb-0">
+              <button
+                class="btn btn-block text-left btnColor"
+                type="button"
+                data-toggle="collapse"
+                data-target="#<%=zIndex%>"
+                aria-expanded="true"
+                aria-controls="<%=zIndex%>"
+              >
+                <a
+                  class="link-success font-weight-bold text-white"
+                  href="/patients/<%= patient._id %>/diagnoses/<%= x._id %>"
+                  >ΑΝΟΣΟΘΕΡΑΠΕΙΑ <%= moment(x.date).format('DD-MM-YYYY') %> -
+                  <%= x.courseOfTreatment %> - <%= x.doc %>
+                </a>
+                <span class="badge badge-light float-right"
+                  ><%= x.treatments.length %> Δοσεις
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-arrow-down-circle-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"
+                    /></svg
+                ></span>
+              </button>
+              <button class="btn btn-primary">
+                <a
+                  class="text-white"
+                  href="/patients/<%= patient._id %>/diagnoses/<%= x._id %>/treatments/new"
+                  >Δημιουργία Δοσης</a
+                >
+              </button>
+              <% if(currentUser && patient.author.id.equals(currentUser._id) ||
+              currentUser && currentUser.isAdmin){ %>
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <form action="" class="mr-2">
+                  <button name="button" class="btn btn-warning">
+                    <a
+                      href="/patients/<%= patient._id %>/diagnoses/<%= x._id %>/edit"
+                      >Επεξεργασία
+                    </a>
+                  </button>
+                </form>
+
+                <!-- <form id="delete-form" action="/patients/<%= patient._id %>/diagnoses/<%= x._id %>?_method=DELETE" method="POST">
                                                         <button class="btn btn-danger checkDeletion">Διαγραφή</button>
                                                     </form> -->
 
-                                                    <%if(Object.keys(x.treatments).length === 0){%>
+                <%if(Object.keys(x.treatments).length === 0){%>
 
-                                                        <form id="delete-form" action="/patients/<%= patient._id %>/diagnoses/<%= x._id %>?_method=DELETE" method="POST">
-                                                            <button class="btn btn-danger ">Διαγραφή</button>
-                                                        </form>
-                                                        <%} else {%>
-                                                            <div data-toggle="tooltip" data-placement="right" title="Για να διαγραψετε αυτη την εγγραφη , πρεπει πρωτα να διαγραφουν ολες οι Δοσεις της.">
-                                                                <form id="delete-form" action="/patients/<%= patient._id %>/diagnoses/<%= x._id %>?_method=DELETE" method="POST">
-                                                                    <button class="btn btn-danger" disabled>Διαγραφή</button>
-                                                                </form>
-                                                            </div>
-                                                            <%}%>
-                                                </div>
-                                                <% } %>
-                                        </h2>
-                                    </div>
+                <form
+                  id="delete-form"
+                  action="/patients/<%= patient._id %>/diagnoses/<%= x._id %>?_method=DELETE"
+                  method="POST"
+                >
+                  <button class="btn btn-danger">Διαγραφή</button>
+                </form>
+                <%} else {%>
+                <div
+                  data-toggle="tooltip"
+                  data-placement="right"
+                  title="Για να διαγραψετε αυτη την εγγραφη , πρεπει πρωτα να διαγραφουν ολες οι Δοσεις της."
+                >
+                  <form
+                    id="delete-form"
+                    action="/patients/<%= patient._id %>/diagnoses/<%= x._id %>?_method=DELETE"
+                    method="POST"
+                  >
+                    <button class="btn btn-danger" disabled>Διαγραφή</button>
+                  </form>
+                </div>
+                <%}%>
+              </div>
+              <% } %>
+            </h2>
+          </div>
 
-                                    <div id="<%=zIndex%>" class="collapse" aria-labelledby="<%=tIndex%>_dose">
+          <div
+            id="<%=zIndex%>"
+            class="collapse"
+            aria-labelledby="<%=tIndex%>_dose"
+          >
+            <% data.treatment.forEach(function(y, index){ %> <%if
+            (x.treatments.includes(y._id)){%>
 
+            <div class="card-body">
+              <% var tIndex="heading1_" +index %> <% var zIndex="collapse1_"
+              +index %>
+              <div class="card-header" id="<%=tIndex%>_dose">
+                <h2 class="mb-0">
+                  <button
+                    class="btn btn-block text-left btnColor1"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#<%=zIndex%>_dose"
+                    aria-expanded="true"
+                    aria-controls="<%=zIndex%>"
+                  >
+                    <a
+                      class="font-weight-bold text-white"
+                      href="/patients/<%= patient._id %>/diagnoses/<%= x.id %>/treatments/<%=y._id %>"
+                      >ΔΟΣΗ <%= moment(y.date).format('DD-MM-YYYY') %> -%> <%=
+                      y.status %> -%> <%= y.staff %> -%> <%= y.numOfApproval %>
+                      - %> <%= y.numOfDose %> %></a
+                    >
+                    <span class="badge badge-light float-right"
+                      ><%= y.effects.length%> Παρενεργειες
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-arrow-down-circle-fill"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
 
-                                        <% data.treatment.forEach(function(y, index){ %>
-                                            <%if (x.treatments.includes(y._id)){%>
-
-                                                <div class="card-body">
-
-
-                                                    <% var tIndex="heading1_" +index %>
-                                                        <% var zIndex="collapse1_" +index %>
-                                                            <div class="card-header" id="<%=tIndex%>_dose">
-                                                                <h2 class="mb-0">
-                                                                    <button class="btn btn-block text-left btnColor1" type="button" data-toggle="collapse" data-target="#<%=zIndex%>_dose" aria-expanded="true" aria-controls="<%=zIndex%>">
-                                                                        <a class='font-weight-bold text-white'
-                                                                            href="/patients/<%= patient._id %>/diagnoses/<%= x.id %>/treatments/<%=y._id %>">ΔΟΣΗ
-                                                                            <%= moment(y.date).format('DD-MM-YYYY') %>
-                                                                                -%>
-                                                                                <%= y.status %> -%>
-                                                                                    <%= y.staff %> -%>
-                                                                                        <%= y.numOfApproval %> - %>
-                                                                                            <%= y.numOfDose %> %></a>
-                                                                        <span
-                                                                            class="badge badge-light float-right"><%= y.effects.length%>  Παρενεργειες <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle-fill" viewBox="0 0 16 16">
-                                                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
-                                                                              </svg>
-                                                                        </span>
-                                                                    </button>
-
-                                                                    <% if(currentUser &&
-                                                                        patient.author.id.equals(currentUser._id) ||
-                                                                        currentUser && currentUser.isAdmin){ %>
-                                                                        <div class="btn-group" role="group" aria-label="Basic example">
-                                                                            <form action="" class='mr-2'>
-                                                                                <button name="button" class="btn btn-warning"> <a
-                                                                                        href="/patients/<%= patient._id %>/diagnoses/<%= x.id %>/treatments/<%=y._id %>/edit">Επεξεργασία</a></button>
-                                                                            </form>
-                                                                            <% if(Object.keys(y.effects).length === 0 ){%>
-                                                                                <form id="delete-form" action="/patients/<%= patient._id %>/diagnoses/<%= x.id %>/treatments/<%=y._id %>?_method=DELETE" method="POST">
-                                                                                    <button class="btn btn-danger">Διαγραφή</button>
-                                                                                </form>
-                                                                                <% }else{%>
-                                                                                    <div data-toggle="tooltip" data-placement="right" title="Για να διαγραψετε αυτη την εγγραφη , πρεπει πρωτα να διαγραφουν ολες οι παρενέργειες της.">
-                                                                                        <form id="delete-form" action="/patients/<%= patient._id %>/diagnoses/<%= x.id %>/treatments/<%=y._id %>?_method=DELETE" method="POST">
-                                                                                            <button class="btn btn-danger" disabled>Διαγραφή</button>
-                                                                                        </form>
-                                                                                    </div>
-                                                                                    <%}%>
-
-                                                                        </div>
-                                                                        <% } %>
-                                                                </h2>
-                                                            </div>
-
-                                                </div>
-                                                <% }%>
-                                                    <div id="<%=zIndex%>_dose" class="collapse" aria-labelledby="<%=tIndex%>_dose">
-
-                                                        <div class="card-body">
-
-                                                            <% if(y.effects.length ===0){%>
-
-                                                                <div class="badge badge-primary text-wrap" style="width: 6rem;">
-                                                                    Δεν υπαρχουν παρενεργειες
-                                                                </div>
-
-                                                                <%}%>
-                                                                    <% y.effects.forEach(function(ef, index){ %>
-
-                                                                        <%arr=[]%>
-
-                                                                            <%['pancreas', 'eyesight' , 'muscle' , 'skin' , 'lungs'
-                                                                , 'stomach_bowel' ].forEach(function(des){%>
-                                                                                <% dat=ef[des].effects %>
-
-                                                                                    <% for (let [skey, svalue] of Object.entries(dat)) {
-                                                                        %>
-                                                                                        <% if(svalue && skey!=='$init' ){ %>
-
-
-                                                                                            <% for (let [keyy, valuee] of
-                                                                                Object.entries(effects)) { %>
-
-                                                                                                <% for (let [keyy1, valuee1] of
-                                                                                    Object.entries(valuee.effects)) { %>
-
-                                                                                                    <%if (keyy1===skey){%>
-                                                                                                        <% arr.push(valuee1.name)%>
-                                                                                                            <%}%>
-                                                                                                                <%}%>
-                                                                                                                    <%}%>
-
-
-                                                                                                                        <% } %>
-                                                                                                                            <%}%>
-                                                                                                                                <%})%>
-
-                                                                                                                                    <div class='card-group'>
-                                                                                                                                        <div class="card  mt-2 btnColor2">
-                                                                                                                                            <div class="card-body">
-                                                                                                                                                <h4 class="card-title">
-                                                                                                                                                    <%= moment(ef.date).format('DD-MM-YYYY')
-                                                                                                                                        %>
-                                                                                                                                                </h4>
-                                                                                                                                                <p class="card-text font-weight-bold">
-
-                                                                                                                                                    <%= arr.join(',')
-                                                                                                                                        %>
-                                                                                                                                                </p>
-                                                                                                                                                <div class="btn-group" role="group" aria-label="Basic example">
-                                                                                                                                                    <form action="" class='mr-2'>
-                                                                                                                                                        <button name="button" class="btn btn-warning">
-                                                                                                                                            <a
-                                                                                                                                                href="/effects/<%= ef._id %>/edit">Επεξεργασία</a></button>
-                                                                                                                                                    </form>
-                                                                                                                                                    <form id="delete-form" action="/effects/delete/<%= ef._id %>?_method=DELETE" method="POST">
-                                                                                                                                                        <button class="btn btn-danger">Διαγραφή</button>
-                                                                                                                                                    </form>
-                                                                                                                                                </div>
-                                                                                                                                            </div>
-                                                                                                                                        </div>
-
-                                                                                                                                    </div>
-
-
-
-
-
-
-                                                                                                                                    <% })%>
-
-                                                        </div>
-                                                        <div class="container-fluid">
-                                                            <div class='effectsForm'>
-                                                                <form class='formEffects'>
-
-
-                                                                    <div class="row">
-                                                                        <% for (const [key, value] of Object.entries(effects)) { %>
-
-                                                                            <div class="col-sm mt-2">
-                                                                                <ul class="list-group docs">
-
-                                                                                    <li class="list-group-item active">
-                                                                                        <%= value.baseName %>
-                                                                                    </li>
-                                                                                    <% for (const [key1, value1] of Object.entries(value.effects)) { %>
-
-                                                                                        <li class="list-group-item ">
-                                                                                            <input type="checkbox" id='<%= key1 %>' name='<%= key1 %>' class="btn-check checkers" !checked />
-                                                                                            <%= value1.name %>
-                                                                                                <!-- <input type="checkbox" class="btn-check" id='<%= key1 %>' name='<%= key1 %>' !checked autocomplete="off">
-                                                                                            <label class="btn btn-primary" for='<%= key1 %>'><%= value1.name %></label> -->
-                                                                                                <!-- <br> -->
-
-                                                                                        </li>
-                                                                                        <% } %>
-
-                                                                                </ul>
-                                                                            </div>
-
-                                                                            <% } %>
-
-                                                                                <div class="form-group row">
-                                                                                    <label class="col-sm col-form-label" for="colFormLabel">Ημερομηνία :</label>
-                                                                                    <div class="col-sm-10">
-                                                                                        <input type="date" class="form-control <%=y.id%>Date " id="colFormLabel" name="datep" placeholder="Ημερομηνία">
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                <!-- <p>Date: <input type="text" id="datepicker" class='effectdate'></p>  2nd way with datepicker-->
-                                                                                <div class="col-sm-10">
-                                                                                    <button data-id='<%=y.id%>' type="submit" class="addbtn1 btn btn-primary mb-4 ">Αποθηκευση</button>
-                                                                                </div>
-                                                                    </div>
-
-                                                                </form>
-                                                            </div>
-
-
-
-
-                                                        </div>
-                                                        <%if(currentUser){%>
-                                                            <button type="submit" class="btn btn-info showForm">Προσθηκη φορμας παρενεργειων</button>
-                                                            <%}%>
-                                                    </div>
-
-
-                                                    <% }) %>
-                                    </div>
-                                    <% }) %>
-
+                  <% if(currentUser && patient.author.id.equals(currentUser._id)
+                  || currentUser && currentUser.isAdmin){ %>
+                  <div
+                    class="btn-group"
+                    role="group"
+                    aria-label="Basic example"
+                  >
+                    <form action="" class="mr-2">
+                      <button name="button" class="btn btn-warning">
+                        <a
+                          href="/patients/<%= patient._id %>/diagnoses/<%= x.id %>/treatments/<%=y._id %>/edit"
+                          >Επεξεργασία</a
+                        >
+                      </button>
+                    </form>
+                    <% if(Object.keys(y.effects).length === 0 ){%>
+                    <form
+                      id="delete-form"
+                      action="/patients/<%= patient._id %>/diagnoses/<%= x.id %>/treatments/<%=y._id %>?_method=DELETE"
+                      method="POST"
+                    >
+                      <button class="btn btn-danger">Διαγραφή</button>
+                    </form>
+                    <% }else{%>
+                    <div
+                      data-toggle="tooltip"
+                      data-placement="right"
+                      title="Για να διαγραψετε αυτη την εγγραφη , πρεπει πρωτα να διαγραφουν ολες οι παρενέργειες της."
+                    >
+                      <form
+                        id="delete-form"
+                        action="/patients/<%= patient._id %>/diagnoses/<%= x.id %>/treatments/<%=y._id %>?_method=DELETE"
+                        method="POST"
+                      >
+                        <button class="btn btn-danger" disabled>
+                          Διαγραφή
+                        </button>
+                      </form>
                     </div>
+                    <%}%>
+                  </div>
+                  <% } %>
+                </h2>
+              </div>
+            </div>
+            <% }%>
+            <div
+              id="<%=zIndex%>_dose"
+              class="collapse"
+              aria-labelledby="<%=tIndex%>_dose"
+            >
+              <div class="card-body">
+                <% if(y.effects.length ===0){%>
 
+                <div class="badge badge-primary text-wrap" style="width: 6rem">
+                  Δεν υπαρχουν παρενεργειες
                 </div>
 
+                <%}%> <% y.effects.forEach(function(ef, index){ %> <%arr=[]%>
+                <%['pancreas', 'eyesight' , 'muscle' , 'skin' , 'lungs' ,
+                'stomach_bowel' ].forEach(function(des){%> <%
+                dat=ef[des].effects %> <% for (let [skey, svalue] of
+                Object.entries(dat)) { %> <% if(svalue && skey!=='$init' ){ %>
+                <% for (let [keyy, valuee] of Object.entries(effects)) { %> <%
+                for (let [keyy1, valuee1] of Object.entries(valuee.effects)) {
+                %> <%if (keyy1===skey){%> <% arr.push(valuee1.name)%> <%}%>
+                <%}%> <%}%> <% } %> <%}%> <%})%>
 
-                <button class="btn btn-primary">
-                    <a class='text-white' href="/patients/<%= patient._id %>/diagnoses/new">Δημιουργία
-                        Ανοσοθεραπείας</a>
-                    </button>
+                <div class="card-group">
+                  <div class="card mt-2 btnColor2">
+                    <div class="card-body">
+                      <h4 class="card-title">
+                        <%= moment(ef.date).format('DD-MM-YYYY') %>
+                      </h4>
+                      <p class="card-text font-weight-bold">
+                        <%= arr.join(',') %>
+                      </p>
+                      <div
+                        class="btn-group"
+                        role="group"
+                        aria-label="Basic example"
+                      >
+                        <form action="" class="mr-2">
+                          <button name="button" class="btn btn-warning">
+                            <a href="/effects/<%= ef._id %>/edit"
+                              >Επεξεργασία</a
+                            >
+                          </button>
+                        </form>
+                        <form
+                          id="delete-form"
+                          action="/effects/delete/<%= ef._id %>?_method=DELETE"
+                          method="POST"
+                        >
+                          <button class="btn btn-danger">Διαγραφή</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-            </div>
-
-            <div class="col-4">
-
-
-
-
-
-                <div class="container">
+                <% })%>
+              </div>
+              <div class="container-fluid">
+                <div class="effectsForm">
+                  <form class="formEffects">
                     <div class="row">
-                        <div class="col">
-                            <h1 class="text-center display-4 my-4">Αρχεία</h1>
-                            <form action="/upload/<%= patient._id %>" method="POST" enctype="multipart/form-data">
-                                <div class="custom-file mb-3">
-                                    <input type="file" name="file" id="file" class="custom-file-input">
-                                    <label for="file" class="custom-file-label">Choose File</label>
-                                </div>
-                                <input type="submit" value="Submit" class="btn btn-primary btn-block">
-                            </form>
-                            <hr>
-                            <% if(allFiles){ %>
-                                <table id="myTable" class="display" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Ονομασια Αρχειου</th>
-                                            <th>Ημερομηνια Εισαγωgης</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <% allFiles.forEach(function(file){%>
+                      <% for (const [key, value] of Object.entries(effects)) {
+                      %>
 
-                                            <tr>
-                                                <td>
-                                                    <%= file.filename.split('.')[0] %>
-                                                </td>
-                                                <td>
-                                                    <div class="row">
-                                                        <div class="col-sm">
-                                                            Aνέβηκε στις
-                                                            <%= moment(file.uploadDate).toISOString() %>
-                                                        </div>
-                                                        <div class="col-sm">
-                                                            <span><button class="btn-sm btn-primary btn-block mt-4" onclick="window.open('http://<%=host%>/serve/<%=file.filename%>')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-window-stack" viewBox="0 0 16 16">
-                                                                <path d="M4.5 6a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1ZM6 6a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm2-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z"/>
-                                                                <path d="M12 1a2 2 0 0 1 2 2 2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2 2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h10ZM2 12V5a2 2 0 0 1 2-2h9a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1Zm1-4v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V8H3Zm12-1V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v2h12Z"/>
-                                                              </svg></button></span>
-                                                        </div>
-                                                        <div class="col-sm">
-                                                            <form method="POST" action="/files/<%= file._id%>?_method=DELETE">
-                                                                <span><button class="btn-sm btn-danger btn-block mt-4">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                                                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-                                                                  </svg>
-                                                            </button></span>
-                                                            </form>
-                                                        </div>
-                                                    </div>
+                      <div class="col-sm mt-2">
+                        <ul class="list-group docs">
+                          <li class="list-group-item active">
+                            <%= value.baseName %>
+                          </li>
+                          <% for (const [key1, value1] of
+                          Object.entries(value.effects)) { %>
 
+                          <li class="list-group-item">
+                            <input
+                              type="checkbox"
+                              id="<%= key1 %>"
+                              name="<%= key1 %>"
+                              class="btn-check checkers"
+                              !checked
+                            />
+                            <%= value1.name %>
+                            <!-- <input type="checkbox" class="btn-check" id='<%= key1 %>' name='<%= key1 %>' !checked autocomplete="off">
+                                                                                            <label class="btn btn-primary" for='<%= key1 %>'><%= value1.name %></label> -->
+                            <!-- <br> -->
+                          </li>
+                          <% } %>
+                        </ul>
+                      </div>
 
+                      <% } %>
 
-
-
-                                                </td>
-
-                                            </tr>
-
-                                            <%})%>
-                                                <% } else { %>
-                                                    <p>No files to show.</p>
-                                                    <% } %>
-                                    </tbody>
-                                </table>
+                      <div class="form-group row">
+                        <label class="col-sm col-form-label" for="colFormLabel"
+                          >Ημερομηνία :</label
+                        >
+                        <div class="col-sm-10">
+                          <input
+                            type="date"
+                            class="form-control daty"
+                            id="colFormLabel"
+                            name="datep"
+                            placeholder="Ημερομηνία"
+                          />
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                      </div>
 
+                      <!-- <p>Date: <input type="text" id="datepicker" class='effectdate'></p>  2nd way with datepicker-->
+                      <div class="col-sm-10">
+                        <button
+                          data-id="<%=y.id%>"
+                          type="submit"
+                          class="addbtn1 btn btn-primary mb-4"
+                        >
+                          Αποθηκευση
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <%if(currentUser){%>
+              <button type="submit" class="btn btn-info showForm">
+                Προσθηκη φορμας παρενεργειων
+              </button>
+              <%}%>
+            </div>
+
+            <% }) %>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+
+      <button class="btn btn-primary">
+        <a class="text-white" href="/patients/<%= patient._id %>/diagnoses/new"
+          >Δημιουργία Ανοσοθεραπείας</a
+        >
+      </button>
     </div>
 
-    <%if(patient.diagnoses.length === 0){%>
-        <input type="hidden" id="checkDiagnoses" name="checkDiagnoses" value="false">
-        <%} else {%>
-            <input type="hidden" id="checkDiagnoses" name="checkDiagnoses" value="true">
-            <%}%>
+    <div class="col-4">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h1 class="text-center display-4 my-4">Αρχεία</h1>
+            <form
+              action="/upload/<%= patient._id %>"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+            <div class="form-group row">
+              
+              <label for="fileName" class="col-sm-2 col-form-label">Ονομα αρχειου:</label>
+              <div class="col-sm-10">
+                <input type="text" name="name" class="form-control" id="fileName" placeholder="Ονομα αρχειου" maxlength="30" required>
+              </div>
+            </div>
+              <div class="custom-file mb-3">
+                <input
+                  type="file"
+                  name="file"
+                  id="file"
+                  class="custom-file-input"
+                />
+                <label for="file" class="custom-file-label">Choose File</label>
+              </div>
+              <input
+                type="submit"
+                value="Submit"
+                class="btn btn-primary btn-block"
+              />
+            </form>
+            <hr />
+            <% if(allFiles){ %>
+            <table id="myTable" class="display" style="width: 100%">
+              <thead>
+                <tr>
+                  <th>Ονομασια Αρχειου</th>
+                  <th>Ημερομηνια Εισαγωgης</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% allFiles.forEach(function(file){%>
 
-                <% include ../partials/footer %>
+                <tr>
+                  <td><%= file.filename.split('.')[0] %></td>
+                  <td>
+                    <div class="row">
+                      <div class="col-sm">
+                        Aνέβηκε στις <%= moment(file.uploadDate).toISOString()
+                        %>
+                      </div>
+                      <div class="col-sm">
+                          <span>
+                            
+                            <button
+                            class="btn-sm btn-primary btn-block mt-4"
+                            onclick="window.open(`http://<%=host%>/download/<%=file.filename%>`)"
+                          >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                          </svg></button
+                        >
+                          </span>
+                      </div>
+                      <div class="col-sm">
+                        <span
+                          ><button
+                            class="btn-sm btn-primary btn-block mt-4"
+                            onclick="window.open('http://<%=host%>/serve/<%=file.filename%>')"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              class="bi bi-window-stack"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                d="M4.5 6a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1ZM6 6a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm2-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z"
+                              />
+                              <path
+                                d="M12 1a2 2 0 0 1 2 2 2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2 2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h10ZM2 12V5a2 2 0 0 1 2-2h9a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1Zm1-4v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V8H3Zm12-1V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v2h12Z"
+                              />
+                            </svg></span>
+                      </div>
+                      <div class="col-sm">
+                        <form
+                          method="POST"
+                          action="/files/<%= file._id%>?_method=DELETE"
+                        >
+                          <span
+                            ><button class="btn-sm btn-danger btn-block mt-4">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="currentColor"
+                                class="bi bi-trash3"
+                                viewBox="0 0 16 16"
+                              >
+                                <path
+                                  d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"
+                                />
+                              </svg></button
+                          ></span>
+                        </form>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+                <%})%> <% } else { %>
+                <p>No files to show.</p>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%if(patient.diagnoses.length === 0){%>
+<input type="hidden" id="checkDiagnoses" name="checkDiagnoses" value="false" />
+<%} else {%>
+<input type="hidden" id="checkDiagnoses" name="checkDiagnoses" value="true" />
+<%}%> <%- include('../partials/footer') -%>

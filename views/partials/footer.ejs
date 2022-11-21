@@ -14,6 +14,14 @@
 <script src="/js/staff.js"></script>
 <script src="/js/myScripts.js"></script>
 
+<script>
+    let bElem = document.getElementById('patientBirthday')
+    if (bElem){
+        bElem.setAttribute('max', new Date().toISOString().split("T")[0]);
+    }
+    
+</script>
+
 
 
 <script>
@@ -36,7 +44,7 @@
         // checkDisableButton(checkEffects, '#disableBtnEffect')
 
     function checkDisableButton(value, _id) {
-        console.log(value)
+        // console.log(value)
         let myBool = (value === 'true');
         $(_id).prop('disabled', myBool);
     }
