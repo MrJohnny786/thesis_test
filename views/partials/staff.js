@@ -65,7 +65,6 @@ $(document).ready(function () {
       success: function (response) {
         if (response.msg == "success") {
           $("tr.taskrow").remove();
-          //console.log(response.data)
           if (
             response.data == undefined ||
             response.data == null ||

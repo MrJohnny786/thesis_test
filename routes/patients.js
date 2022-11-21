@@ -12,70 +12,6 @@ const path = require("path");
 const fs = require("fs");
 const staticEffects = require("../public/effects.json");
 
-// // Init Storage *Needs to be refactored for better naming of the uploaded files :)
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         const id = req.url.replace('/', '')
-//         Patient.findById(id, function(err, user) {
-//             const patient_name = user.firstName
-//             const patient_lastname = user.lastName
-//             const pname = patient_lastname + ' ' + patient_name + ' ' + id
-//             const dir = `./public/uploads/${pname}`
-//             if (err) {
-//                 return fs.mkdir(dir, error => cb(error, dir))
-//             } else {
-//                 fs.exists(dir, exist => {
-//                     if (!exist) {
-//                         return fs.mkdir(dir, error => cb(error, dir))
-//                     }
-//                     return cb(null, dir)
-//                 })
-//             }
-//         })
-//     },
-//     filename: function(req, file, cb) {
-//         const id = req.url.replace('/', '')
-//         Patient.findById(id, function(err, user) {
-//             if (err) {
-//                 cb(null, '-' + path.extname(file.originalname))
-//             } else {
-//                 const patient_name = user.firstName
-//                 const patient_lastname = user.lastName
-//                 const pname = patient_lastname + ' ' + patient_name
-//                 const timestamp = Date.now()
-//                 const date = new Date(timestamp) //Changed from date , to const date.
-//                 const date_c = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getHours() + '-' + date.getMinutes()
-//                 cb(null, pname + '-' + date_c + path.extname(file.originalname))
-//             }
-//         })
-//     }
-// })
-
-// // Init Upload
-// const upload = multer({
-
-//     storage: storage,
-//     limits: { fileSize: 1000000 },
-//     fileFilter: function(req, file, cb) {
-//         checkFileType(file, cb)
-//     }
-// }).single('myImage')
-
-// // Check File Type
-// function checkFileType(file, cb) {
-//     // Allowed ext
-//     const filetypes = /jpeg|jpg|png|pdf|doc|docx/
-//         // Check ext
-//     const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
-//         // Check mime
-//     const mimetype = filetypes.test(file.mimetype)
-//     if (extname) {
-//         return cb(null, true)
-//     } else {
-//         cb('Error: File problem!')
-//     }
-// }
-
 /**
  * Return every Patient in the database.
  * @param  {} '/getpatients'
@@ -95,35 +31,15 @@ router.get("/getpatients", middleware.isLoggedIn, (req, res) => {
  * Return all the Patients from the Database.
  * @param  {} "/" The route name for returning all the patients.
  */
-router.get("/", function (req, res) {
-  if (req.query.search) {
-    const regex = new RegExp(escapeRegex(req.query.search), "gi");
-    Patient.find({ lastName: regex }, function (err, allPatients) {
-      if (err) {
-        console.log(err);
-      } else {
-        res.render("patients/index", { patients: allPatients });
-      }
-    });
-  } else if (req.query.search1) {
-    const regex = new RegExp(escapeRegex(req.query.search1), "gi");
-    Patient.find({ doc: regex }, function (err, allPatients) {
-      if (err) {
-        console.log(err);
-      } else {
-        res.render("patients/index", { patients: allPatients });
-      }
-    });
-  } else {
-    // Get all patient from DB
-    Patient.find({}, function (err, allPatients) {
-      if (err) {
-        console.log(err);
-      } else {
-        res.render("patients/index", { patients: allPatients });
-      }
-    });
-  }
+router.get("/", middleware.isLoggedIn, function (req, res) {
+  // Get all patient from DB
+  Patient.find({}, function (err, allPatients) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("patients/index", { patients: allPatients });
+    }
+  });
 });
 
 /**
@@ -207,7 +123,6 @@ router.get("/new", middleware.isLoggedIn, function (req, res) {
  * @param  {} res redirects depending on the outcome.
  */
 router.post("/:id", middleware.checkPatientOwnership, function (req, res) {
-  console.log("UPLOOOOOOOOOOOAD");
   upload(req, res, (err) => {
     if (err) {
       console.log(err);
@@ -237,7 +152,7 @@ mongooseUpload.once("open", () => {
  * @param  {id"} "/ Route that gets the data for the correct patient id.
  * @param  {} res Returns the show view with the patient data.
  */
-router.get("/:id", function (req, res) {
+router.get("/:id", middleware.isLoggedIn, function (req, res) {
   var data = {};
   const testFolder = path.join(__dirname, "../public/uploads/");
 
@@ -250,7 +165,6 @@ router.get("/:id", function (req, res) {
         ////////////////////// SHOW FILES
         var allFiles;
         gfs.files.find({ aliases: req.params.id }).toArray((err, files) => {
-          // console.log("found files", files);
           //Check if files
           if (!files || files.length === 0) {
             oneFile = false;
@@ -387,8 +301,8 @@ router.delete("/:id", middleware.checkPatientOwnership, function (req, res) {
 /**
  * Find patients name logic with regex
  */
-function escapeRegex(text) {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-}
+// function escapeRegex(text) {
+//   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+// }
 
 module.exports = router;

@@ -1,210 +1,166 @@
 <%- include('../partials/header')-%>
-    <!--class="navbar navbar-light" style="background-color: #e3f2fd;"-->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
-
-
-    <div class="container-fluid ">
-        <% if(currentUser && currentUser.isAdmin) { %>
-            <h1>Εισαι Διαχειριστης/στρια</h1>
-            <% } %>
-                <header class="jumbotron jumbotheelephant">
-                    <div class="container">
-                        <h2> Νοσοκομείο Πατρών</h2>
-                        <p></p>
-                        <p>
-                            <a class="btn btn-primary btn-large" href="/patients/new">Προσθεστε Ασθενη</a>
-                        </p>
-                    </div>
-                </header>
-
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm">
-                            <h1 class='text-center'>Ασθενεις</h1>
-                            <table id="myPatientsTable" class="display" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Όνομα</th>
-                                        <th>Επώνυμο </th>
-                                        <th>Ημερομηνία Γέννησης </th>
-                                        <th>Υπευθυνος Γιατρος </th>
-                                        <th>Δημιουργηθηκε </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    <% patients.forEach(function(patient){%>
-
-                                        <tr class='clickable-row ' data-href='/patients/<%= patient._id %>' style="cursor:pointer">
-                                            <td>
-                                                <a class="alpha">
-                                                    <%= patient.firstName %>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a class="alpha">
-                                                    <%= patient.lastName %>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a class="alpha">
-                                                    <%= moment(patient.birthday).format('DD-MM-YYYY') %>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a class="alpha">
-                                                    <%= patient.doc %>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a class="alpha">
-                                                    <%= moment(patient.createdAt).fromNow() %>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <% }) %>
-                                </tbody>
-                            </table>
-                        </div>
-                        <% if(currentUser && currentUser.isAdmin) { %>
-
-                            <div class="col-sm">
-                                <h1 class='text-center'>Προσωπικο Νοσοκομειου</h1>
-                                <div class="container jumbotheelephant ">
-                                    <form>
-                                        <div class="form-row align-items-center">
-                                            <div class="col-auto">
-                                                <label class="sr-only" for="name">Ονομα</label>
-                                                <input type="text" class="form-control mb-2" id="name" name="name" placeholder="Ονομα">
-                                            </div>
-                                            <div class="col-auto">
-                                                <label class="sr-only" for="surname">Επωνυμο</label>
-                                                <input type="text" class="form-control mb-2" id="surname" name="surname" placeholder="Επωνυμο">
-                                            </div>
-                                            <div class="col-auto">
-                                                <label class="sr-only" for="role">Ρολος</label>
-                                                <select class="custom-select my-1 mr-sm-2" name="role" id="role">
-                                                <!-- <option selected>Ρολος</option> -->
-                                                <option value="Γιατρος">Γιατρος</option>
-                                                <option value="Νοσηλευτης">Νοσηλευτης</option>
-                                                <option value="Αλλο">Αλλο</option>
-                                            </select>
-                                            </div>
-                                            <div class="col-auto">
-                                                <label class="sr-only" for="description">Προσθετα</label>
-                                                <input type="text" name="description" class="form-control mb-2 " id="description" placeholder="Επιπλεον στοιχεια">
-                                            </div>
-
-
-                                            <div class="col-auto">
-                                                <button type="submit" class="btn btn-primary mb-2 addbtn">Αποθηκευση</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-
-                                <br>
-
-                                <div class="container">
-                                    <div class="row shame">
-                                        <div class="col-sm">
-                                            <ul class="list-group docs">
-                                                <li class="list-group-item active">Γιατροι</li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm">
-                                            <ul class="list-group">
-                                                <li class="list-group-item active">Νοσηλευτες</li>
-
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm">
-                                            <ul class="list-group">
-                                                <li class="list-group-item active">Προσωπικο</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <%}%>
-                    </div>
-                </div>
-
-
-
-                <!-- <table id="waypointsTable" class="table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Όνομα</th>
-                            <th scope="col">Επώνυμο </th>
-                            <th scope="col">Ημερομηνία Γέννησης </th>
-                            <th scope="col">Υπευθυνος Γιατρος </th>
-                            <th scope="col">Δημιουργηθηκε </th>
-                        </tr>
-                    </thead>
-                    <%var i=0 %>
-                        <% patients.forEach(function(patient,i){%>
-                            <%i+=1 %>
-
-                                <tbody>
-                                    <tr class='clickable-row ' data-href='/patients/<%= patient._id %>' style="cursor:pointer">
-                                        <td>
-                                            <a class="alpha">
-                                                <%= i %>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a class="alpha ">
-                                                <%= patient.firstName %>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a class="alpha">
-                                                <%= patient.lastName %>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a class="alpha">
-                                                <%= moment(patient.birthday).format('DD-MM-YYYY') %>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a class="alpha">
-                                                <%= patient.doc %>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a class="alpha">
-                                                <%= moment(patient.createdAt).fromNow() %>
-                                            </a>
-                                        </td>
-                                    </tr>
-
-                                    <% }) %>
-                                </tbody>
-                </table> -->
-
-
-
+<div class="container-fluid">
+  <% if(currentUser && currentUser.isAdmin) { %>
+  <h1>Εισαι Διαχειριστης/στρια</h1>
+  <% } %>
+  <header class="jumbotron jumbotheelephant">
+    <div class="container">
+      <h2>Νοσοκομείο Πατρών</h2>
+      <p></p>
+      <p>
+        <a class="btn btn-primary btn-large" href="/patients/new"
+          >Προσθεστε Ασθενη</a
+        >
+      </p>
     </div>
+  </header>
 
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm">
+        <h1 class="text-center">Ασθενεις</h1>
+        <table id="myPatientsTable" class="display" style="width: 100%">
+          <thead>
+            <tr>
+              <th>Όνομα</th>
+              <th>Επώνυμο</th>
+              <th>Ημερομηνία Γέννησης</th>
+              <th>Υπευθυνος Γιατρος</th>
+              <th>Δημιουργηθηκε</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% patients.forEach(function(patient){%>
 
+            <tr
+              class="clickable-row"
+              data-href="/patients/<%= patient._id %>"
+              style="cursor: pointer"
+            >
+              <td>
+                <a class="alpha"> <%= patient.firstName %> </a>
+              </td>
+              <td>
+                <a class="alpha"> <%= patient.lastName %> </a>
+              </td>
+              <td>
+                <a class="alpha">
+                  <%= moment(patient.birthday).format('DD-MM-YYYY') %>
+                </a>
+              </td>
+              <td>
+                <a class="alpha"> <%= patient.doc %> </a>
+              </td>
+              <td>
+                <a class="alpha">
+                  <%= moment(patient.createdAt).fromNow() %>
+                </a>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <% if(currentUser && currentUser.isAdmin) { %>
+
+      <div class="col-sm">
+        <h1 class="text-center">Προσωπικο Νοσοκομειου</h1>
+        <div class="container jumbotheelephant">
+          <form>
+            <div class="form-row align-items-center">
+              <div class="col-auto">
+                <label class="sr-only" for="name">Ονομα</label>
+                <input
+                  type="text"
+                  class="form-control mb-2"
+                  id="name"
+                  name="name"
+                  placeholder="Ονομα"
+                />
+              </div>
+              <div class="col-auto">
+                <label class="sr-only" for="surname">Επωνυμο</label>
+                <input
+                  type="text"
+                  class="form-control mb-2"
+                  id="surname"
+                  name="surname"
+                  placeholder="Επωνυμο"
+                />
+              </div>
+              <div class="col-auto">
+                <label class="sr-only" for="role">Ρολος</label>
+                <select
+                  class="custom-select my-1 mr-sm-2"
+                  name="role"
+                  id="role"
+                >
+                  <option value="Γιατρος">Γιατρος</option>
+                  <option value="Νοσηλευτης">Νοσηλευτης</option>
+                  <option value="Αλλο">Αλλο</option>
+                </select>
+              </div>
+              <div class="col-auto">
+                <label class="sr-only" for="description">Προσθετα</label>
+                <input
+                  type="text"
+                  name="description"
+                  class="form-control mb-2"
+                  id="description"
+                  placeholder="Επιπλεον στοιχεια"
+                />
+              </div>
+
+              <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-2 addbtn">
+                  Αποθηκευση
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <br />
+
+        <div class="container">
+          <div class="row shame">
+            <div class="col-sm">
+              <ul class="list-group docs">
+                <li class="list-group-item active">Γιατροι</li>
+              </ul>
+            </div>
+            <div class="col-sm">
+              <ul class="list-group">
+                <li class="list-group-item active">Νοσηλευτες</li>
+              </ul>
+            </div>
+            <div class="col-sm">
+              <ul class="list-group">
+                <li class="list-group-item active">Προσωπικο</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%}%>
     </div>
+  </div>
+</div>
 
-    <script>
-        jQuery(document).ready(function($) {
-            $(".clickable-row").click(function() {
-                window.location = $(this).data("href");
-            });
-            $('.clickable-row').hover(function() {
-                    $(this).addClass('hoveri');
-                },
-                function() {
-                    $(this).removeClass('hoveri');
-                });
-        });
-    </script>
-
+<script>
+  jQuery(document).ready(function ($) {
+    $(".clickable-row").click(function () {
+      window.location = $(this).data("href");
+    });
+    $(".clickable-row").hover(
+      function () {
+        $(this).addClass("hoveri");
+      },
+      function () {
+        $(this).removeClass("hoveri");
+      }
+    );
+  });
+</script>
 
 <%- include('../partials/footer') -%>

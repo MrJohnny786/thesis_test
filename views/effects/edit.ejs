@@ -3,8 +3,11 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
-      <a ><button type="button" onclick="history.go(-1)"" class="btn btn-info">Πίσω</button></a>
-      
+      <a
+        ><button type="button" onclick="history.go(-1)" class="btn btn-info">
+          Πίσω
+        </button></a
+      >
     </li>
   </ol>
 </nav>
@@ -18,23 +21,6 @@
   Ημερομηνια φορμας παρενεργειας <%= moment(effect.date).format('YYYY-MM-DD') %>
 </p>
 <div class="container-fluid">
-  <!-- <div class="form-group row">
-    <label for="colFormLabel" class="col-sm-4 col-form-label"
-      >Ημερομηνία Δόσης :</label
-    >
-    <div class="col-sm-5">
-      <input
-        type="date"
-        class="form-control"
-        name="effect[date]"
-        id="colFormLabel"
-        value="<%= moment(effect.date).format('YYYY-MM-DD') %>"
-        required
-        minlength="1"
-        maxlength="20"
-      />
-    </div> 
-  </div> -->
   <div id="effectsForm">
     <form id="formEffects">
       <div class="row">
@@ -92,15 +78,10 @@
               Αποθηκευση
             </button>
           </div>
-          
         </div>
-
-        <!-- <p>Date: <input type="text" id="datepicker" class='effectdate'></p>  2nd way with datepicker-->
-
       </div>
     </form>
   </div>
-
 </div>
 
 <%- include('../partials/footer') -%>

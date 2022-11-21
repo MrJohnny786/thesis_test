@@ -1,70 +1,53 @@
 <!-- Footer -->
 <footer class="page-footer font-small special-color-dark pt-4">
-
-
-
-    <!-- Copyright -->
-    <div class="footer-copyright text-center py-3 ">© 2021 Copyright: Johnny Damilatis
-
-    </div>
-    <!-- Copyright -->
-
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">
+    © 2022 Copyright: Giannis Damilatis
+  </div>
+  <!-- Copyright -->
 </footer>
 <!-- Footer -->
 <script src="/js/staff.js"></script>
 <script src="/js/myScripts.js"></script>
 
 <script>
-    let bElem = document.getElementById('patientBirthday')
-    if (bElem){
-        bElem.setAttribute('max', new Date().toISOString().split("T")[0]);
-    }
-    
+  let bElem = document.getElementById("patientBirthday");
+  if (bElem) {
+    bElem.setAttribute("max", new Date().toISOString().split("T")[0]);
+  }
 </script>
 
-
-
 <script>
-    jQuery(document).ready(function($) {
-        $(function() {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
-        $(".clickable-row").click(function() {
-            window.location = $(this).data("href");
-        });
+  jQuery(document).ready(function ($) {
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip();
     });
+    $(".clickable-row").click(function () {
+      window.location = $(this).data("href");
+    });
+  });
 </script>
 <script>
-    var checkDiagnoses = $('#checkDiagnoses').val()
-    var checkTreatments = $('#checkTreatments').val()
-    var checkEffects = $('#checkEffects').val()
+  var checkDiagnoses = $("#checkDiagnoses").val();
+  var checkTreatments = $("#checkTreatments").val();
+  var checkEffects = $("#checkEffects").val();
 
-    checkDisableButton(checkDiagnoses, '#disableBtnPatient')
-        //checkDisableButton(checkTreatments, '#disableBtnDiagnose')
-        // checkDisableButton(checkEffects, '#disableBtnEffect')
-
-    function checkDisableButton(value, _id) {
-        // console.log(value)
-        let myBool = (value === 'true');
-        $(_id).prop('disabled', myBool);
-    }
+  checkDisableButton(checkDiagnoses, "#disableBtnPatient");
+  function checkDisableButton(value, _id) {
+    let myBool = value === "true";
+    $(_id).prop("disabled", myBool);
+  }
 </script>
-
-<!-- <script>
-    $(function() {
-        var $select = $(".some_select");
-        for (i = 1; i <= 100; i++) {
-            $select.append($('<option></option>').val(i).html(i))
-        }
-    });​
-</script> -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script> -->
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+  integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+  crossorigin="anonymous"
+></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
-
 <script src="/js/sideEffects.js"></script>
-</body>

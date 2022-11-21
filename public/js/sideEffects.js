@@ -246,7 +246,6 @@ $(document).ready(function () {
   const p_id = $("#patient").val();
   const d_id = $("#diagnose").val();
   const t_id = $("#treatment").val();
-  // console.log('t_id', t_id)
   const e_id = $("#e_id").val();
 
   idata.patient = p_id;
@@ -311,7 +310,6 @@ $(document).ready(function () {
         }
       },
       error: function (response) {
-        console.log("mpes t_id11111", t_id);
         alert("server error");
       },
     });
@@ -350,7 +348,6 @@ $(document).ready(function () {
       data: { data: idata },
       success: function (response) {
         if (response.msg === "success" && response.redirect === true) {
-          // console.log("posting ", idata);
           getdata(greekNames, idata.treatment);
           window.location.reload();
         } else {
@@ -358,8 +355,7 @@ $(document).ready(function () {
         }
       },
       error: function (response) {
-        console.log(response);
-        alert("server error occured");
+        alert("server error occured trying to create a new effect");
       },
     });
   });
@@ -368,14 +364,12 @@ $(document).ready(function () {
     // e.preventDefault();
     const datepick = $(".dateClass").val();
     idata.date = datepick;
-    console.log("edw to idata", idata);
     $.ajax({
       url: "/effects/" + e_id,
       method: "PUT",
       dataType: "json",
       data: { data: idata },
       success: function (response) {
-        console.log(response.url);
         if (response.msg === "success" && response.redirect === true) {
           window.location.href = response.url;
         } else {

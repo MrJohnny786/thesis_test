@@ -6,50 +6,6 @@
   </ol>
 </nav>
 
-<!-- <div class="jumbotron jumbotron-fluid">
-        <div class="container-md">
-            <div class="row">
-                <div class="col-md">
-                    Όνομα :
-                    <%= patient.firstName %>
-                </div>
-                <div class="col-md">
-                    One of three columns
-                </div>
-                <div class="col-md">
-                    One of three columns
-                </div>
-                <div class="col-md">
-                    One of three columns
-                </div>
-                <div class="col-md">
-                    One of three columns
-                </div>
-                <div class="col-md">
-                    <ul class="list-group">
-                        <li class="list-group-item disabled">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Morbi leo risus</li>
-                        <li class="list-group-item">Porta ac consectetur ac</li>
-                        <li class="list-group-item">Vestibulum at eros</li>
-                    </ul>
-                </div>
-            </div>
-
-        </div>
-    </div> -->
-<!-- <div class="card">
-        <div class="card-header">
-            Όνοματεπωνυμο :
-            <%= patient.firstName %>
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-    </div> -->
-
 <div class="container-fluid">
   <div class="row">
     <div class="col-2">
@@ -377,10 +333,10 @@
                   <div class="card mt-2 btnColor2">
                     <div class="card-body">
                       <h4 class="card-title">
-                        <%= moment(ef.date).format('DD-MM-YYYY') %>
+                        Ημερομηνια : <%= moment(ef.date).format('DD-MM-YYYY') %>
                       </h4>
                       <p class="card-text font-weight-bold">
-                        <%= arr.join(',') %>
+                        Παρενεργειες : <%= arr.join(',') %>
                       </p>
                       <div
                         class="btn-group"
@@ -432,9 +388,6 @@
                               !checked
                             />
                             <%= value1.name %>
-                            <!-- <input type="checkbox" class="btn-check" id='<%= key1 %>' name='<%= key1 %>' !checked autocomplete="off">
-                                                                                            <label class="btn btn-primary" for='<%= key1 %>'><%= value1.name %></label> -->
-                            <!-- <br> -->
                           </li>
                           <% } %>
                         </ul>
@@ -456,8 +409,6 @@
                           />
                         </div>
                       </div>
-
-                      <!-- <p>Date: <input type="text" id="datepicker" class='effectdate'></p>  2nd way with datepicker-->
                       <div class="col-sm-10">
                         <button
                           data-id="<%=y.id%>"
@@ -501,13 +452,22 @@
               method="POST"
               enctype="multipart/form-data"
             >
-            <div class="form-group row">
-              
-              <label for="fileName" class="col-sm-2 col-form-label">Ονομα αρχειου:</label>
-              <div class="col-sm-10">
-                <input type="text" name="name" class="form-control" id="fileName" placeholder="Ονομα αρχειου" maxlength="30" required>
+              <div class="form-group row">
+                <label for="fileName" class="col-sm-2 col-form-label"
+                  >Ονομα αρχειου:</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    name="name"
+                    class="form-control"
+                    id="fileName"
+                    placeholder="Ονομα αρχειου"
+                    maxlength="30"
+                    required
+                  />
+                </div>
               </div>
-            </div>
               <div class="custom-file mb-3">
                 <input
                   type="file"
@@ -544,18 +504,28 @@
                         %>
                       </div>
                       <div class="col-sm">
-                          <span>
-                            
-                            <button
+                        <span>
+                          <button
                             class="btn-sm btn-primary btn-block mt-4"
                             onclick="window.open(`http://<%=host%>/download/<%=file.filename%>`)"
                           >
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                          </svg></button
-                        >
-                          </span>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              class="bi bi-download"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"
+                              />
+                              <path
+                                d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"
+                              />
+                            </svg>
+                          </button>
+                        </span>
                       </div>
                       <div class="col-sm">
                         <span
@@ -577,7 +547,9 @@
                               <path
                                 d="M12 1a2 2 0 0 1 2 2 2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2 2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h10ZM2 12V5a2 2 0 0 1 2-2h9a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1Zm1-4v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V8H3Zm12-1V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v2h12Z"
                               />
-                            </svg></span>
+                            </svg>
+                          </button>
+                        </span>
                       </div>
                       <div class="col-sm">
                         <form

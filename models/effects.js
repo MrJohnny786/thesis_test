@@ -196,7 +196,7 @@ const effectsSchema = new mongoose.Schema({
       },
     },
   },
-  date: { type: Date },
+  date: { type: Date, default: () => new Date() },
   patient_id: String,
   diagnose_id: String,
   treatment_id: String,

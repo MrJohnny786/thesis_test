@@ -44,7 +44,6 @@ const treatmentRoutes = require("./routes/treatments");
 const staffRoutes = require("./routes/staff");
 const effectRoutes = require("./routes/effects");
 const indexRoutes = require("./routes/index");
-// const uploadRoutes = require("./upload");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "/public"))); // __dirname starts where the script is running which in this particular case is routes
@@ -105,7 +104,6 @@ const storage = new GridFsStorage({
         bucketName: "hospital",
       };
       resolve(fileInfo);
-      // });
     });
   },
 });
@@ -116,7 +114,6 @@ const upload = multer({ storage });
 // @route POST /upload
 // @desc Upload file to DB
 app.post("/upload/:id", upload.single("file"), (req, res) => {
-  console.log("hello?");
   // res.json({ file: req.file })
   res.redirect("back");
 });
@@ -124,7 +121,6 @@ app.post("/upload/:id", upload.single("file"), (req, res) => {
 // @route GET /files
 // @desc Dsiplay all files in JSON
 app.get("/files", (req, res) => {
-  console.log("find next");
   gfs.files.find().toArray((err, files) => {
     //Check if files
     if (!files || files.length === 0) {
@@ -165,7 +161,6 @@ app.get("/files/:filename", (req, res) => {
 // @desc Display image
 app.get("/serve/:filename", (req, res) => {
   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-    //console.log(file)
     if (!file || file.length === 0) {
       return res.status(404).json({
         err: "No file exist",
@@ -190,7 +185,6 @@ app.get("/serve/:filename", (req, res) => {
 // @desc Display image
 app.get("/download/:filename", (req, res) => {
   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-    //console.log(file)
     if (!file || file.length === 0) {
       return res.status(404).json({
         err: "No file exist",
@@ -220,19 +214,3 @@ app.get("/download/:filename", (req, res) => {
 app.listen(port, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
-
-// // HEROKU LOGIC NEEDS FIX
-// app.listen(process.env.PORT, process.env.IP, function() {
-//     console.log("Started");
-// });
-
-// app.listen(process.env.PORT || 3000)
-
-// const MongoClient = require('mongodb').MongoClient;
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
-// client.connect(err => {
-//     //   const collection = client.db("test").collection("devices");
-//     // perform actions on the collection object
-//     client.close();
-// });

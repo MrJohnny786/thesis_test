@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const User = require("../models/user");
+const conf = require("../config");
+const adminCode = conf["dev"].app.adminCode;
 /**
  * GET the register html page.
  */
@@ -15,12 +17,11 @@ router.get("/register", function (req, res) {
  */
 router.post("/register", function (req, res) {
   const newUser = new User({ username: req.body.username });
-  if (req.body.adminCode === "786") {
+  if (req.body.adminCode === adminCode) {
     newUser.isAdmin = true;
   }
   User.register(newUser, req.body.password, function (err, user) {
     if (err) {
-      console.log(err);
       req.flash("error", err.message);
       return res.redirect("/register");
     }

@@ -15,7 +15,7 @@ const Staff = require("../models/staff");
 router.get("/new", middleware.isLoggedIn, function (req, res) {
   Patient.findById(req.params.id, function (err, patient) {
     if (err) {
-      console.log(err);
+      console.log("Error creating new diagnose/ανοσοθεραπεια", err);
       res.redirect("/patients");
     } else {
       Staff.find({ role: "Γιατρος" }, function (err, findDoctors) {
@@ -41,14 +41,13 @@ router.post("/", middleware.isLoggedIn, function (req, res) {
   // lookup patient using ID
   Patient.findById(req.params.id, function (err, patient) {
     if (err) {
-      console.log(err);
+      console.log("Error posting new diagnose", err);
       res.redirect("/patients");
     } else {
-      // console.log(req.body.diagnose);
       Diagnose.create(req.body.diagnose, function (err, diagnose) {
         if (err) {
           req.flash("error", "Δημιουργηθηκε καποιο προβλημα");
-          console.log(err);
+          console.log("Error posting new diagnose", err);
         } else {
           diagnose.alpha.id = req.user._id;
           diagnose.alpha.username = req.user.username;
@@ -92,7 +91,7 @@ router.get(
   function (req, res) {
     Diagnose.findById(req.params.diagnose_id, function (err, foundDiagnose) {
       if (err) {
-        console.log(err);
+        console.log("Error while trying to go to the edit view", err);
         res.redirect("/patients");
       } else {
         Staff.find({ role: "Γιατρος" }, function (err, findDoctors) {
@@ -124,8 +123,8 @@ router.put(
       req.body.diagnose,
       function (err, updatedDiagnose) {
         if (err) {
+          console.log("Error while trying to update a diagnose", err);
           res.redirect("back");
-          console.log(err);
         } else {
           res.redirect(
             "/patients/" +
@@ -149,10 +148,9 @@ router.delete(
   function (req, res) {
     Diagnose.findByIdAndRemove(req.params.diagnose_id, function (err) {
       if (err) {
-        //console.log('Failed')
+        console.log("Error trying to delete a diagnose", err);
         res.redirect("back");
       } else {
-        // console.log('success')
         res.redirect("/patients/" + req.params.id);
       }
     });
