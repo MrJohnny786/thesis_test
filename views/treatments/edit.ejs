@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <h1 class="text-center display-4 my-4">Επεξεργασία </h1>
+                <h1 class="text-center display-4 my-4">Επεξεργασία Δόσης</h1>
 
                 <form action="/patients/<%= patient_id %>/diagnoses/<%= diagnose_id %>/treatments/<%= treatment._id %>?_method=PUT" method="POST">
 
@@ -26,27 +26,66 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="colFormLabel" class="col-sm-4 col-form-label">Γιατρος :</label>
+                        <label for="colFormLabel" class="col-sm-4 col-form-label">ΦΑΡΜΑΚΑ (ΟΔΗΓΙΕΣ - ΟΔΗΓΙΕΣ ΧΟΡΗΓΗΣΕΩΣ) :</label>
                         <div class="col-sm-5">
-                            <select class="btn btn-secondary dropdown-toggle" class="staff" data-style="btn-info" name="treatment[staff]">
-    <optgroup label="Select Table">
-      <option name="-" value="-">
-        -
-      </option>
-      <% for(var i=0; i<staff.length; i++) {%>
-        <% fullname=staff[i].surname
-          +' '+ staff[i].name %>
-<option name="staff" value=" <%= fullname%> "><%= fullname%></option>
-<% } %>
+                            <input type="text" class="form-control" name="treatment[courseOfTreatment]" value="<%= treatment.courseOfTreatment %>" id="colFormLabel" placeholder="ΦΑΡΜΑΚΑ (ΟΔΗΓΙΕΣ - ΟΔΗΓΙΕΣ ΧΟΡΗΓΗΣΕΩΣ)" required minlength="1" maxlength="100">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="colFormLabel" class="col-sm-4 col-form-label">Πορεια Νοσου :</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="treatment[status]" id="colFormLabel" placeholder="Πορεια Νοσου" value="<%= treatment.status %>" required minlength="1" maxlength="100">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="colFormLabel" class="col-sm-4 col-form-label">Αριθμος Εγκρισης :</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="treatment[numOfApproval]" id="colFormLabel" placeholder="Αριθμος Εγκρισης" value="<%= treatment.numOfApproval %>" required minlength="1" maxlength="100">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-sm-2">
+                            <label for="mg">Miligrams</label>
+                            <input type="text" name="treatment[mg]" value="<%= treatment.mg %>"  class="form-control" id="mg">
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="numOfDose">Αριθμος Δοσεων</label>
+                            <select id="numOfDose" name="treatment[numOfDose]" value="<%= treatment.numOfDose %>"  class="form-control">
+                        <option selected>Αριθμος Δοσεων </option>
+                        <optgroup >
+                          <option name="-" value="-">-</option>
+                          <option name="x1" value="x1">x1</option>
+                          <option name="x2" value="x2">x2</option>
+                          <option name="x3" value="x3">x3</option>
+                          <option name="x4" value="x4">x4</option>
+                          <option name="x5" value="x5">x5</option>
+                        </optgroup>
+                      </select>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="colFormLabel" class="col-sm-4 col-form-label">Νοσηλευτης :</label>
+                        <div class="col-sm-5">
+                            <select class="btn btn-secondary dropdown-toggle" class="staff" data-style="btn-info" value="<%= treatment.staff %>"  name="treatment[staff]">
+<optgroup label="Select Table">
+    <% for(var i=0; i<staff.length; i++) {%>
+        <% fullname = staff[i].role + ' - ' +staff[i].surname +' '+ staff[i].name %>
+        <option type='text' name="staff" value=" <%= staff[i].surname +' '+ staff[i].name %> "><%= fullname%></option>
+    <% } %>
 </optgroup>
 </select>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-sm-4 col-form-label" for="exampleTextarea">Γενικές σημειώσεις :</label>
+                        <label class="col-sm-4 col-form-label" for="exampleTextarea">Παρατηρησεις :</label>
                         <div>
-                            <textarea class="form-control" name="treatment[general]" id="exampleTextarea" cols="200" rows="10"><%= treatment.general %></textarea>
+                            <textarea class="form-control" name="treatment[observation]" id="exampleTextarea"  value="<%= treatment.observation %>" cols="200" rows="10"></textarea>
                         </div>
                     </div>
 

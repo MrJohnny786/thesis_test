@@ -1,10 +1,11 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 const treatmentSchema = mongoose.Schema({
   date: { type: Date },
   mg: Number,
   numOfDose: String,
   numOfApproval: String,
+  courseOfTreatment: String,
   staff: String,
   status: String,
   observation: String,
@@ -19,15 +20,16 @@ const treatmentSchema = mongoose.Schema({
   beta: {
     id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: "User",
     },
-    username: String
+    username: String,
   },
-  effects: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Effect'
-  }]
+  effects: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Effect",
+    },
+  ],
+});
 
-})
-
-module.exports = mongoose.model('Treatment', treatmentSchema)
+module.exports = mongoose.model("Treatment", treatmentSchema);

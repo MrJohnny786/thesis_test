@@ -13,7 +13,7 @@
 
     <div class="container">
         <div class="row ">
-            <div class="container  p-5 ">
+            <div class="container">
 
                 <div class="row mt-3 patient_row">
                     <div class="col-sm">ΦΑΡΜΑΚΑ (ΟΔΗΓΙΕΣ - ΟΔΟΣ ΧΟΡΗΓΗΣΕΩΣ):</div>
@@ -69,66 +69,77 @@
                     </form>
                     <% } %>
                         <hr>
-                        <div>
-                            <h1 class="text-center p-2">Δοσεις</h1>
-                        </div>
-                        <div>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Αριθμος Δόσης :</th>
-                                        <th scope="col">Ημ/νια Δόσης :</th>
-                                        <th scope="col">Δοσολογεια :</th>
-                                        <th scope="col">Αριθμος Εγκρισης :</th>
-                                        <th scope="col">Νοσηλευτης :</th>
-                                        <th scope="col">Πορεία Νοσου :</th>
-                                        <th scope="col">Παρατηρησεις :</th>
-                                        <th scope="col">Δημιουργηθηκε απο :</th>
-                                    </tr>
-                                </thead>
-                                <%var i=0 %>
-                                    <% diagnose.treatments.forEach(function(treatment,i){ %>
-                                        <%i+=1 %>
-                                            <tbody>
-                                                <tr class='clickable-row' data-href="/patients/<%= patient_id %>/diagnoses/<%= diagnose.id %>/treatments/<%=treatment._id %>" style="cursor:pointer">
-                                                    <td>
-                                                        <a class="alpha">
-                                                            <%= i %>
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a class="alpha">
-                                                            <%= moment(treatment.date).format('DD-MM-YYYY') %>
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a class="alpha">
-                                                            <%= treatment.mg +' '+ treatment.numOfDose %>
-                                                    </td>
-                                                    <td>
-                                                        <a class="alpha">
-                                                            <%= treatment.numOfApproval %>
-                                                    </td>
-                                                    <td>
-                                                        <a class="alpha">
-                                                            <%= treatment.staff %>
-                                                    </td>
-                                                    <td>
-                                                        <a class="alpha">
-                                                            <%= treatment.status %>
-                                                    </td>
-                                                    <td>
-                                                        <a class="alpha">
-                                                            <%= treatment.observation %>
-                                                    </td>
-                                                    <td>
-                                                        <a class="alpha">
-                                                            <%= diagnose.alpha.username %>
-                                                    </td>
-                                                </tr>
-                                                <% }) %>
-                                            </tbody>
-                            </table>
+                            <div class="row">
+                                <div class="col-md">
+                                    <h1 class="text-center">Δοσεις</h1>
+                                    <table id="myPatientsTable" class="display" style="width: 100%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Αριθμος Δόσης :</th>
+                                                <th scope="col">Ημ/νια Δόσης :</th>
+                                                <th scope="col">Οδηγίες χορηγήσεως :</th>
+                                                <th scope="col">Δοσολογεια :</th>
+                                                <th scope="col">Αριθμος Εγκρισης :</th>
+                                                <th scope="col">Νοσηλευτης :</th>
+                                                <th scope="col">Πορεία Νοσου :</th>
+                                                <th scope="col">Παρατηρησεις :</th>
+                                                <th scope="col">Δημιουργηθηκε απο :</th>
+                                            </tr>
+                                        </thead>
+                                      <tbody>
+                                        <%var i=0 %>
+                                        <% diagnose.treatments.forEach(function(treatment,i){ %>
+                                            <%i+=1 %>
+                                        <tr
+                                          class="clickable-row"
+                                          data-href="/patients/<%= patient_id %>/diagnoses/<%= diagnose.id %>/treatments/<%=treatment._id %>"
+                                          style="cursor: pointer"
+                                        >
+                                        <td>
+                                            <a class="alpha">
+                                                <%= i %>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a class="alpha">
+                                                <%= moment(treatment.date).format('DD-MM-YYYY') %>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a class="alpha">
+                                                <%= treatment.courseOfTreatment%>
+                                        </td>
+                                        <td>
+                                            <a class="alpha">
+                                                <%= treatment.mg +' '+ treatment.numOfDose %>
+                                        </td>
+                                        <td>
+                                            <a class="alpha">
+                                                <%= treatment.numOfApproval %>
+                                        </td>
+                                        <td>
+                                            <a class="alpha">
+                                                <%= treatment.staff %>
+                                        </td>
+                                        <td>
+                                            <a class="alpha">
+                                                <%= treatment.status %>
+                                        </td>
+                                        <td>
+                                            <a class="alpha">
+                                                <%= treatment.observation %>
+                                        </td>
+                                        <td>
+                                            <a class="alpha">
+                                                <%= diagnose.alpha.username %>
+                                        </td>
+                                        </tr>
+                                        <% }) %>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                            
+                    
                         </div>
                         <p>
                             <a class="btn btn-primary btn-large" href="/patients/<%= patient_id %>/diagnoses/<%= diagnose._id %>/treatments/new">Πρόσθεστε

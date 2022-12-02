@@ -240,9 +240,10 @@
                     <a
                       class="font-weight-bold text-white"
                       href="/patients/<%= patient._id %>/diagnoses/<%= x.id %>/treatments/<%=y._id %>"
-                      >ΔΟΣΗ <%= moment(y.date).format('DD-MM-YYYY') %> -%> <%=
-                      y.status %> -%> <%= y.staff %> -%> <%= y.numOfApproval %>
-                      - %> <%= y.numOfDose %> %></a
+                      >ΔΟΣΗ <%=y.courseOfTreatment%> <%=
+                      moment(y.date).format('DD-MM-YYYY') %> -%> <%= y.status %>
+                      -%> <%= y.staff %> -%> <%= y.numOfApproval %> - %> <%=
+                      y.numOfDose %> %></a
                     >
                     <span class="badge badge-light float-right"
                       ><%= y.effects.length%> Παρενεργειες
