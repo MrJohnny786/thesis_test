@@ -24,16 +24,15 @@ const mySecret = environment.app.secret;
 
 // CCONNECT TO DB (EITHER LOCAL OR ONLINE)
 var conn = mongoose.connect(
-  db,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-  },
-  (err, db) => {
-    if (err) throw err;
-    console.log(`MongoDB connected on port ${port}`);
-  }
+    db, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+    },
+    (err, db) => {
+        if (err) throw err;
+        console.log(`MongoDB connected on port ${db}`);
+    }
 );
 const mongooseUpload = mongoose.connection;
 
@@ -52,11 +51,11 @@ app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
 app.use(flash());
 app.use(
-  require("express-session")({
-    secret: mySecret,
-    resave: false,
-    saveUninitialized: false,
-  })
+    require("express-session")({
+        secret: mySecret,
+        resave: false,
+        saveUninitialized: false,
+    })
 );
 app.locals.moment = require("moment");
 
@@ -71,11 +70,11 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // AUTH RESPONSE
-app.use(function (req, res, next) {
-  res.locals.currentUser = req.user;
-  res.locals.error = req.flash("error");
-  res.locals.success = req.flash("success");
-  next();
+app.use(function(req, res, next) {
+    res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
+    next();
 });
 
 // ROUTES LOGIC
@@ -90,24 +89,24 @@ app.use("/effects", effectRoutes);
 //UPLOAD FILE WITH GRIDFS
 let gfs;
 mongooseUpload.once("open", () => {
-  // init stream
-  gfs = Grid(mongooseUpload.db, mongoose.mongo);
-  gfs.collection("hospital");
+    // init stream
+    gfs = Grid(mongooseUpload.db, mongoose.mongo);
+    gfs.collection("hospital");
 });
 const storage = new GridFsStorage({
-  url: db,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      const filename = req.body.name || file.originalname;
-      const fileInfo = {
-        filename: filename,
-        aliases: req.params.id,
-        bucketName: "hospital",
-      };
-      resolve(fileInfo);
-      // });
-    });
-  },
+    url: db,
+    file: (req, file) => {
+        return new Promise((resolve, reject) => {
+            const filename = req.body.name || file.originalname;
+            const fileInfo = {
+                filename: filename,
+                aliases: req.params.id,
+                bucketName: "hospital",
+            };
+            resolve(fileInfo);
+            // });
+        });
+    },
 });
 const upload = multer({ storage });
 // @route GET/
@@ -116,109 +115,109 @@ const upload = multer({ storage });
 // @route POST /upload
 // @desc Upload file to DB
 app.post("/upload/:id", upload.single("file"), (req, res) => {
-  console.log("hello?");
-  // res.json({ file: req.file })
-  res.redirect("back");
+    console.log("hello?");
+    // res.json({ file: req.file })
+    res.redirect("back");
 });
 
 // @route GET /files
 // @desc Dsiplay all files in JSON
 app.get("/files", (req, res) => {
-  console.log("find next");
-  gfs.files.find().toArray((err, files) => {
-    //Check if files
-    if (!files || files.length === 0) {
-      return res.status(404).json({
-        err: "No files exist",
-      });
-    }
-    return res.json(files);
-  });
+    console.log("find next");
+    gfs.files.find().toArray((err, files) => {
+        //Check if files
+        if (!files || files.length === 0) {
+            return res.status(404).json({
+                err: "No files exist",
+            });
+        }
+        return res.json(files);
+    });
 });
 
 // @route DELETE //files/:_id
 // @desc Delete file
 app.delete("/files/:id", (req, res) => {
-  gfs.remove({ _id: req.params.id, root: "hospital" }, (err, gridStore) => {
-    if (err) {
-      return res.status(404).json({ err: err });
-    } else {
-      res.redirect("back");
-    }
-  });
+    gfs.remove({ _id: req.params.id, root: "hospital" }, (err, gridStore) => {
+        if (err) {
+            return res.status(404).json({ err: err });
+        } else {
+            res.redirect("back");
+        }
+    });
 });
 
 // @route GET /files/:filename
 // @desc Dsiplay a single file in JSON
 app.get("/files/:filename", (req, res) => {
-  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-    if (!file || file.length === 0) {
-      return res.status(404).json({
-        err: "No file exist",
-      });
-    }
-    return res.json(file);
-  });
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+        if (!file || file.length === 0) {
+            return res.status(404).json({
+                err: "No file exist",
+            });
+        }
+        return res.json(file);
+    });
 });
 
 // @route GET /files/:filename
 // @desc Display image
 app.get("/serve/:filename", (req, res) => {
-  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-    //console.log(file)
-    if (!file || file.length === 0) {
-      return res.status(404).json({
-        err: "No file exist",
-      });
-    }
-    if (file.contentType === "image/jpeg" || file.contentType === "image/png") {
-      // Read output to browser
-      const readstream = gfs.createReadStream(file._id);
-      readstream.pipe(res);
-    } else if (file.contentType === "application/pdf") {
-      const readstream = gfs.createReadStream(file._id);
-      readstream.pipe(res);
-    } else {
-      res.status(404).json({
-        err: "Not an image",
-      });
-    }
-  });
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+        //console.log(file)
+        if (!file || file.length === 0) {
+            return res.status(404).json({
+                err: "No file exist",
+            });
+        }
+        if (file.contentType === "image/jpeg" || file.contentType === "image/png") {
+            // Read output to browser
+            const readstream = gfs.createReadStream(file._id);
+            readstream.pipe(res);
+        } else if (file.contentType === "application/pdf") {
+            const readstream = gfs.createReadStream(file._id);
+            readstream.pipe(res);
+        } else {
+            res.status(404).json({
+                err: "Not an image",
+            });
+        }
+    });
 });
 
 // @route GET /files/:filename
 // @desc Display image
 app.get("/download/:filename", (req, res) => {
-  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-    //console.log(file)
-    if (!file || file.length === 0) {
-      return res.status(404).json({
-        err: "No file exist",
-      });
-    }
-    let mimeType = file.contentType;
-    res.set({
-      "Content-Type": mimeType,
-      "Content-Disposition": "attachment; filename=" + file.filename,
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+        //console.log(file)
+        if (!file || file.length === 0) {
+            return res.status(404).json({
+                err: "No file exist",
+            });
+        }
+        let mimeType = file.contentType;
+        res.set({
+            "Content-Type": mimeType,
+            "Content-Disposition": "attachment; filename=" + file.filename,
+        });
+        if (file.contentType === "image/jpeg" || file.contentType === "image/png") {
+            // Read output to browser
+            const readstream = gfs.createReadStream(file._id);
+            readstream.pipe(res);
+        } else if (file.contentType === "application/pdf") {
+            const readstream = gfs.createReadStream(file._id);
+            readstream.pipe(res);
+        } else {
+            res.status(404).json({
+                err: "Error during download",
+            });
+        }
     });
-    if (file.contentType === "image/jpeg" || file.contentType === "image/png") {
-      // Read output to browser
-      const readstream = gfs.createReadStream(file._id);
-      readstream.pipe(res);
-    } else if (file.contentType === "application/pdf") {
-      const readstream = gfs.createReadStream(file._id);
-      readstream.pipe(res);
-    } else {
-      res.status(404).json({
-        err: "Error during download",
-      });
-    }
-  });
 });
 
 // APP LISTENING
 app.listen(port, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+    console.log(`Server running at http://${hostname}:${port}/`);
 });
 
 // // HEROKU LOGIC NEEDS FIX
