@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const effectsSchema = new mongoose.Schema({
   stomach_bowel: {
@@ -204,10 +204,10 @@ const effectsSchema = new mongoose.Schema({
   user: {
     id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
     },
     username: String,
   },
 });
 
-module.exports = mongoose.model("Effect", effectsSchema);
+module.exports = mongoose.model('Effect', effectsSchema);

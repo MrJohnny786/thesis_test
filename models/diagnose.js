@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const diagnoseSchema = mongoose.Schema({ // change the name to  ανοσοθεραπεια
   courseOfTreatment: String,
@@ -10,17 +10,17 @@ const diagnoseSchema = mongoose.Schema({ // change the name to  ανοσοθερ
   alpha: {
     id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
     },
-    username: String
+    username: String,
   },
   treatments: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Treatment'
-    }
-  ]
+      ref: 'Treatment',
+    },
+  ],
 
-})
+});
 
-module.exports = mongoose.model('Diagnose', diagnoseSchema)
+module.exports = mongoose.model('Diagnose', diagnoseSchema);

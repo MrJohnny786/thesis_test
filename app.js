@@ -8,15 +8,24 @@ const LocalStrategy = require("passport-local");
 const methodOverride = require("method-override");
 const User = require("./models/user");
 const path = require("path");
-const conf = require("./config");
+//const conf = require("./config");
 const fs = require("fs");
 const crypto = require("crypto");
 const GridFsStorage = require("multer-gridfs-storage").GridFsStorage;
 const Grid = require("gridfs-stream");
 const multer = require("multer");
 
-// USE CONFIG FILE
-const environment = conf["dev"];
+const conf = require("./config/config"); // Updated path
+
+// Load environment variables from .env file
+require("dotenv").config();
+
+const environment = conf[process.env.NODE_ENV || "dev"];
+console.log("Environment:", environment); // Add this line for debugging
+if (!environment) {
+  throw new Error("Environment configuration is missing or incorrect");
+}
+
 const hostname = environment.app.host || null;
 const port = environment.app.port || process.env.PORT || 3000;
 const db = environment.app.db;
