@@ -226,13 +226,17 @@ const mongooseUpload = mongoose.connection;
 const GridFsStorage = require("multer-gridfs-storage");
 const Grid = require("gridfs-stream");
 
-let gfs;
 mongooseUpload.once("open", () => {
-  // init stream
+  // Init GridFS stream
   gfs = Grid(mongooseUpload.db, mongoose.mongo);
-  gfs.collection("hospital");
+  gfs.collection("hospital"); // Use the 'hospital' collection in GridFS
+  console.log("GridFS initialized and connected to hospital collection.");
 });
 
+// Handle MongoDB connection errors
+mongooseUpload.on("error", (err) => {
+  console.error("MongoDB connection error:", err);
+});
 /**
  * @param  {id"} "/ Route that gets the data for the correct patient id.
  * @param  {} res Returns the show view with the patient data.

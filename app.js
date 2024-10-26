@@ -32,18 +32,19 @@ const db = environment.app.db;
 const mySecret = environment.app.secret;
 
 // CCONNECT TO DB (EITHER LOCAL OR ONLINE)
-var conn = mongoose.connect(
-  db,
-  {
+// Mongoose and GridFS setup
+mongoose
+  .connect(db, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
-  },
-  (err, db) => {
-    if (err) throw err;
-    console.log(`MongoDB connected on port ${port}`);
-  }
-);
+  })
+  .then(() => {
+    console.log(`MongoDB connected to ${db}`);
+  })
+  .catch((err) => {
+    console.error("Database connection error:", err);
+  });
 const mongooseUpload = mongoose.connection;
 
 // ROUTES LOGIC
@@ -99,9 +100,9 @@ app.use("/effects", effectRoutes);
 //UPLOAD FILE WITH GRIDFS
 let gfs;
 mongooseUpload.once("open", () => {
-  // init stream
   gfs = Grid(mongooseUpload.db, mongoose.mongo);
   gfs.collection("hospital");
+  console.log("GridFS initialized");
 });
 const storage = new GridFsStorage({
   url: db,
@@ -114,7 +115,6 @@ const storage = new GridFsStorage({
         bucketName: "hospital",
       };
       resolve(fileInfo);
-      // });
     });
   },
 });
@@ -124,22 +124,21 @@ const upload = multer({ storage });
 
 // @route POST /upload
 // @desc Upload file to DB
+// Routes
 app.post("/upload/:id", upload.single("file"), (req, res) => {
-  console.log("hello?");
-  // res.json({ file: req.file })
+  if (!gfs) {
+    return res.status(500).json({ error: "GridFS is not initialized" });
+  }
   res.redirect("back");
 });
 
-// @route GET /files
-// @desc Dsiplay all files in JSON
 app.get("/files", (req, res) => {
-  console.log("find next");
+  if (!gfs) {
+    return res.status(500).json({ error: "GridFS is not initialized" });
+  }
   gfs.files.find().toArray((err, files) => {
-    //Check if files
-    if (!files || files.length === 0) {
-      return res.status(404).json({
-        err: "No files exist",
-      });
+    if (err || !files || files.length === 0) {
+      return res.status(404).json({ err: "No files exist" });
     }
     return res.json(files);
   });
